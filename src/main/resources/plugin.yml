@@ -1,0 +1,15 @@
+name: WarTeam
+main: com.suixin.warteam.WarTeam
+version: ${project.version}
+authors:
+- suixin
+softdepend:
+- VaultAPI
+- VexView
+commands:
+  wt:
+    description: 游戏指令
+    usage: /wt
+permissions:
+  warteam.tn:
+    description: Allows you to use tn
