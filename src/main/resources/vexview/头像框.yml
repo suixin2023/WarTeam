@@ -1,9 +1,12 @@
 #此组件由VexEdit生成
-x: 487
-y: 38
+x: 2
+y: 90
 
-width: 24
-high: 24
+width: 40
+high: 40
 
-xshow: 24
-yshow: 24
+xshow: 40
+yshow: 40
+#间隔距离
+xinterval: 46
+yinterval: 74
