@@ -27,6 +27,7 @@ public class Message {
     public static String no_team;
     public static String not_allow_out_team;
     public static String not_join_oneTeam;
+    public static String no_more_team;
 
     public static boolean loadMessage( ){
         YamlConfiguration config = WarTeam.getYml("message.yml");
@@ -51,6 +52,7 @@ public class Message {
             no_team = prefix + config.getString("WarTeam.no_team","§c没有战队可以解散");
             not_allow_out_team = prefix + config.getString("WarTeam.not_allow_out_team","§c你不能退出自己的战队");
             not_join_oneTeam = prefix + config.getString("WarTeam.not_join_oneTeam","§c你还没有加入一个战队");
+            no_more_team = prefix + config.getString("WarTeam.no_more_team","§c没有更多的战队了");
             return true;
         }else {
             return true;

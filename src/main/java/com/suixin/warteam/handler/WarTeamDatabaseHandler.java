@@ -75,7 +75,7 @@ public class WarTeamDatabaseHandler {
     }
 
     public static  List<WarTeamEntity> selectWarTeamDataNum(Integer current){
-        String sql = "select * from war_team where status = 1 limit "+current+", 20";
+        String sql = "select * from war_team where status = 1 limit "+current+", 5";
         List<WarTeamEntity> warTeamEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -131,6 +131,23 @@ public class WarTeamDatabaseHandler {
             e.printStackTrace();
         }
         return  warTeamEntity;
+    }
+
+    //查询总页数
+    public static Integer selectTeamCount(){
+        String sql = "select count(*) as datacount from war_team where status = 1";
+        Integer datacount=0;
+        try {
+            ResultSet rst = MysqlUtil.execQuery(sql);
+            rst.next();
+            datacount = rst.getInt("datacount");
+            MysqlUtil.close(rst);
+
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return datacount;
     }
 
     public static  WarTeamEntity selectWarTeamByCreator(String creator){

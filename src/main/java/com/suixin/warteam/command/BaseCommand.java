@@ -34,7 +34,7 @@ public class BaseCommand implements CommandExecutor {
 			if (args.length == 0) {
 				player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 				player.sendMessage("§6●§a/wt open §e打开战队管理");
-				player.sendMessage("§6●§a/wt list §e打开战队列表");
+				player.sendMessage("§6●§a/wt list <页码> §e打开战队列表");
 				player.sendMessage("§6●§a/wt create <战队> §e创建战队!");
 				player.sendMessage("§6●§a/wt join <战队> §e加入一个战队!");
 				player.sendMessage("§6●§a/wt dismiss  §e解散战队!");
@@ -49,8 +49,10 @@ public class BaseCommand implements CommandExecutor {
 			String arg1 = argsList.get(0);
 			if (arg1.equals("open")) {
 				//打开战队
+//				openWarTeam(argsList,player);
 			} else if (arg1.equals("list")) {
 				//打开战队列表
+				warTeamList(argsList,player);
 			} else if (arg1.equals("create")) {
 				//创建战队
 				createWarTeam(argsList,player);
@@ -77,6 +79,67 @@ public class BaseCommand implements CommandExecutor {
 		return true;
 	}
 
+	private void warTeamList ( List<String> argsList,Player player) {
+		if (argsList.size() != 3){
+			player.sendMessage("§c指令不正确");
+			return;
+		}
+		Integer count = WarTeamDatabaseHandler.selectTeamCount();
+		int j = count / 5;
+		int i = count % 5;
+		Integer countnum;
+		if (i == 0) {
+			countnum = j;
+		} else {
+			countnum = j + 1;
+		}
+		if (count < 5) {
+			countnum = 1;
+		}
+		if (argsList.size() == 2) {
+			if (1 > countnum) {
+				player.sendMessage(Message.no_more_team);
+				return;
+			}
+			//查询第一页
+			List<WarTeamEntity> warTeamEntities = WarTeamDatabaseHandler.selectWarTeamDataNum(0);
+			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §e【§a§l战队列表§e】 §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
+			for (WarTeamEntity warTeamEntity : warTeamEntities) {
+				String name = warTeamEntity.getName();
+				String creator = warTeamEntity.getCreator();
+				Integer level = warTeamEntity.getLevel();
+				player.sendMessage("§6●§3战队名:§a" + name + "  §3创建人:§a" + creator + "  §3等级:§6" + level);
+			}
+			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §a§l<页码>  " + 1 + "\\" + countnum + " §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
+			return;
+		}
+		if (argsList.size() == 3) {
+			//获取页数
+			String num = argsList.get(2);
+			Integer limit = 0;
+			try {
+				limit = Integer.valueOf(num);
+			} catch (Exception e) {
+				player.sendMessage("§c页码必须是整数");
+				return;
+			}
+			if (limit > countnum) {
+				player.sendMessage(Message.no_more_team);
+				return;
+			}
+			limit = (limit - 1) * 5;
+			List<WarTeamEntity> warTeamEntities = WarTeamDatabaseHandler.selectWarTeamDataNum(limit);
+			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §e【§a§l对局列表§e】 §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
+			for (WarTeamEntity warTeamEntity : warTeamEntities) {
+				String name = warTeamEntity.getName();
+				String creator = warTeamEntity.getCreator();
+				Integer level = warTeamEntity.getLevel();
+				player.sendMessage("§6●§3战队名:§a" + name + "  §3创建人:§a" + creator + "  §3等级:§6" + level);
+			}
+			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §a§l<页码>  " + num + "\\" + countnum + " §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
+			return;
+		}
+	}
 	private void createWarTeam ( List<String> argsList,Player player) {
 		if (argsList.size() != 2){
 			player.sendMessage("§c指令不正确");

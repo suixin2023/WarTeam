@@ -15,4 +15,5 @@ WarTeam:
   no_team: '§c没有战队可以解散!'
   not_allow_out_team: '§c你不能退出自己的战队'
   not_join_oneTeam: '§c你还没有加入一个战队'
+  no_more_team: '§c没有更多的战队了'
 
