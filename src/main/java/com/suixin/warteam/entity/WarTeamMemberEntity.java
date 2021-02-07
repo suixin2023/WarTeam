@@ -20,6 +20,8 @@ public class WarTeamMemberEntity {
     //有效性
     private Integer status;
     //加入时间
+    private Date joinTime;
+
     private Date created;
     private Date modified;
 
@@ -93,5 +95,13 @@ public class WarTeamMemberEntity {
 
     public void setModified(Date modified) {
         this.modified = modified;
+    }
+
+    public Date getJoinTime() {
+        return joinTime;
+    }
+
+    public void setJoinTime(Date joinTime) {
+        this.joinTime = joinTime;
     }
 }

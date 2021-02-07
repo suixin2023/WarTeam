@@ -19,7 +19,6 @@ import org.bukkit.entity.Player;
 import java.util.*;
 
 public class BaseCommand implements CommandExecutor {
-	YamlConfiguration systemConfig = WarTeam.getSystemConfig();
 	HashMap<Integer, Integer> levelMap = WarTeam.getLevelMap();
 	HashMap<Integer, Integer> maxNumMap = WarTeam.getMaxNumMap();
 	@Override
