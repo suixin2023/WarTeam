@@ -271,10 +271,7 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(warTeamApplyEntity.getWarTeamName());
-		if (!warTeamEntity.getCreator().equals(player.getName())) {
-			player.sendMessage(Message.apply_inexistence);
-			return;
-		}
+
 		WarTeamMemberEntity warTeamMemberEntity = new WarTeamMemberEntity();
 		warTeamMemberEntity.setWarTeamId(warTeamEntity.getId());
 		warTeamMemberEntity.setWarTeamName(warTeamEntity.getName());
