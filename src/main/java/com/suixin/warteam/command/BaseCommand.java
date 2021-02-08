@@ -80,7 +80,7 @@ public class BaseCommand implements CommandExecutor {
 	}
 
 	private void warTeamList ( List<String> argsList,Player player) {
-		if (argsList.size() != 3){
+		if (argsList.size() > 2){
 			player.sendMessage("§c指令不正确");
 			return;
 		}
@@ -96,7 +96,7 @@ public class BaseCommand implements CommandExecutor {
 		if (count < 5) {
 			countnum = 1;
 		}
-		if (argsList.size() == 2) {
+		if (argsList.size() == 1) {
 			if (1 > countnum) {
 				player.sendMessage(Message.no_more_team);
 				return;
@@ -113,9 +113,9 @@ public class BaseCommand implements CommandExecutor {
 			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §a§l<页码>  " + 1 + "\\" + countnum + " §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 			return;
 		}
-		if (argsList.size() == 3) {
+		if (argsList.size() == 2) {
 			//获取页数
-			String num = argsList.get(2);
+			String num = argsList.get(1);
 			Integer limit = 0;
 			try {
 				limit = Integer.valueOf(num);
@@ -129,7 +129,7 @@ public class BaseCommand implements CommandExecutor {
 			}
 			limit = (limit - 1) * 5;
 			List<WarTeamEntity> warTeamEntities = WarTeamDatabaseHandler.selectWarTeamDataNum(limit);
-			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §e【§a§l对局列表§e】 §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
+			player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §e【§a§l战队列表§e】 §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 			for (WarTeamEntity warTeamEntity : warTeamEntities) {
 				String name = warTeamEntity.getName();
 				String creator = warTeamEntity.getCreator();
@@ -186,6 +186,7 @@ public class BaseCommand implements CommandExecutor {
 		warTeamMemberEntity.setCreated(new Date());
 		WarTeamMemBerDatabaseHandler.insert(warTeamMemberEntity);
 		player.sendMessage(Message.create_successful);
+		VaultAPI.removeMoney(player.getName(),amount);
 	}
 
 	private void joinWarTeam ( List<String> argsList,Player player) {

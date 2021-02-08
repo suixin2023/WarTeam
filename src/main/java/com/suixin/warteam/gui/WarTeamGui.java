@@ -156,15 +156,18 @@ public class WarTeamGui {
             VexImage pictureFrameImage = new VexImage(ImageUrlEnum.pictureFrame.getUrl(), pictureFramex, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"));
             VexText nameText = new VexText(namex, namey, Arrays.asList("游戏名："+playerName),0.6);
             VexText expText = new VexText(expx, expy, Arrays.asList("贡献："+exp),0.6);
-            opg.addDynamicComponent(pictureFrameImage);
-            opg.addDynamicComponent(nameText);
-            opg.addDynamicComponent(expText);
-            memBerlist.add(pictureFrameImage);
-            memBerlist.add(nameText);
-            memBerlist.add(expText);
-            list.add(pictureFrameImage);
-            list.add(nameText);
-            list.add(expText);
+            if (opg == null) {
+                list.add(pictureFrameImage);
+                list.add(nameText);
+                list.add(expText);
+            }else {
+                opg.addDynamicComponent(pictureFrameImage);
+                opg.addDynamicComponent(nameText);
+                opg.addDynamicComponent(expText);
+                memBerlist.add(pictureFrameImage);
+                memBerlist.add(nameText);
+                memBerlist.add(expText);
+            }
             pictureFramex = pictureFramex + pictureFrameYml.getInt("high") + pictureFrameYml.getInt("xinterval");
             namex = namex + pictureFrameYml.getInt("high")+ pictureFrameYml.getInt("xinterval");
             expx = expx + pictureFrameYml.getInt("high")+ pictureFrameYml.getInt("xinterval");

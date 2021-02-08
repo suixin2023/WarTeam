@@ -29,7 +29,7 @@ public class WarTeamWindow {
     public static VexGui createGui(Player player,Integer type) {
         VexGui gui = getGui();
         YamlConfiguration shurukuang = VvGuiYml.getShurukuang();
-        final VexColorfulTextField shurukuangTextField = new VexColorfulTextField(shurukuang.getInt("x")+10, shurukuang.getInt("y"), shurukuang.getInt("width"), shurukuang.getInt("high"),11,1,0x00FF3366,0x00663366,"");
+        final VexColorfulTextField shurukuangTextField = new VexColorfulTextField(shurukuang.getInt("x")+10, shurukuang.getInt("y"), shurukuang.getInt("width"), shurukuang.getInt("high"),11,1,0x00FF3366,0x00663366,"请输入");
         //确定键
         YamlConfiguration confirm = VvGuiYml.getConfirm();
         VexButton confirmButton = new VexButton("confirmButton", "", ImageUrlEnum.confirm.getUrl(), ImageUrlEnum.confirm.getUrl(), confirm.getInt("x"), confirm.getInt("y"), confirm.getInt("width"), confirm.getInt("high"), new ButtonFunction() {
@@ -41,6 +41,7 @@ public class WarTeamWindow {
                 }else {
                     player.chat("/wt join "+typedText);
                 }
+                WarTeamGui.openGameLobbyGui(player);
             }
         });
 

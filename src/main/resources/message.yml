@@ -19,5 +19,5 @@ WarTeam:
   not_join_oneTeam: '§c你还没有加入一个战队'
   no_more_team: '§c没有更多的战队了'
   apply_join: '§c该玩家已经加入其他战队'
-  apply_join2: '§e你已经加入了战队：'
+  apply_join2: '§c申请失败！你已经加入了战队：'
 
