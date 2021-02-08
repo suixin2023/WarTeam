@@ -8,6 +8,7 @@ import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.Message;
 import com.suixin.warteam.util.MysqlUtil;
 import com.suixin.warteam.util.VaultAPI;
+import com.suixin.warteam.util.VvGuiYml;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -75,11 +76,10 @@ public class WarTeam extends JavaPlugin {
 			return;
 		}
 		Bukkit.getConsoleSender().sendMessage("§a载入语言文件");
-//		if(!VvGuiYml.loadGui()) {
-//			Bukkit.getConsoleSender().sendMessage("§c载入gui文件异常,请检查");
-//			Bukkit.getPluginManager().disablePlugin(this);
-//			return;
-//		}
+		if(!VvGuiYml.loadGui()) {
+			Bukkit.getConsoleSender().sendMessage("§c载入gui文件异常,请检查");
+			return;
+		}
 		Bukkit.getConsoleSender().sendMessage("§a载入GUI文件");
 		if (player != null) {
 			player.sendMessage("§a重载成功");

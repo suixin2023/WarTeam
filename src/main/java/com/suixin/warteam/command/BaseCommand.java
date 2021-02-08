@@ -4,16 +4,16 @@ import com.suixin.warteam.WarTeam;
 import com.suixin.warteam.entity.WarTeamApplyEntity;
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
+import com.suixin.warteam.gui.WarTeamGui;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.Message;
+import com.suixin.warteam.util.VaultAPI;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -49,7 +49,7 @@ public class BaseCommand implements CommandExecutor {
 			String arg1 = argsList.get(0);
 			if (arg1.equals("open")) {
 				//打开战队
-//				openWarTeam(argsList,player);
+				WarTeamGui.openGameLobbyGui(player);
 			} else if (arg1.equals("list")) {
 				//打开战队列表
 				warTeamList(argsList,player);
@@ -156,6 +156,13 @@ public class BaseCommand implements CommandExecutor {
 			player.sendMessage(Message.team_already_exist);
 			return;
 		}
+		double money = VaultAPI.getMoney(player.getName());
+		Double amount = new Double(WarTeam.getSystemConfig().getString("WarTeam.cost"));
+		if (money < amount) {
+			player.sendMessage(WarTeam.getSystemConfig().getString("WarTeam.prefix") +"§c您没有足够的金币！");
+			return;
+		}
+
 		warTeamEntity.setName(teamName);
 		warTeamEntity.setLevel(1);
 		//一级最大成员数

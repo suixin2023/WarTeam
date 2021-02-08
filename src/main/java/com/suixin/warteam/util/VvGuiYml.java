@@ -9,7 +9,6 @@ public class VvGuiYml {
     private static YamlConfiguration renshu;
     private static YamlConfiguration create;
     private static YamlConfiguration join;
-    private static YamlConfiguration picture;
     private static YamlConfiguration pictureFrame;
     private static YamlConfiguration name;
     private static YamlConfiguration background;
@@ -30,7 +29,6 @@ public class VvGuiYml {
             renshu = WarTeam.getYml("vexview/人数.yml");
             create = WarTeam.getYml("vexview/创建战队.yml");
             join = WarTeam.getYml("vexview/加入战队.yml");
-            picture = WarTeam.getYml("vexview/头像.yml");
             pictureFrame = WarTeam.getYml("vexview/头像框.yml");
             name = WarTeam.getYml("vexview/战队名.yml");
             background = WarTeam.getYml("vexview/背景.yml");
@@ -42,7 +40,6 @@ public class VvGuiYml {
             dissolveTeam = WarTeam.getYml("vexview/解散战队.yml");
             window = WarTeam.getYml("vexview/弹窗.yml");
             shurukuang = WarTeam.getYml("vexview/输入框.yml");
-            confirm = WarTeam.getYml("vexview/确定.yml");
             confirm = WarTeam.getYml("vexview/确定.yml");
             return true;
         }catch (Exception e){
@@ -89,14 +86,6 @@ public class VvGuiYml {
 
     public static void setJoin(YamlConfiguration join) {
         VvGuiYml.join = join;
-    }
-
-    public static YamlConfiguration getPicture() {
-        return picture;
-    }
-
-    public static void setPicture(YamlConfiguration picture) {
-        VvGuiYml.picture = picture;
     }
 
     public static YamlConfiguration getPictureFrame() {

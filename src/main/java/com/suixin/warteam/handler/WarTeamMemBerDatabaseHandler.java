@@ -69,8 +69,8 @@ public class WarTeamMemBerDatabaseHandler {
         }
     }
 
-    public static  List<WarTeamMemberEntity> selectWarTeamMemBerDataNum(Integer current){
-        String sql = "select * from war_team_member where status = 1 limit "+current+", 20";
+    public static  List<WarTeamMemberEntity> selectWarTeamMemBerDataNum(Integer limit, Integer warTeamId){
+        String sql = "select * from war_team_member where status = 1 and war_team_id = "+warTeamId+" limit "+limit+", 20";
         List<WarTeamMemberEntity> warTeamMemberEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
