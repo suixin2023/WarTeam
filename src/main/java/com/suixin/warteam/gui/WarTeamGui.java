@@ -84,7 +84,10 @@ public class WarTeamGui {
                 player.chat("/wt out ");
             }
         });
-        List<VexComponents> vexComponents = memBerList(player, component, 1, warTeamMemberEntity,1);
+        List<VexComponents> vexComponents = new ArrayList<>();
+        if (id != null) {
+            vexComponents = memBerList(player, component, 1, warTeamMemberEntity,1);
+        }
         //上一页
         YamlConfiguration shangyiye = VvGuiYml.getShangyiye();
         VexButton shangyiyeButton = new VexButton("shangyiyeButton", "", ImageUrlEnum.shangyiye.getUrl(), ImageUrlEnum.shangyiye.getUrl(), shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), new ButtonFunction() {

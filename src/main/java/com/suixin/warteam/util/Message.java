@@ -62,7 +62,7 @@ public class Message {
             no_more_team = prefix + config.getString("WarTeam.no_more_team","§c没有更多的战队了");
             apply_join = prefix + config.getString("WarTeam.apply_join","§c该玩家已经加入其他战队");
             apply_join2 = prefix + config.getString("WarTeam.apply_join2","§c申请失败！你已经加入了战队：");
-            no_more_member = prefix + config.getString("WarTeam.no_more_team","§c没有更多的队员了");
+            no_more_member = prefix + config.getString("WarTeam.no_more_member","§c没有更多的队员了");
             return true;
         }else {
             return true;
