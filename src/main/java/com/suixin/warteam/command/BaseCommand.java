@@ -187,6 +187,11 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		String teamName = argsList.get(1);
+		WarTeamMemberEntity warTeamMemberEntity = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
+		if (warTeamMemberEntity.getId() != null) {
+			player.sendMessage(Message.apply_join2+warTeamMemberEntity.getWarTeamName());
+			return;
+		}
 		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(teamName);
 		if (warTeamEntity.getId() == null) {
 			player.sendMessage(Message.team_inexistence);
@@ -265,9 +270,22 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		String userName = argsList.get(1);
+		WarTeamEntity warTeamEntity1 = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+		if (warTeamEntity1.getId() == null) {
+			player.sendMessage(Message.create_first);
+			return;
+		}
 		WarTeamApplyEntity warTeamApplyEntity = WarTeamApplyDatabaseHandler.selectWarTeamApplyByUidAndApply(userName,player.getName());
 		if (warTeamApplyEntity.getId() == null) {
 			player.sendMessage(Message.apply_inexistence);
+			return;
+		}
+		WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(userName);
+		if (warTeamMemberEntity1.getId() != null) {
+			player.sendMessage(Message.apply_join);
+			//玩家加入其他战队后，此申请自动拒绝
+			warTeamApplyEntity.setStatus(2);
+			WarTeamApplyDatabaseHandler.updateUserConfigDataNum(warTeamApplyEntity.getId(),warTeamApplyEntity);
 			return;
 		}
 		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(warTeamApplyEntity.getWarTeamName());
@@ -297,14 +315,22 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		String userName = argsList.get(1);
+		WarTeamEntity warTeamEntity1 = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+		if (warTeamEntity1.getId() == null) {
+			player.sendMessage(Message.create_first);
+			return;
+		}
 		WarTeamApplyEntity warTeamApplyEntity = WarTeamApplyDatabaseHandler.selectWarTeamApplyByUidAndApply(userName,player.getName());
 		if (warTeamApplyEntity.getId() == null) {
 			player.sendMessage(Message.apply_inexistence);
 			return;
 		}
-		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(warTeamApplyEntity.getWarTeamName());
-		if (!warTeamEntity.getCreator().equals(player.getName())) {
-			player.sendMessage(Message.apply_inexistence);
+		WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(userName);
+		if (warTeamMemberEntity1.getId() != null) {
+			player.sendMessage(Message.apply_join);
+			//玩家加入其他战队后，此申请自动拒绝
+			warTeamApplyEntity.setStatus(2);
+			WarTeamApplyDatabaseHandler.updateUserConfigDataNum(warTeamApplyEntity.getId(),warTeamApplyEntity);
 			return;
 		}
 		warTeamApplyEntity.setStatus(2);
