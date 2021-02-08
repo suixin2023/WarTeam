@@ -8,5 +8,5 @@ high: 40
 xshow: 40
 yshow: 40
 #间隔距离
-xinterval: 46
-yinterval: 63
+xinterval: 76
+yinterval: -30

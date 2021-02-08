@@ -70,7 +70,7 @@ public class WarTeamMemBerDatabaseHandler {
     }
 
     public static  List<WarTeamMemberEntity> selectWarTeamMemBerDataNum(Integer limit, Integer warTeamId){
-        String sql = "select * from war_team_member where status = 1 and war_team_id = "+warTeamId+" limit "+limit+", 20";
+        String sql = "select * from war_team_member where status = 1 and war_team_id = "+warTeamId+" limit "+limit+", 14";
         List<WarTeamMemberEntity> warTeamMemberEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -209,7 +209,7 @@ public class WarTeamMemBerDatabaseHandler {
 
     //删除队员
     public static void deleteById(String uid){
-        String sql = "update war_team_member set status = -1 where uid = "+uid;
+        String sql = "update war_team_member set status = -1 where uid = '"+uid+"'";
         try {
             int i = MysqlUtil.execCommand(sql);
         } catch (Exception e) {
