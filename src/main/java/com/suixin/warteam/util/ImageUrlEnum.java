@@ -7,6 +7,8 @@ package com.suixin.warteam.util;
 public enum ImageUrlEnum {
     create("create","创建一个战队.png", "创建一个战队"),
     join("join","加入一个战队.png", "加入一个战队"),
+    kickOut("kickOut","踢出成员.png", "踢出成员"),
+    updateName("updateName","修改战队名.png", "修改战队名"),
     dissolveTeam("dissolveTeam","解散当前战队.png", "解散当前战队"),
     backgroundOfNoTeam("backgroundOfNoTeam","无战队.png", "无战队"),
     confirm("confirm","确定键.png", "确定键"),
@@ -17,6 +19,7 @@ public enum ImageUrlEnum {
     pictureFrame("pictureFrame","战队成员框.png", "战队成员框"),
     creator("creator","战队创建者.png", "战队创建者"),
     window("window","战队名.png", "战队名"),
+    window2("window2","队员名.png", "队员名"),
 
     ;
 

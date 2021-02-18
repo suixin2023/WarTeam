@@ -1,6 +1,8 @@
 WarTeam:
   create_successful: '§a创建成功!'
+  update_successful: '§a修改成功!'
   create_failure: '§c创建失败,战队已存在!'
+  update_failure: '§c修改失败,战队已存在!'
   create_failure_not_enough_money: '§c创建失败,没有足够的钱!创建战队需花费：'
   apply_successful: '§a成功发送加入申请!,请耐心等待管理员审核!'
   apply_failure: '§c已经申请过,请不要重复提交!'
@@ -8,6 +10,7 @@ WarTeam:
   team_full: '§c错误!战队成员已满!'
   team_dissolve: '§e战队已解散!'
   out_successful: '§a退出战队成功!'
+  out_player_successful: '§a踢出战队成功!'
   join_successful: '§a加入战队成功!'
   join_failure: '§c管理员已拒绝,加入战队失败!'
   create_first: '§c请先创建一个战队!'
@@ -17,8 +20,10 @@ WarTeam:
   no_team: '§c没有战队可以解散!'
   not_allow_out_team: '§c你不能退出自己的战队'
   not_join_oneTeam: '§c你还没有加入一个战队'
+  plyer_not_join_oneTeam: '§c该玩家还没有加入一个战队'
   no_more_team: '§c没有更多的战队了'
   apply_join: '§c该玩家已经加入其他战队'
   apply_join2: '§c申请失败！你已经加入了战队：'
   no_more_member: '§c没有更多的队员了'
+  no_permission: '§c无权限,你不是队长'
 

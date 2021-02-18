@@ -1,14 +1,10 @@
 package com.suixin.warteam.gui;
 
-import com.suixin.warteam.WarTeam;
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
-import com.suixin.warteam.util.Component;
-import com.suixin.warteam.util.ImageUrlEnum;
-import com.suixin.warteam.util.Message;
-import com.suixin.warteam.util.VvGuiYml;
+import com.suixin.warteam.util.*;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.OpenedVexGui;
 import lk.vexview.gui.VexGui;
@@ -41,7 +37,7 @@ public class WarTeamGui {
         VexGui gui = getGui();
         //创建战队
         YamlConfiguration create = VvGuiYml.getCreate();
-        VexButton createButton = new VexButton("createButton", "", ImageUrlEnum.create.getUrl(), ImageUrlEnum.create.getUrl(), create.getInt("x"), create.getInt("y"), create.getInt("width"), create.getInt("high"), new ButtonFunction() {
+        VexButton createButton = new VexButton("createButton", "", ImageUrlEnum.create.getUrl(), PImageUrlEnum.create.getUrl(), create.getInt("x"), create.getInt("y"), create.getInt("width"), create.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 WarTeamWindow.openGameLobbyGui(player,1);
@@ -50,8 +46,9 @@ public class WarTeamGui {
         VexText nameText = null;
         VexText renshuText = null;
         VexText levelText = null;
+        WarTeamEntity warTeamEntity = null;
         if (id != null) {
-            WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(warTeamMemberEntity.getWarTeamName());
+            warTeamEntity = WarTeamDatabaseHandler.selectWarTeamById(warTeamMemberEntity.getWarTeamId());
             Integer count = WarTeamMemBerDatabaseHandler.selectCount(warTeamMemberEntity.getWarTeamId());
             YamlConfiguration name = VvGuiYml.getName();
             YamlConfiguration renshu = VvGuiYml.getRenshu();
@@ -62,7 +59,7 @@ public class WarTeamGui {
         }
         //加入战队
         YamlConfiguration join = VvGuiYml.getJoin();
-        VexButton joinButton = new VexButton("joinButton", "", ImageUrlEnum.join.getUrl(), ImageUrlEnum.join.getUrl(), join.getInt("x"), join.getInt("y"), join.getInt("width"), join.getInt("high"), new ButtonFunction() {
+        VexButton joinButton = new VexButton("joinButton", "", ImageUrlEnum.join.getUrl(), PImageUrlEnum.join.getUrl(), join.getInt("x"), join.getInt("y"), join.getInt("width"), join.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 WarTeamWindow.openGameLobbyGui(player,2);
@@ -70,7 +67,7 @@ public class WarTeamGui {
         });
         //解散战队
         YamlConfiguration dissolveTeam = VvGuiYml.getDissolveTeam();
-        VexButton dissolveTeamButton = new VexButton("dissolveTeamButton", "", ImageUrlEnum.dissolveTeam.getUrl(), ImageUrlEnum.dissolveTeam.getUrl(), dissolveTeam.getInt("x"), dissolveTeam.getInt("y"), dissolveTeam.getInt("width"), dissolveTeam.getInt("high"), new ButtonFunction() {
+        VexButton dissolveTeamButton = new VexButton("dissolveTeamButton", "", ImageUrlEnum.dissolveTeam.getUrl(), PImageUrlEnum.dissolveTeam.getUrl(), dissolveTeam.getInt("x"), dissolveTeam.getInt("y"), dissolveTeam.getInt("width"), dissolveTeam.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 player.chat("/wt dismiss ");
@@ -78,7 +75,7 @@ public class WarTeamGui {
         });
         //退出战队
         YamlConfiguration outTeam = VvGuiYml.getOutTeam();
-        VexButton outTeamButton = new VexButton("outTeamButton", "", ImageUrlEnum.outTeam.getUrl(), ImageUrlEnum.outTeam.getUrl(), outTeam.getInt("x"), outTeam.getInt("y"), outTeam.getInt("width"), outTeam.getInt("high"), new ButtonFunction() {
+        VexButton outTeamButton = new VexButton("outTeamButton", "", ImageUrlEnum.outTeam.getUrl(), PImageUrlEnum.outTeam.getUrl(), outTeam.getInt("x"), outTeam.getInt("y"), outTeam.getInt("width"), outTeam.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 player.chat("/wt out ");
@@ -90,7 +87,7 @@ public class WarTeamGui {
         }
         //上一页
         YamlConfiguration shangyiye = VvGuiYml.getShangyiye();
-        VexButton shangyiyeButton = new VexButton("shangyiyeButton", "", ImageUrlEnum.shangyiye.getUrl(), ImageUrlEnum.shangyiye.getUrl(), shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), new ButtonFunction() {
+        VexButton shangyiyeButton = new VexButton("shangyiyeButton", "", ImageUrlEnum.shangyiye.getUrl(), PImageUrlEnum.shangyiye.getUrl(), shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 Component component = WarTeamGui.getUserComponent().get(player.getName());
@@ -104,7 +101,7 @@ public class WarTeamGui {
 
         //下一页
         YamlConfiguration xiayiye = VvGuiYml.getXiayiye();
-        VexButton xiayiyeButton = new VexButton("xiayiyeButton", "", ImageUrlEnum.xiayiye.getUrl(), ImageUrlEnum.xiayiye.getUrl(), xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"), new ButtonFunction() {
+        VexButton xiayiyeButton = new VexButton("xiayiyeButton", "", ImageUrlEnum.xiayiye.getUrl(), PImageUrlEnum.xiayiye.getUrl(), xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
                 Component component = WarTeamGui.getUserComponent().get(player.getName());
@@ -112,14 +109,36 @@ public class WarTeamGui {
                 memBerList(player,component,limit,warTeamMemberEntity,2);
             }
         });
+
+        //修改战队名
+        YamlConfiguration updateName = VvGuiYml.getUpdateName();
+        VexButton updateNameButton = new VexButton("updateNameButton", "", ImageUrlEnum.updateName.getUrl(), PImageUrlEnum.updateName.getUrl(), updateName.getInt("x"), updateName.getInt("y"), updateName.getInt("width"), updateName.getInt("high"), new ButtonFunction() {
+            @Override
+            public void run(Player player) {
+                WarTeamWindow.openGameLobbyGui(player,3);
+            }
+        });
+
+        //踢出战队
+        YamlConfiguration kickOut = VvGuiYml.getKickOut();
+        VexButton kickOutButton = new VexButton("kickOutButton", "", ImageUrlEnum.kickOut.getUrl(), PImageUrlEnum.kickOut.getUrl(), kickOut.getInt("x"), kickOut.getInt("y"), kickOut.getInt("width"), kickOut.getInt("high"), new ButtonFunction() {
+            @Override
+            public void run(Player player) {
+                WarTeamWindow.openGameLobbyGui(player,4);
+            }
+        });
+
         YamlConfiguration backgroundOfNoTeam = VvGuiYml.getBackgroundOfNoTeam();
         VexImage backgroundOfNoTeamImage = new VexImage(ImageUrlEnum.backgroundOfNoTeam.getUrl(),  backgroundOfNoTeam.getInt("x"), backgroundOfNoTeam.getInt("y"), backgroundOfNoTeam.getInt("width"), backgroundOfNoTeam.getInt("high"));
 
-        gui.addComponent(createButton);
-        gui.addComponent(joinButton);
         if (id != null) {
-            gui.addComponent(dissolveTeamButton);
-            gui.addComponent(outTeamButton);
+            if (warTeamMemberEntity.getUid().equals(warTeamEntity.getCreator())) {
+                gui.addComponent(updateNameButton);
+                gui.addComponent(kickOutButton);
+                gui.addComponent(dissolveTeamButton);
+            }else {
+                gui.addComponent(outTeamButton);
+            }
             gui.addComponent(shangyiyeButton);
             gui.addComponent(xiayiyeButton);
             gui.addComponent(nameText);
@@ -131,6 +150,8 @@ public class WarTeamGui {
                 }
             }
         }else {
+            gui.addComponent(createButton);
+            gui.addComponent(joinButton);
             gui.addComponent(backgroundOfNoTeamImage);
         }
         return gui;
@@ -159,7 +180,7 @@ public class WarTeamGui {
         int expy = expYml.getInt("y");
 
         List<WarTeamMemberEntity> warTeamMemberEntities = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerDataNum(limit, warTeamMemberEntity.getWarTeamId());
-        WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(warTeamMemberEntity.getWarTeamName());
+        WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamById(warTeamMemberEntity.getWarTeamId());
         if (warTeamMemberEntities.size() == 0) {
             player.sendMessage(Message.no_more_member);
             return list;

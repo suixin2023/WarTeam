@@ -1,7 +1,7 @@
 package com.suixin.warteam.handler;
 
-import com.suixin.jdbc.util.MysqlUtil;
 import com.suixin.warteam.entity.WarTeamApplyEntity;
+import com.suixin.warteam.util.MysqlUtil;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;

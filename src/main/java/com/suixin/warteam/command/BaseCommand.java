@@ -36,9 +36,11 @@ public class BaseCommand implements CommandExecutor {
 				player.sendMessage("§6●§a/wt open §e打开战队管理");
 				player.sendMessage("§6●§a/wt list <页码> §e打开战队列表");
 				player.sendMessage("§6●§a/wt create <战队> §e创建战队!");
+				player.sendMessage("§6●§a/wt update <战队> §e修改战队名!");
 				player.sendMessage("§6●§a/wt join <战队> §e加入一个战队!");
 				player.sendMessage("§6●§a/wt dismiss  §e解散战队!");
 				player.sendMessage("§6●§a/wt out  §e退出战队!");
+				player.sendMessage("§6●§a/wt out <玩家> §e踢出战队!");
 				player.sendMessage("§6●§a/wt agree <玩家> §e同意玩家加入战队!");
 				player.sendMessage("§6●§a/wt refuse <玩家> §e拒绝玩家加入战队!");
 				player.sendMessage("§6●§a/wt reload §e重载插件!");
@@ -71,7 +73,13 @@ public class BaseCommand implements CommandExecutor {
 			} else if (arg1.equals("refuse")) {
 				//拒绝玩家加入战队!
 				applyNoPassWarTeam(argsList,player);
-			} else if (arg1.equals("reload")) {
+			} else if (arg1.equals("update")) {
+				//修改战队名
+				updateWarTeam(argsList,player);
+			}else if (arg1.equals("out") && argsList.size() == 2) {
+				//踢出战队
+				kickOutPlayer(argsList,player);
+			}else if (arg1.equals("reload")) {
 				//重载插件
 				WarTeam.loadPlugin(player);
 			}
@@ -187,6 +195,78 @@ public class BaseCommand implements CommandExecutor {
 		WarTeamMemBerDatabaseHandler.insert(warTeamMemberEntity);
 		player.sendMessage(Message.create_successful);
 		VaultAPI.removeMoney(player.getName(),amount);
+	}
+
+	private void updateWarTeam ( List<String> argsList,Player player) {
+		if (argsList.size() != 2) {
+			player.sendMessage("§c指令不正确");
+			return;
+		}
+		WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
+		if (warTeamMemberEntity1.getId() == null) {
+			player.sendMessage(Message.not_join_oneTeam);
+			return;
+		}
+		WarTeamEntity warTeamEntity2 = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+		if (warTeamEntity2.getId() == null) {
+			player.sendMessage(Message.no_permission);
+			return;
+		}
+		String teamName = argsList.get(1);
+		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByName(teamName);
+		if (warTeamEntity.getId() != null) {
+			player.sendMessage(Message.update_failure);
+			return;
+		}
+		double money = VaultAPI.getMoney(player.getName());
+		Double amount = new Double(WarTeam.getSystemConfig().getString("WarTeam.update_cost"));
+		if (money < amount) {
+			player.sendMessage(WarTeam.getSystemConfig().getString("WarTeam.prefix") + "§c您没有足够的金币！");
+			return;
+		}
+		WarTeamEntity warTeam = new WarTeamEntity();
+		warTeam.setName(teamName);
+		WarTeamDatabaseHandler.updateUserConfigDataNum(warTeamEntity2.getId(),warTeam);
+
+		List<WarTeamMemberEntity> warTeamMemberEntities = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByWarTeamId(warTeamEntity2.getId());
+		for (WarTeamMemberEntity warTeamMemberEntity : warTeamMemberEntities) {
+			warTeamMemberEntity.setWarTeamName(teamName);
+			WarTeamMemBerDatabaseHandler.updateUserConfigDataNum(warTeamMemberEntity.getId(),warTeamMemberEntity);
+		}
+
+		player.sendMessage(Message.update_successful);
+		VaultAPI.removeMoney(player.getName(),amount);
+	}
+
+	private void kickOutPlayer ( List<String> argsList,Player player) {
+		if (argsList.size() != 2) {
+			player.sendMessage("§c指令不正确");
+			return;
+		}
+		WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
+		if (warTeamMemberEntity1.getId() == null) {
+			player.sendMessage(Message.not_join_oneTeam);
+			return;
+		}
+		WarTeamEntity warTeamEntity2 = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+		if (warTeamEntity2.getId() == null) {
+			player.sendMessage(Message.no_permission);
+			return;
+		}
+		String playerName = argsList.get(1);
+		WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByCreator(playerName);
+		if (warTeamEntity.getId() != null) {
+			player.sendMessage(Message.not_allow_out_team);
+			return;
+		}
+
+		WarTeamMemberEntity warTeamMemberEntity = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(playerName);
+		if (warTeamMemberEntity.getId() == null) {
+			player.sendMessage(Message.plyer_not_join_oneTeam);
+			return;
+		}
+		WarTeamMemBerDatabaseHandler.deleteById(playerName);
+		player.sendMessage(Message.out_player_successful);
 	}
 
 	private void joinWarTeam ( List<String> argsList,Player player) {

@@ -6,6 +6,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class VvGuiYml {
     private static YamlConfiguration shangyiye;
     private static YamlConfiguration xiayiye;
+    private static YamlConfiguration kickOut;
+    private static YamlConfiguration updateName;
     private static YamlConfiguration renshu;
     private static YamlConfiguration create;
     private static YamlConfiguration join;
@@ -26,6 +28,8 @@ public class VvGuiYml {
         try {
             shangyiye = WarTeam.getYml("vexview/上一页.yml");
             xiayiye = WarTeam.getYml("vexview/下一页.yml");
+            kickOut = WarTeam.getYml("vexview/踢人.yml");
+            updateName = WarTeam.getYml("vexview/修改队名.yml");
             renshu = WarTeam.getYml("vexview/人数.yml");
             create = WarTeam.getYml("vexview/创建战队.yml");
             join = WarTeam.getYml("vexview/加入战队.yml");
@@ -182,5 +186,21 @@ public class VvGuiYml {
 
     public static void setConfirm(YamlConfiguration confirm) {
         VvGuiYml.confirm = confirm;
+    }
+
+    public static YamlConfiguration getKickOut() {
+        return kickOut;
+    }
+
+    public static void setKickOut(YamlConfiguration kickOut) {
+        VvGuiYml.kickOut = kickOut;
+    }
+
+    public static YamlConfiguration getUpdateName() {
+        return updateName;
+    }
+
+    public static void setUpdateName(YamlConfiguration updateName) {
+        VvGuiYml.updateName = updateName;
     }
 }

@@ -1,7 +1,7 @@
 package com.suixin.warteam.handler;
 
-import com.suixin.jdbc.util.MysqlUtil;
 import com.suixin.warteam.entity.WarTeamEntity;
+import com.suixin.warteam.util.MysqlUtil;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -132,7 +132,34 @@ public class WarTeamDatabaseHandler {
         }
         return  warTeamEntity;
     }
+    public static  WarTeamEntity selectWarTeamById(Integer id){
+        String sql = "select * from war_team where status = 1 and id =  '"+id+"'";
+        WarTeamEntity warTeamEntity = new WarTeamEntity();
+        try {
+            ResultSet rst = MysqlUtil.execQuery(sql);
+            if (rst != null) {
+                while (rst.next()) {
+                    warTeamEntity.setId(rst.getInt("id"));
+                    warTeamEntity.setUid(rst.getString("uid"));
+                    warTeamEntity.setCreator(rst.getString("creator"));
+                    warTeamEntity.setName(rst.getString("name"));
+                    warTeamEntity.setLevel(rst.getInt("level"));
+                    warTeamEntity.setExpAll(rst.getInt("exp_all"));
+                    warTeamEntity.setExpCurrent(rst.getInt("exp_current"));
+                    warTeamEntity.setMaxMember(rst.getInt("max_member"));
+                    warTeamEntity.setStatus(rst.getInt("status"));
+                    warTeamEntity.setCreated(rst.getDate("created"));
+                    warTeamEntity.setModified(rst.getDate("modified"));
+                }
+            }
 
+            MysqlUtil.close(rst);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  warTeamEntity;
+    }
     //查询总页数
     public static Integer selectTeamCount(){
         String sql = "select count(*) as datacount from war_team where status = 1";

@@ -1,12 +1,12 @@
 package com.suixin.warteam;
 
 import com.google.common.base.Charsets;
-import com.suixin.jdbc.util.MysqlUtil;
 import com.suixin.warteam.command.BaseCommand;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.Message;
+import com.suixin.warteam.util.MysqlUtil;
 import com.suixin.warteam.util.VaultAPI;
 import com.suixin.warteam.util.VvGuiYml;
 import org.bukkit.Bukkit;
