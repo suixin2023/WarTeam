@@ -95,7 +95,7 @@ public class WarTeamApplyDatabaseHandler {
     }
 
     public static  Integer selectCount(Integer warTeamId){
-        String sql = "select count(*) as datacount from war_team_apply where status = 1 and war_team_id = "+warTeamId;
+        String sql = "select count(*) as datacount from war_team_apply where status = 0 and war_team_id = "+warTeamId;
         Integer datacount = 0;
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -136,7 +136,7 @@ public class WarTeamApplyDatabaseHandler {
     }
 
     public static  List<WarTeamApplyEntity> selectWarTeamApplyByWarTeamId(Integer limit, Integer warTeamId){
-        String sql = "select * from war_team_apply where status = 0 and war_team_id = '" +warTeamId+" limit "+limit+", 6";
+        String sql = "select * from war_team_apply where status = 0 and war_team_id = " +warTeamId+" limit "+limit+", 6";
         List<WarTeamApplyEntity> warTeamApplyEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);

@@ -24,7 +24,7 @@ public class ButtonClickListener implements Listener {
         String[] split = id.split("#");
         String applyUserName = null;
         String buttonId = null;
-        if (split.length > 2) {
+        if (split.length > 1) {
             buttonId = split[0];
             applyUserName = split[1];
         }else {

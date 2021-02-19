@@ -108,7 +108,7 @@ public class WarTeamApply {
 
         for (WarTeamApplyEntity warTeamApplyEntity: warTeamApplyEntities) {
             String applyUserName = warTeamApplyEntity.getApply();
-            String apply = warTeamApplyEntity.getApply();
+            String apply = warTeamApplyEntity.getUid();
             VexText nameText = new VexText(nameYml.getInt("x"), nameYmlY, Arrays.asList(apply),1.0);
             VexImage img = new VexImage(ImageUrlEnum.applyModel.getUrl(), applyList.getInt("x"), applyListY, applyList.getInt("width"), applyList.getInt("high"));
             //同意
