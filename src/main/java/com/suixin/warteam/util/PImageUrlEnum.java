@@ -16,10 +16,10 @@ public enum PImageUrlEnum {
     xiayiye("xiayiye","下一页2.png", "下一页"),
     applyShangyiye("applyShangyiye","审批上一页2.png", "审批上一页"),
     applyXiayiye("applyXiayiye","审批下一页2.png", "审批下一页"),
-    applyClose("applyClose","同意2.png", "同意"),
-    applyAgree("applyAgree","不同意2.png", "不同意"),
-    applyRepulse("applyRepulse","关闭按钮2.png", "关闭按钮"),
-    applyButton("applyButton","审批列表2.png", "审批列表"),
+    applyClose("applyClose","关闭按钮2.png", "关闭按钮"),
+    applyAgree("applyAgree","同意2.png", "同意"),
+    applyList("applyRepulse","审批列表2.png", "审批列表"),
+    applyRepulse("applyRepulse","不同意2.png", "不同意"),
     ;
 
     private String id;

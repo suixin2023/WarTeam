@@ -38,6 +38,7 @@ public class Message {
     public static String apply_join;
     public static String apply_join2;
     public static String no_more_member;
+    public static String no_more_apply;
     public static String no_permission;
 
     public static boolean loadMessage( ){
@@ -73,6 +74,7 @@ public class Message {
             apply_join = prefix + config.getString("WarTeam.apply_join","§c该玩家已经加入其他战队");
             apply_join2 = prefix + config.getString("WarTeam.apply_join2","§c申请失败！你已经加入了战队：");
             no_more_member = prefix + config.getString("WarTeam.no_more_member","§c没有更多的队员了");
+            no_more_apply = prefix + config.getString("WarTeam.no_more_apply","§c没有更多的申请了");
             no_permission = prefix + config.getString("WarTeam.no_permission","§c无权限,你不是队长");
             return true;
         }else {

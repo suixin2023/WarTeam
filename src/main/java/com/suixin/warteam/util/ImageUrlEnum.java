@@ -22,12 +22,12 @@ public enum ImageUrlEnum {
     window2("window2","队员名.png", "队员名"),
     applyShangyiye("applyShangyiye","审批上一页.png", "审批上一页"),
     applyXiayiye("applyXiayiye","审批下一页.png", "审批下一页"),
-    applyClose("applyClose","同意.png", "同意"),
-    applyAgree("applyAgree","不同意.png", "不同意"),
-    applyRepulse("applyRepulse","关闭按钮.png", "关闭按钮"),
+    applyClose("applyClose","关闭按钮.png", "关闭按钮"),
+    applyAgree("applyAgree","同意.png", "同意"),
+    applyRepulse("applyRepulse","不同意.png", "不同意"),
     backgroundOfApply("applyRepulse","审批背景.png", "审批背景"),
+    applyList("applyRepulse","审批列表.png", "审批列表"),
     applyModel("applyRepulse","审批组件.png", "审批组件"),
-    applyButton("applyButton","审批列表2.png", "审批列表"),
     ;
 
     private String id;

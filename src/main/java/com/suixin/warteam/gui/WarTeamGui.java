@@ -161,6 +161,18 @@ public class WarTeamGui {
             }
         });
 
+        //审批列表
+        YamlConfiguration applyList = VvGuiYml.getApplyButton();
+        VexButton applyListButton = new VexButton("applyListButton", "", ImageUrlEnum.applyList.getUrl(), PImageUrlEnum.applyList.getUrl(), applyList.getInt("x"), applyList.getInt("y"), applyList.getInt("width"), applyList.getInt("high"), new ButtonFunction() {
+            @Override
+            public void run(Player player) {
+                WarTeamApply.openGameLobbyGui(player,warTeamMemberEntity.getWarTeamId());
+            }
+        });
+        //审批数量
+        YamlConfiguration applyNum = VvGuiYml.getApplyNum();
+        Integer integer = WarTeamApplyDatabaseHandler.selectCount(warTeamMemberEntity.getWarTeamId());
+        VexText applyNumText = new VexText(applyNum.getInt("x"), applyNum.getInt("y"), Arrays.asList(integer.toString()),1.0);
         YamlConfiguration backgroundOfNoTeam = VvGuiYml.getBackgroundOfNoTeam();
         VexImage backgroundOfNoTeamImage = new VexImage(ImageUrlEnum.backgroundOfNoTeam.getUrl(),  backgroundOfNoTeam.getInt("x"), backgroundOfNoTeam.getInt("y"), backgroundOfNoTeam.getInt("width"), backgroundOfNoTeam.getInt("high"));
 
@@ -169,6 +181,8 @@ public class WarTeamGui {
                 gui.addComponent(updateNameButton);
                 gui.addComponent(kickOutButton);
                 gui.addComponent(dissolveTeamButton);
+                gui.addComponent(applyListButton);
+                gui.addComponent(applyNumText);
             }else {
                 gui.addComponent(outTeamButton);
             }

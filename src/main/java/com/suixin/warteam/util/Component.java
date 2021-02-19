@@ -11,6 +11,7 @@ import java.util.List;
 public class Component {
     private Integer current = 1;
     private List<DynamicComponent> memBerlist  = new ArrayList<>();
+    private List<DynamicComponent> applylist  = new ArrayList<>();
     public Integer getCurrent() {
         return current;
     }
@@ -25,5 +26,13 @@ public class Component {
 
     public void setMemBerlist(List<DynamicComponent> memBerlist) {
         this.memBerlist = memBerlist;
+    }
+
+    public List<DynamicComponent> getApplylist() {
+        return applylist;
+    }
+
+    public void setApplylist(List<DynamicComponent> applylist) {
+        this.applylist = applylist;
     }
 }

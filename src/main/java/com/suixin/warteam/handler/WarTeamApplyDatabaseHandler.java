@@ -135,6 +135,34 @@ public class WarTeamApplyDatabaseHandler {
         return  warTeamApplyEntity;
     }
 
+    public static  List<WarTeamApplyEntity> selectWarTeamApplyByWarTeamId(Integer limit, Integer warTeamId){
+        String sql = "select * from war_team_apply where status = 0 and war_team_id = '" +warTeamId+" limit "+limit+", 6";
+        List<WarTeamApplyEntity> warTeamApplyEntitys = new ArrayList<>();
+        try {
+            ResultSet rst = MysqlUtil.execQuery(sql);
+            if (rst != null) {
+                while (rst.next()) {
+                    WarTeamApplyEntity warTeamApplyEntity = new WarTeamApplyEntity();
+                    warTeamApplyEntity.setId(rst.getInt("id"));
+                    warTeamApplyEntity.setUid(rst.getString("uid"));
+                    warTeamApplyEntity.setApply(rst.getString("apply"));
+                    warTeamApplyEntity.setWarTeamId(rst.getInt("war_team_id"));
+                    warTeamApplyEntity.setWarTeamName(rst.getString("war_team_name"));
+                    warTeamApplyEntity.setStatus(rst.getInt("status"));
+                    warTeamApplyEntity.setCreated(rst.getDate("created"));
+                    warTeamApplyEntity.setModified(rst.getDate("modified"));
+                    warTeamApplyEntitys.add(warTeamApplyEntity);
+                }
+            }
+
+            MysqlUtil.close(rst);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  warTeamApplyEntitys;
+    }
+
     public static  WarTeamApplyEntity selectWarTeamApplyByUidAndApply(String uid, String apply){
         String sql = "select * from war_team_apply where status = 0 and uid = '" +uid +"' and apply = '" +apply+"'";
         WarTeamApplyEntity warTeamApplyEntity = new WarTeamApplyEntity();

@@ -12,7 +12,10 @@ public class VvGuiYml {
     private static YamlConfiguration applyAgree;
     private static YamlConfiguration applyRepulse;
     private static YamlConfiguration applyList;
+    private static YamlConfiguration applyNum;
+    private static YamlConfiguration applyButton;
     private static YamlConfiguration applyPlayerName;
+    private static YamlConfiguration applyBackground;
     private static YamlConfiguration kickOut;
     private static YamlConfiguration updateName;
     private static YamlConfiguration renshu;
@@ -41,7 +44,10 @@ public class VvGuiYml {
             applyAgree = WarTeam.getYml("vexview/审批同意.yml");
             applyRepulse = WarTeam.getYml("vexview/审批拒绝.yml");
             applyList = WarTeam.getYml("vexview/审批列表.yml");
+            applyButton = WarTeam.getYml("vexview/审批按钮.yml");
             applyPlayerName = WarTeam.getYml("vexview/审批玩家名.yml");
+            applyBackground = WarTeam.getYml("vexview/审批背景.yml");
+            applyNum = WarTeam.getYml("vexview/审批数量.yml");
             kickOut = WarTeam.getYml("vexview/踢人.yml");
             updateName = WarTeam.getYml("vexview/修改队名.yml");
             renshu = WarTeam.getYml("vexview/人数.yml");
@@ -272,5 +278,29 @@ public class VvGuiYml {
 
     public static void setApplyPlayerName(YamlConfiguration applyPlayerName) {
         VvGuiYml.applyPlayerName = applyPlayerName;
+    }
+
+    public static YamlConfiguration getApplyBackground() {
+        return applyBackground;
+    }
+
+    public static void setApplyBackground(YamlConfiguration applyBackground) {
+        VvGuiYml.applyBackground = applyBackground;
+    }
+
+    public static YamlConfiguration getApplyButton() {
+        return applyButton;
+    }
+
+    public static void setApplyButton(YamlConfiguration applyButton) {
+        VvGuiYml.applyButton = applyButton;
+    }
+
+    public static YamlConfiguration getApplyNum() {
+        return applyNum;
+    }
+
+    public static void setApplyNum(YamlConfiguration applyNum) {
+        VvGuiYml.applyNum = applyNum;
     }
 }
