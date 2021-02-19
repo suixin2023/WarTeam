@@ -5,10 +5,7 @@ import com.suixin.warteam.command.BaseCommand;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
-import com.suixin.warteam.util.Message;
-import com.suixin.warteam.util.MysqlUtil;
-import com.suixin.warteam.util.VaultAPI;
-import com.suixin.warteam.util.VvGuiYml;
+import com.suixin.warteam.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -57,6 +54,9 @@ public class WarTeam extends JavaPlugin {
 		}
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"==================[WarTeam]==================");
 		loadPlugin(null);
+		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+			new SomeExpansion(this).register();
+		}
 	}
 	// 加载配置
 	public static void loadPlugin(Player player) {

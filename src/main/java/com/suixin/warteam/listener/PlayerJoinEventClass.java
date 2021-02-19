@@ -73,10 +73,6 @@ public final class PlayerJoinEventClass implements Listener {
         }
     }
 
-    private  void sda(){
-
-    }
-
     public static long getDatePoor(long endDate, long nowDate) {
         long nd = 1000 * 24 * 60 * 60;
         long nh = 1000 * 60 * 60;

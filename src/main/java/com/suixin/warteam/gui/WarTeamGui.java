@@ -2,6 +2,7 @@ package com.suixin.warteam.gui;
 
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
+import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.*;
@@ -9,6 +10,7 @@ import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.OpenedVexGui;
 import lk.vexview.gui.VexGui;
 import lk.vexview.gui.components.*;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -70,7 +72,24 @@ public class WarTeamGui {
         VexButton dissolveTeamButton = new VexButton("dissolveTeamButton", "", ImageUrlEnum.dissolveTeam.getUrl(), PImageUrlEnum.dissolveTeam.getUrl(), dissolveTeam.getInt("x"), dissolveTeam.getInt("y"), dissolveTeam.getInt("width"), dissolveTeam.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                player.chat("/wt dismiss ");
+                WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+                if (warTeamEntity.getId() == null) {
+                    player.sendMessage(Message.no_team);
+                    return;
+                }
+                WarTeamDatabaseHandler.deleteById(warTeamEntity.getId());
+                List<WarTeamMemberEntity> warTeamMemberEntities = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByWarTeamId(warTeamEntity.getId());
+                for (WarTeamMemberEntity warTeamMemberEntity : warTeamMemberEntities) {
+                    String uid = warTeamMemberEntity.getUid();
+                    Player addressee = Bukkit.getServer().getPlayer(uid);
+                    if (addressee != null) {
+                        addressee.sendMessage(Message.team_dissolve);
+                    }
+                }
+                WarTeamMemBerDatabaseHandler.deleteAll(warTeamEntity.getId());
+                WarTeamApplyDatabaseHandler.deleteAll(warTeamEntity.getId());
+                player.closeInventory();
+                player.chat("/wt open ");
             }
         });
         //退出战队
@@ -78,7 +97,21 @@ public class WarTeamGui {
         VexButton outTeamButton = new VexButton("outTeamButton", "", ImageUrlEnum.outTeam.getUrl(), PImageUrlEnum.outTeam.getUrl(), outTeam.getInt("x"), outTeam.getInt("y"), outTeam.getInt("width"), outTeam.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                player.chat("/wt out ");
+                WarTeamEntity warTeamEntity = WarTeamDatabaseHandler.selectWarTeamByCreator(player.getName());
+                if (warTeamEntity.getId() != null) {
+                    player.sendMessage(Message.not_allow_out_team);
+                    return;
+                }
+
+                WarTeamMemberEntity warTeamMemberEntity = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
+                if (warTeamMemberEntity.getId() == null) {
+                    player.sendMessage(Message.not_join_oneTeam);
+                    return;
+                }
+                WarTeamMemBerDatabaseHandler.deleteById(player.getName());
+                player.sendMessage(Message.out_successful);
+                player.closeInventory();
+                player.chat("/wt open ");
             }
         });
         List<VexComponents> vexComponents = new ArrayList<>();
