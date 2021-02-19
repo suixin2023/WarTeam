@@ -30,6 +30,7 @@ public class BaseCommand implements CommandExecutor {
 			sender.sendMessage("错误，这是一个玩家指令!");
 			return true;
 		}
+		boolean op = player.isOp();
 		if (cmd.getName().equalsIgnoreCase("wt")) {
 			if (args.length == 0) {
 				player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
@@ -43,7 +44,9 @@ public class BaseCommand implements CommandExecutor {
 				player.sendMessage("§6●§a/wt out <玩家> §e踢出战队!");
 				player.sendMessage("§6●§a/wt agree <玩家> §e同意玩家加入战队!");
 				player.sendMessage("§6●§a/wt refuse <玩家> §e拒绝玩家加入战队!");
-				player.sendMessage("§6●§a/wt reload §e重载插件!");
+				if (op) {
+					player.sendMessage("§6●§a/wt reload §e重载插件!");
+				}
 				player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 				return true;
 			}
@@ -80,6 +83,9 @@ public class BaseCommand implements CommandExecutor {
 				//踢出战队
 				kickOutPlayer(argsList,player);
 			}else if (arg1.equals("reload")) {
+				if (!op) {
+					player.sendMessage("§c无权限");
+				}
 				//重载插件
 				WarTeam.loadPlugin(player);
 			}
