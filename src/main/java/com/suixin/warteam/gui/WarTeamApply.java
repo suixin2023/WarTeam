@@ -107,18 +107,17 @@ public class WarTeamApply {
         }
 
         for (WarTeamApplyEntity warTeamApplyEntity: warTeamApplyEntities) {
-            String applyUserName = warTeamApplyEntity.getApply();
             String apply = warTeamApplyEntity.getUid();
             VexText nameText = new VexText(nameYml.getInt("x"), nameYmlY, Arrays.asList(apply),1.0);
             VexImage img = new VexImage(ImageUrlEnum.applyModel.getUrl(), applyList.getInt("x"), applyListY, applyList.getInt("width"), applyList.getInt("high"));
             //同意
-            VexButton applyAgreeButton = new VexButton("applyAgreeButton#"+applyUserName, "", ImageUrlEnum.applyAgree.getUrl(), PImageUrlEnum.applyAgree.getUrl(), applyAgree.getInt("x"), applyAgreeY, applyAgree.getInt("width"), applyAgree.getInt("high"), new ButtonFunction() {
+            VexButton applyAgreeButton = new VexButton("applyAgreeButton#"+apply, "", ImageUrlEnum.applyAgree.getUrl(), PImageUrlEnum.applyAgree.getUrl(), applyAgree.getInt("x"), applyAgreeY, applyAgree.getInt("width"), applyAgree.getInt("high"), new ButtonFunction() {
                 @Override
                 public void run(Player player) {
                 }
             });
             //不同意
-            VexButton applyRepulseButton = new VexButton("applyRepulseButton#"+applyUserName, "", ImageUrlEnum.applyRepulse.getUrl(), PImageUrlEnum.applyRepulse.getUrl(), applyRepulse.getInt("x"), applyRepulseY, applyRepulse.getInt("width"), applyRepulse.getInt("high"), new ButtonFunction() {
+            VexButton applyRepulseButton = new VexButton("applyRepulseButton#"+apply, "", ImageUrlEnum.applyRepulse.getUrl(), PImageUrlEnum.applyRepulse.getUrl(), applyRepulse.getInt("x"), applyRepulseY, applyRepulse.getInt("width"), applyRepulse.getInt("high"), new ButtonFunction() {
                 @Override
                 public void run(Player player) {
                 }
@@ -143,9 +142,9 @@ public class WarTeamApply {
                 applylist.add(applyRepulseButton);
                 applylist.add(img);
             }
-            applyAgreeY = applyAgreeY + applyAgree.getInt("high") + 3;
-            applyRepulseY = applyRepulseY + applyRepulse.getInt("high")+ 3;
-            nameYmlY = nameYmlY + nameYml.getInt("high")+ 3;
+            applyAgreeY = applyAgreeY + applyList.getInt("high") + 3;
+            applyRepulseY = applyRepulseY + applyList.getInt("high")+ 3;
+            nameYmlY = nameYmlY + applyList.getInt("high")+ 3;
             applyListY = applyListY + applyList.getInt("high")+ 3;
         }
 
