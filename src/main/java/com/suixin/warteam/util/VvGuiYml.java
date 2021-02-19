@@ -6,6 +6,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class VvGuiYml {
     private static YamlConfiguration shangyiye;
     private static YamlConfiguration xiayiye;
+    private static YamlConfiguration applyShangyiye;
+    private static YamlConfiguration applyXiayiye;
+    private static YamlConfiguration applyClose;
+    private static YamlConfiguration applyAgree;
+    private static YamlConfiguration applyRepulse;
+    private static YamlConfiguration applyList;
+    private static YamlConfiguration applyPlayerName;
     private static YamlConfiguration kickOut;
     private static YamlConfiguration updateName;
     private static YamlConfiguration renshu;
@@ -28,6 +35,13 @@ public class VvGuiYml {
         try {
             shangyiye = WarTeam.getYml("vexview/上一页.yml");
             xiayiye = WarTeam.getYml("vexview/下一页.yml");
+            applyShangyiye = WarTeam.getYml("vexview/审批上一页.yml");
+            applyXiayiye = WarTeam.getYml("vexview/审批下一页.yml");
+            applyClose = WarTeam.getYml("vexview/审批关闭.yml");
+            applyAgree = WarTeam.getYml("vexview/审批同意.yml");
+            applyRepulse = WarTeam.getYml("vexview/审批拒绝.yml");
+            applyList = WarTeam.getYml("vexview/审批列表.yml");
+            applyPlayerName = WarTeam.getYml("vexview/审批玩家名.yml");
             kickOut = WarTeam.getYml("vexview/踢人.yml");
             updateName = WarTeam.getYml("vexview/修改队名.yml");
             renshu = WarTeam.getYml("vexview/人数.yml");
@@ -202,5 +216,61 @@ public class VvGuiYml {
 
     public static void setUpdateName(YamlConfiguration updateName) {
         VvGuiYml.updateName = updateName;
+    }
+
+    public static YamlConfiguration getApplyShangyiye() {
+        return applyShangyiye;
+    }
+
+    public static void setApplyShangyiye(YamlConfiguration applyShangyiye) {
+        VvGuiYml.applyShangyiye = applyShangyiye;
+    }
+
+    public static YamlConfiguration getApplyXiayiye() {
+        return applyXiayiye;
+    }
+
+    public static void setApplyXiayiye(YamlConfiguration applyXiayiye) {
+        VvGuiYml.applyXiayiye = applyXiayiye;
+    }
+
+    public static YamlConfiguration getApplyClose() {
+        return applyClose;
+    }
+
+    public static void setApplyClose(YamlConfiguration applyClose) {
+        VvGuiYml.applyClose = applyClose;
+    }
+
+    public static YamlConfiguration getApplyAgree() {
+        return applyAgree;
+    }
+
+    public static void setApplyAgree(YamlConfiguration applyAgree) {
+        VvGuiYml.applyAgree = applyAgree;
+    }
+
+    public static YamlConfiguration getApplyRepulse() {
+        return applyRepulse;
+    }
+
+    public static void setApplyRepulse(YamlConfiguration applyRepulse) {
+        VvGuiYml.applyRepulse = applyRepulse;
+    }
+
+    public static YamlConfiguration getApplyList() {
+        return applyList;
+    }
+
+    public static void setApplyList(YamlConfiguration applyList) {
+        VvGuiYml.applyList = applyList;
+    }
+
+    public static YamlConfiguration getApplyPlayerName() {
+        return applyPlayerName;
+    }
+
+    public static void setApplyPlayerName(YamlConfiguration applyPlayerName) {
+        VvGuiYml.applyPlayerName = applyPlayerName;
     }
 }

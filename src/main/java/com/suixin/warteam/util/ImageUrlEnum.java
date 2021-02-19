@@ -20,7 +20,14 @@ public enum ImageUrlEnum {
     creator("creator","战队创建者.png", "战队创建者"),
     window("window","战队名.png", "战队名"),
     window2("window2","队员名.png", "队员名"),
-
+    applyShangyiye("applyShangyiye","审批上一页.png", "审批上一页"),
+    applyXiayiye("applyXiayiye","审批下一页.png", "审批下一页"),
+    applyClose("applyClose","同意.png", "同意"),
+    applyAgree("applyAgree","不同意.png", "不同意"),
+    applyRepulse("applyRepulse","关闭按钮.png", "关闭按钮"),
+    backgroundOfApply("applyRepulse","审批背景.png", "审批背景"),
+    applyModel("applyRepulse","审批组件.png", "审批组件"),
+    applyButton("applyButton","审批列表2.png", "审批列表"),
     ;
 
     private String id;
