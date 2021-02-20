@@ -3,6 +3,7 @@ package com.suixin.warteam.listener;
 import com.suixin.warteam.entity.WarTeamApplyEntity;
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
+import com.suixin.warteam.gui.WarTeamApply;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
@@ -60,6 +61,7 @@ public class ButtonClickListener implements Listener {
                 addressee.sendMessage(Message.join_successful);
             }
             player.sendMessage(Message.apply_pass);
+            WarTeamApply.openGameLobbyGui(player,warTeamApplyEntity.getWarTeamId());
         }else {
 
             WarTeamApplyEntity warTeamApplyEntity = WarTeamApplyDatabaseHandler.selectWarTeamApplyByUidAndApply(applyUserName,player.getName());
@@ -78,6 +80,7 @@ public class ButtonClickListener implements Listener {
                 addressee.sendMessage(Message.join_failure);
             }
             player.sendMessage(Message.apply_nopass);
+            WarTeamApply.openGameLobbyGui(player,warTeamApplyEntity.getWarTeamId());
         }
 
     }
