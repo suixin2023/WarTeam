@@ -1,5 +1,6 @@
 package com.suixin.warteam.util;
 
+import com.suixin.warteam.WarTeam;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.*;
@@ -53,7 +54,7 @@ public class MysqlUtil {
         ResultSet rstSet = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                MysqlUtil.openConnection(WarTeam.getSystemConfig());
             }
             Statement stmt = conn.createStatement();
             rstSet = stmt.executeQuery(sql);
@@ -84,7 +85,7 @@ public class MysqlUtil {
         ResultSet rst = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                MysqlUtil.openConnection(WarTeam.getSystemConfig());
             }
 
             Statement stmt = conn.createStatement();
@@ -104,7 +105,7 @@ public class MysqlUtil {
         PreparedStatement pstmt = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                MysqlUtil.openConnection(WarTeam.getSystemConfig());
             }
             pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 
@@ -127,7 +128,7 @@ public class MysqlUtil {
         int flag = 0;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                MysqlUtil.openConnection(WarTeam.getSystemConfig());
             }
             Statement stmt = conn.createStatement();
             flag = stmt.executeUpdate(sql);
@@ -179,7 +180,7 @@ public void callStordProc(String sql, Object[] inParams, SqlParameter[] outParam
         PreparedStatement pstmt = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                MysqlUtil.openConnection(WarTeam.getSystemConfig());
             }
             pstmt = conn.prepareStatement(psql);
         } catch (SQLException e) {
