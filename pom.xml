@@ -81,7 +81,7 @@
 				<configuration>
 					<!-- 指定打包的jar包输出路径-->
 					<outputDirectory>
-<!--						F:\BaiduNetdiskDownload\Spigot-1.12.2\plugins-->
+						F:\BaiduNetdiskDownload\Spigot-1.12.2\plugins
 <!--						K:\1.11.2 - 开发版\plugins-->
 					</outputDirectory>
 				</configuration>
@@ -142,11 +142,11 @@
 			</systemPath>
 		</dependency>
 		<dependency>
-			<groupId>suixin.mysql</groupId>
-			<artifactId>MysqlApi</artifactId>
-			<version>5.5.0</version>
+			<groupId>suixin.dragoncore</groupId>
+			<artifactId>DragonCore</artifactId>
+			<version>2.3.5</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/MysqlApi.jar
+			<systemPath>${project.basedir}/lib/DragonCore-2.3.5.jar
 			</systemPath>
 		</dependency>
 	</dependencies>

@@ -2,6 +2,7 @@ package com.suixin.warteam;
 
 import com.google.common.base.Charsets;
 import com.suixin.warteam.command.BaseCommand;
+import com.suixin.warteam.command.TestCommand;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
@@ -32,6 +33,7 @@ public class WarTeam extends JavaPlugin {
 		instance = this;
 		//初始化配置文件
 		getCommand("wt").setExecutor(new BaseCommand());
+		getCommand("test").setExecutor(new TestCommand());
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"==================[WarTeam]==================");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"第一次运行，请先检查配置文件");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"作者QQ：2469012478");

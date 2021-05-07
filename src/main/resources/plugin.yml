@@ -10,6 +10,9 @@ commands:
   wt:
     description: 游戏指令
     usage: /wt
+  test:
+    description: 游戏指令
+    usage: /test
 permissions:
   warteam.tn:
     description: Allows you to use tn

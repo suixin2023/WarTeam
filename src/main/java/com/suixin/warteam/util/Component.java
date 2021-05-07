@@ -1,17 +1,18 @@
 package com.suixin.warteam.util;
 
+import eos.moe.dragoncore.api.easygui.component.EasyComponent;
 import lk.vexview.gui.components.DynamicComponent;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 玩家vv组件对象缓存
+ * 玩家龙核组件对象缓存
  */
 public class Component {
     private Integer current = 1;
-    private List<DynamicComponent> memBerlist  = new ArrayList<>();
-    private List<DynamicComponent> applylist  = new ArrayList<>();
+    private List<EasyComponent> memBerlist  = new ArrayList<>();
+    private List<EasyComponent> applylist  = new ArrayList<>();
     public Integer getCurrent() {
         return current;
     }
@@ -20,19 +21,19 @@ public class Component {
         this.current = current;
     }
 
-    public List<DynamicComponent> getMemBerlist() {
+    public List<EasyComponent> getMemBerlist() {
         return memBerlist;
     }
 
-    public void setMemBerlist(List<DynamicComponent> memBerlist) {
+    public void setMemBerlist(List<EasyComponent> memBerlist) {
         this.memBerlist = memBerlist;
     }
 
-    public List<DynamicComponent> getApplylist() {
+    public List<EasyComponent> getApplylist() {
         return applylist;
     }
 
-    public void setApplylist(List<DynamicComponent> applylist) {
+    public void setApplylist(List<EasyComponent> applylist) {
         this.applylist = applylist;
     }
 }
