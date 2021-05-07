@@ -42,15 +42,15 @@ public class WarTeamApply {
             }
         });
         List<VexComponents> vexComponents = new ArrayList<>();
-        Map<String, Component> userComponent = WarTeamGui.getUserComponent();
-        Component component = userComponent.get(player.getName());
+        Map<String, Component2> userComponent = WarTeamGui.getUserComponent();
+        Component2 component = userComponent.get(player.getName());
         vexComponents = applyList(player, component, 1, warTeamId,1);
         //上一页
         YamlConfiguration shangyiye = VvGuiYml.getApplyShangyiye();
         VexButton shangyiyeButton = new VexButton("shangyiyeButton", "", ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl(), shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                Component component = WarTeamGui.getUserComponent().get(player.getName());
+                Component2 component = WarTeamGui.getUserComponent().get(player.getName());
                 Integer currentPage = component.getCurrent();
                 if (currentPage == 1) {
                     return;
@@ -64,7 +64,7 @@ public class WarTeamApply {
         VexButton xiayiyeButton = new VexButton("xiayiyeButton", "", ImageUrlEnum.applyXiayiye.getUrl(), PImageUrlEnum.applyXiayiye.getUrl(), xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                Component component = WarTeamGui.getUserComponent().get(player.getName());
+                Component2 component = WarTeamGui.getUserComponent().get(player.getName());
                 Integer limit = component.getCurrent() + 1;
                 applyList(player,component,limit,warTeamId,2);
             }
@@ -81,7 +81,7 @@ public class WarTeamApply {
         return gui;
     }
 
-    private static List<VexComponents> applyList(Player player, Component component, Integer limit,Integer warTeamId,Integer type) {
+    private static List<VexComponents> applyList(Player player, Component2 component, Integer limit,Integer warTeamId,Integer type) {
         List<VexComponents> list = new ArrayList<>();
         int currentPage = limit;
         //获取页数
@@ -150,7 +150,7 @@ public class WarTeamApply {
 
         component.setCurrent(currentPage);
         component.setApplylist(applylist);
-        Map<String, Component> userComponent = WarTeamGui.getUserComponent();
+        Map<String, Component2> userComponent = WarTeamGui.getUserComponent();
         userComponent.put(player.getName(),component);
         return list;
     }

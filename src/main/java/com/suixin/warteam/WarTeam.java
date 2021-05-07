@@ -7,6 +7,7 @@ import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.listener.ButtonClickListener;
+import com.suixin.warteam.listener.EasyButtonClickListener;
 import com.suixin.warteam.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,6 +55,7 @@ public class WarTeam extends JavaPlugin {
 //				Bukkit.getPluginManager().registerEvents(new VvEventListener(),this);
 			//按键事件
 			Bukkit.getPluginManager().registerEvents(new ButtonClickListener(),this);
+			Bukkit.getPluginManager().registerEvents(new EasyButtonClickListener(),this);
 		}else {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW+"未找到VexView，插件将无法正常运行");
 		}

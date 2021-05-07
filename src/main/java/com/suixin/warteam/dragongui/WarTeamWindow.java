@@ -3,7 +3,6 @@ package com.suixin.warteam.dragongui;
 import com.suixin.warteam.WarTeam;
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
-import com.suixin.warteam.gui.WarTeamGui;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.*;
@@ -26,8 +25,7 @@ public class WarTeamWindow {
             url =  ImageUrlEnum.window.getUrl();
         }
         YamlConfiguration window = VvGuiYml.getWindow();
-        EasyScreen gui = new EasyScreen(url, window.getInt("x"), window.getInt("y"));
-        return gui;
+        return new EasyScreen(url, window.getInt("width"), window.getInt("high"));
     }
 
     //打开GUI
@@ -37,21 +35,21 @@ public class WarTeamWindow {
     }
 
     //创建VV组件
-    public static EasyScreen createGui(Player player,Integer type) {
-        EasyScreen gui = getGui(type);
+    public static EasyScreen createGui(Player player,Integer type1) {
+        EasyScreen gui = getGui(type1);
         YamlConfiguration shurukuang = VvGuiYml.getShurukuang();
         final EasyTextField shurukuangTextField = new EasyTextField(shurukuang.getInt("x"), shurukuang.getInt("y"), shurukuang.getInt("width"), "请输入");
         //确定键
         YamlConfiguration confirm = VvGuiYml.getConfirm();
         EasyButton confirmButton = new EasyButton( confirm.getInt("x"), confirm.getInt("y"), confirm.getInt("width"), confirm.getInt("high"),  ImageUrlEnum.confirm.getUrl(), PImageUrlEnum.confirm.getUrl()) {
             @Override
-            public void onClick(Player player, Type type2) {
+            public void onClick(Player player, Type type) {
                 String typedText = shurukuangTextField.getText();
-                if (type == 1){
+                if (type1 == 1){
                     player.chat("/wt create "+typedText);
-                }else if (type == 2){
+                }else if (type1 == 2){
                     player.chat("/wt join "+typedText);
-                }else if (type == 3){
+                }else if (type1 == 3){
                     WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
                     if (warTeamMemberEntity1.getId() == null) {
                         player.sendMessage(Message.not_join_oneTeam);

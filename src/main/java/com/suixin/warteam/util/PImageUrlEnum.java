@@ -41,6 +41,6 @@ public enum PImageUrlEnum {
     }
 
     public String getUrl() {
-        return "[local]warteam/"+url;
+        return "warteam/"+url;
     }
 }

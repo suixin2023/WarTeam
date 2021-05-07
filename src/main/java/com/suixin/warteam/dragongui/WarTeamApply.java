@@ -1,7 +1,6 @@
 package com.suixin.warteam.dragongui;
 
 import com.suixin.warteam.entity.WarTeamApplyEntity;
-import com.suixin.warteam.gui.WarTeamGui;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.listener.EasyButtonClickListener;
 import com.suixin.warteam.util.*;
@@ -21,7 +20,7 @@ public class WarTeamApply {
     //创建GUI
     public static EasyScreen getGui() {
         YamlConfiguration window = VvGuiYml.getApplyBackground();
-        return new EasyScreen(ImageUrlEnum.backgroundOfApply.getUrl(), window.getInt("x"), window.getInt("y"));
+        return new EasyScreen(ImageUrlEnum.backgroundOfApply.getUrl(), window.getInt("width"), window.getInt("high"));
     }
 
     //打开GUI
@@ -136,8 +135,8 @@ public class WarTeamApply {
                 applylist.add(img);
             }else {
                 components.put("nameText",nameText);
-                components.put("applyAgreeButton",applyAgreeButton);
-                components.put("applyRepulseButton",applyRepulseButton);
+                components.put("applyAgreeButton#"+apply,applyAgreeButton);
+                components.put("applyRepulseButton"+apply,applyRepulseButton);
                 components.put("img",img);
                 applylist.add(nameText);
                 applylist.add(applyAgreeButton);

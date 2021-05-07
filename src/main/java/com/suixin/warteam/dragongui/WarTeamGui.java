@@ -2,8 +2,6 @@ package com.suixin.warteam.dragongui;
 
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
-import com.suixin.warteam.gui.WarTeamApply;
-import com.suixin.warteam.gui.WarTeamWindow;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
@@ -43,6 +41,8 @@ public class WarTeamGui {
         EasyButton createButton = new EasyButton(create.getInt("x"), create.getInt("y"), create.getInt("width"), create.getInt("high"), ImageUrlEnum.create.getUrl(), PImageUrlEnum.create.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                openedScreen.onClose(player);
                 WarTeamWindow.openGameLobbyGui(player, 1);
             }
         };
@@ -65,6 +65,8 @@ public class WarTeamGui {
         EasyButton joinButton = new EasyButton(join.getInt("x"), join.getInt("y"), join.getInt("width"), join.getInt("high"),ImageUrlEnum.join.getUrl(), PImageUrlEnum.join.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                openedScreen.onClose(player);
                 WarTeamWindow.openGameLobbyGui(player,2);
             }
         };
@@ -167,6 +169,8 @@ public class WarTeamGui {
         EasyButton applyListButton = new EasyButton(applyList.getInt("x"), applyList.getInt("y"), applyList.getInt("width"), applyList.getInt("high"),ImageUrlEnum.applyList.getUrl(), PImageUrlEnum.applyList.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                openedScreen.onClose(player);
                 WarTeamApply.openGameLobbyGui(player,warTeamMemberEntity.getWarTeamId());
             }
         };

@@ -49,6 +49,6 @@ public enum ImageUrlEnum {
     }
 
     public String getUrl() {
-        return "[local]warteam/"+url;
+        return "warteam/"+url;
     }
 }

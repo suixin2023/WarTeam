@@ -6,6 +6,7 @@ import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
 import com.suixin.warteam.util.*;
+import eos.moe.dragoncore.api.easygui.EasyScreen;
 import lk.vexview.api.VexViewAPI;
 import lk.vexview.gui.OpenedVexGui;
 import lk.vexview.gui.VexGui;
@@ -18,7 +19,7 @@ import java.util.*;
 
 
 public class WarTeamGui {
-    private static Map<String, Component> userComponent = new HashMap<>();
+    private static Map<String, Component2> userComponent = new HashMap<>();
     //创建GUI
     public static VexGui getGui() {
         YamlConfiguration mainGui = VvGuiYml.getBackground();
@@ -32,7 +33,7 @@ public class WarTeamGui {
 
     //创建VV组件
     public static VexGui createLhdGui(Player player) {
-        Component component = new Component();
+        Component2 component = new Component2();
         userComponent.put(player.getName(),component);
         WarTeamMemberEntity warTeamMemberEntity = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(player.getName());
         Integer id = warTeamMemberEntity.getId();
@@ -123,7 +124,7 @@ public class WarTeamGui {
         VexButton shangyiyeButton = new VexButton("shangyiyeButton", "", ImageUrlEnum.shangyiye.getUrl(), PImageUrlEnum.shangyiye.getUrl(), shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                Component component = WarTeamGui.getUserComponent().get(player.getName());
+                Component2 component = WarTeamGui.getUserComponent().get(player.getName());
                 Integer currentPage = component.getCurrent();
                 if (currentPage == 1) {
                     return;
@@ -137,7 +138,7 @@ public class WarTeamGui {
         VexButton xiayiyeButton = new VexButton("xiayiyeButton", "", ImageUrlEnum.xiayiye.getUrl(), PImageUrlEnum.xiayiye.getUrl(), xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"), new ButtonFunction() {
             @Override
             public void run(Player player) {
-                Component component = WarTeamGui.getUserComponent().get(player.getName());
+                Component2 component = WarTeamGui.getUserComponent().get(player.getName());
                 Integer limit = component.getCurrent() + 1;
                 memBerList(player,component,limit,warTeamMemberEntity,2);
             }
@@ -204,7 +205,7 @@ public class WarTeamGui {
         return gui;
     }
 
-    private static List<VexComponents> memBerList(Player player, Component component, Integer limit,WarTeamMemberEntity warTeamMemberEntity,Integer type) {
+    private static List<VexComponents> memBerList(Player player, Component2 component, Integer limit,WarTeamMemberEntity warTeamMemberEntity,Integer type) {
         List<VexComponents> list = new ArrayList<>();
         int currentPage = limit;
         //获取页数
@@ -283,11 +284,11 @@ public class WarTeamGui {
         return list;
     }
 
-    public static Map<String, Component> getUserComponent() {
+    public static Map<String, Component2> getUserComponent() {
         return userComponent;
     }
 
-    public static void setUserComponent(Map<String, Component> userComponent) {
+    public static void setUserComponent(Map<String, Component2> userComponent) {
         WarTeamGui.userComponent = userComponent;
     }
 }

@@ -20,9 +20,8 @@ import java.util.Date;
 
 public class EasyButtonClickListener implements Listener {
     @EventHandler
-    public void buttonClick(CustomPacketEvent e){
-        VexButton button = e.getPlayer();
-        String id = (String) button.getId();
+    public void buttonClick(CustomPacketEvent event){
+        String id = event.getIdentifier();
         String[] split = id.split("#");
         String applyUserName = null;
         String buttonId = null;
@@ -32,7 +31,7 @@ public class EasyButtonClickListener implements Listener {
         }else {
             return;
         }
-        Player player = e.getPlayer();
+        Player player = event.getPlayer();
         if (buttonId.equals("applyAgreeButton")) {
             WarTeamApplyEntity warTeamApplyEntity = WarTeamApplyDatabaseHandler.selectWarTeamApplyByUidAndApply(applyUserName,player.getName());
             WarTeamMemberEntity warTeamMemberEntity1 = WarTeamMemBerDatabaseHandler.selectWarTeamMemBerByUid(applyUserName);

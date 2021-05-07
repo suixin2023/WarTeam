@@ -2,7 +2,6 @@ package com.suixin.warteam.util;
 
 import com.suixin.warteam.WarTeam;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.omg.CORBA.NO_PERMISSION;
 
 
 /**

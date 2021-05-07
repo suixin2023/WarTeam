@@ -1,10 +1,11 @@
 package com.suixin.warteam.command;
 
 import com.suixin.warteam.WarTeam;
+import com.suixin.warteam.dragongui.WarTeamGui;
+import com.suixin.warteam.dragongui.WarTeamWindow;
 import com.suixin.warteam.entity.WarTeamApplyEntity;
 import com.suixin.warteam.entity.WarTeamEntity;
 import com.suixin.warteam.entity.WarTeamMemberEntity;
-import com.suixin.warteam.gui.WarTeamGui;
 import com.suixin.warteam.handler.WarTeamApplyDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamDatabaseHandler;
 import com.suixin.warteam.handler.WarTeamMemBerDatabaseHandler;
@@ -54,7 +55,7 @@ public class BaseCommand implements CommandExecutor {
 			String arg1 = argsList.get(0);
 			if (arg1.equals("open")) {
 				//打开战队
-				WarTeamGui.openGameLobbyGui(player);
+				WarTeamWindow.openGameLobbyGui(player,1);
 			} else if (arg1.equals("list")) {
 				//打开战队列表
 				warTeamList(argsList,player);
