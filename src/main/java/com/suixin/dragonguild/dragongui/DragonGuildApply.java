@@ -152,9 +152,6 @@ public class DragonGuildApply {
         component.setApplylist(applylist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
-        if (openedScreen != null) {
-            openedScreen.updateGui(player);
-        }
         return list;
     }
 }
