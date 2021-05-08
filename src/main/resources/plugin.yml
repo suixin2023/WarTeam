@@ -1,18 +1,15 @@
-name: WarTeam
-main: com.suixin.warteam.WarTeam
+name: DragonGuild
+main: com.suixin.dragonguild.DragonGuild
 version: ${project.version}
 authors:
 - suixin
 softdepend:
 - VaultAPI
-- VexView
+- DragonCore
 commands:
-  wt:
+  gh:
     description: 游戏指令
-    usage: /wt
-  test:
-    description: 游戏指令
-    usage: /test
+    usage: /gh
 permissions:
-  warteam.tn:
-    description: Allows you to use tn
+  dragonguild.gh:
+    description: Allows you to use gh

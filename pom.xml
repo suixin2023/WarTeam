@@ -1,9 +1,9 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>com.suixin.warteam</groupId>
-	<artifactId>Warteam</artifactId>
-	<version>1.9.0</version>
+	<groupId>com.suixin.dragonguild</groupId>
+	<artifactId>DragonGuild</artifactId>
+	<version>1.1.0</version>
 	<build>
 		<finalName>${project.name}</finalName>
 		<resources>
@@ -41,7 +41,7 @@
 							<transformers>
 								<transformer
 										implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-									<mainClass>com.suixin.warteam.Warteam</mainClass>
+									<mainClass>com.suixin.dragonguild.DragonGuild</mainClass>
 								</transformer>
 							</transformers>
 
@@ -132,14 +132,6 @@
 			<artifactId>placeholderapi</artifactId>
 			<version>2.10.9</version>
 			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>lk.vexview</groupId>
-			<artifactId>VexView</artifactId>
-			<version>2.7.3</version>
-			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/vexview-spigot-all-2.7.3.jar
-			</systemPath>
 		</dependency>
 		<dependency>
 			<groupId>suixin.dragoncore</groupId>
