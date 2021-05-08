@@ -9,10 +9,7 @@ import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 
 public class DragonGuildApply {
@@ -85,7 +82,10 @@ public class DragonGuildApply {
         int currentPage = limit;
         //获取页数
         EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
-        Map<String, EasyComponent> components = openedScreen.getComponents();
+        Map<String, EasyComponent> components = new HashMap<>();
+        if (openedScreen != null) {
+            components = openedScreen.getComponents();
+        }
         List<EasyComponent> applylist = component.getApplylist();
         limit = (limit - 1) * 6;
         YamlConfiguration applyList = DragonGuiYml.getApplyList();
@@ -152,7 +152,9 @@ public class DragonGuildApply {
         component.setApplylist(applylist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
-        openedScreen.updateGui(player);
+        if (openedScreen != null) {
+            openedScreen.updateGui(player);
+        }
         return list;
     }
 }

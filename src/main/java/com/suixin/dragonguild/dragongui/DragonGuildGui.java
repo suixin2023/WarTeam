@@ -213,8 +213,11 @@ public class DragonGuildGui {
         List<EasyComponent> list = new ArrayList<>();
         int currentPage = limit;
         //获取页数
+        Map<String, EasyComponent> components = new HashMap<>();
         EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
-        Map<String, EasyComponent> components = openedScreen.getComponents();
+        if(type != 1) {
+            components = openedScreen.getComponents();
+        }
         List<EasyComponent> memBerlist = component.getMemBerlist();
         limit = (limit - 1) * 14;
         YamlConfiguration pictureFrameYml = DragonGuiYml.getPictureFrame();
@@ -286,7 +289,9 @@ public class DragonGuildGui {
         component.setCurrent(currentPage);
         component.setMemBerlist(memBerlist);
         userComponent.put(player.getName(),component);
-        openedScreen.updateGui(player);
+        if (openedScreen != null) {
+            openedScreen.updateGui(player);
+        }
         return list;
     }
 
