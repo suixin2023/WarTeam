@@ -39,7 +39,7 @@ public class DragonGuild extends JavaPlugin {
 		}else{
 			Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW +"Vault未找到,插件将无法正常运行");
 		}
-		//检测VV是否开启
+		//检测是否开启
 		if ( Bukkit.getServer().getPluginManager().isPluginEnabled("DragonCore")) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"DragonCore已连接");
 			Bukkit.getPluginManager().registerEvents(new EasyButtonClickListener(),this);

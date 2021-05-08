@@ -34,7 +34,7 @@ public class DragonGuildWindow {
         lhdGui.openGui(player);
     }
 
-    //创建VV组件
+    //创建组件
     public static EasyScreen createGui(Player player,Integer type1) {
         EasyScreen gui = getGui(type1);
         YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();

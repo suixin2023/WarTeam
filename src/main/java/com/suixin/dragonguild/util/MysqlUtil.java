@@ -1,5 +1,7 @@
 package com.suixin.dragonguild.util;
 
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 import org.bukkit.configuration.file.FileConfiguration;
 
 import java.sql.*;
@@ -24,7 +26,19 @@ public class MysqlUtil {
         try {
             loadConnProperties(fileConfiguration);
             Class.forName(dbDriver);
-            conn = DriverManager.getConnection(dbURL, userName, password);
+            //实例化类
+            HikariConfig hikariConfig = new HikariConfig();
+            //设置url
+            hikariConfig.setJdbcUrl(dbURL);
+            //数据库帐号
+            hikariConfig.setUsername(userName);
+            //数据库密码
+            hikariConfig.setPassword(password);
+            hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
+            hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
+            hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
+            HikariDataSource ds = new HikariDataSource(hikariConfig);
+            conn = ds.getConnection();
             return true;
         } catch (ClassNotFoundException classnotfoundexception) {
             classnotfoundexception.printStackTrace();

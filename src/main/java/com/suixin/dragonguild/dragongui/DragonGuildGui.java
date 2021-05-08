@@ -29,7 +29,7 @@ public class DragonGuildGui {
         lhdGui.openGui(player);
     }
 
-    //创建VV组件
+    //创建组件
     public static EasyScreen createLhdGui(Player player) {
         Component component = new Component();
         userComponent.put(player.getName(),component);

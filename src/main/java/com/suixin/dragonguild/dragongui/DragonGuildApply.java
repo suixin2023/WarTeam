@@ -28,7 +28,7 @@ public class DragonGuildApply {
         gui.openGui(player);
     }
 
-    //创建VV组件
+    //创建组件
     public static EasyScreen createGui(Player player, Integer dragonGuildId) {
         EasyScreen gui = getGui();
 
@@ -124,10 +124,10 @@ public class DragonGuildApply {
             };
 
             if (type == 1) {
-                list.add(nameText);
-                list.add(applyAgreeButton);
-                list.add(applyRepulseButton);
                 list.add(img);
+                list.add(applyRepulseButton);
+                list.add(applyAgreeButton);
+                list.add(nameText);
                 applylist.add(nameText);
                 applylist.add(applyAgreeButton);
                 applylist.add(applyRepulseButton);
