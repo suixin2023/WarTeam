@@ -2,9 +2,8 @@ package com.suixin.dragonguild;
 
 import com.google.common.base.Charsets;
 import com.suixin.dragonguild.command.BaseCommand;
-import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
-import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
-import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
+import com.suixin.dragonguild.dragongui.DragonGuildNotice;
+import com.suixin.dragonguild.handler.*;
 import com.suixin.dragonguild.listener.EasyButtonClickListener;
 import com.suixin.dragonguild.util.*;
 import org.bukkit.Bukkit;
@@ -88,6 +87,8 @@ public class DragonGuild extends JavaPlugin {
 				Integer count = DragonGuildApplyDatabaseHandler.selectTabCount();
 				Integer count1 = DragonGuildDatabaseHandler.selectTabCount();
 				Integer count2 = DragonGuildMemBerDatabaseHandler.selectTabCount();
+				Integer count3 = DragonGuildChatDatabaseHandler.selectTabCount();
+				Integer count4 = DragonGuildNoticeDatabaseHandler.selectTabCount();
 				if (count == 0) {
 					//如果表不存在，则初始化表
 					DragonGuildApplyDatabaseHandler.createTable();
@@ -97,6 +98,12 @@ public class DragonGuild extends JavaPlugin {
 				}
 				if (count2 == 0) {
 					DragonGuildMemBerDatabaseHandler.createTable();
+				}
+				if (count3 == 0) {
+					DragonGuildChatDatabaseHandler.createTable();
+				}
+				if (count4 == 0) {
+					DragonGuildNoticeDatabaseHandler.createTable();
 				}
 			}
 		}catch (Exception e){

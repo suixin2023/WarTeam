@@ -1,6 +1,5 @@
 package com.suixin.dragonguild.handler;
 
-import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildNoticeEntity;
 import com.suixin.dragonguild.util.MysqlUtil;
 
@@ -70,7 +69,7 @@ public class DragonGuildNoticeDatabaseHandler {
         }
     }
 
-    public static  List<DragonGuildEntity> selectDragonGuildDataNum(Integer current){
+    public static  List<DragonGuildNoticeEntity> selectDragonGuildDataNum(Integer current){
         String sql = "select * from dragon_guild_notice where status = 1 limit "+current+", 5";
         List<DragonGuildNoticeEntity> dragonGuildNoticeEntitys = new ArrayList<>();
         try {
@@ -81,11 +80,9 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setId(rst.getInt("id"));
                     dragonGuildNoticeEntity.setUid(rst.getString("uid"));
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
-                    dragonGuildNoticeEntity.setName(rst.getString("name"));
-                    dragonGuildNoticeEntity.setLevel(rst.getInt("level"));
-                    dragonGuildNoticeEntity.setExpAll(rst.getInt("exp_all"));
-                    dragonGuildNoticeEntity.setExpCurrent(rst.getInt("exp_current"));
-                    dragonGuildNoticeEntity.setMaxMember(rst.getInt("max_member"));
+                    dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
+                    dragonGuildNoticeEntity.setTitle(rst.getString("title"));
+                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
@@ -110,11 +107,9 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setId(rst.getInt("id"));
                     dragonGuildNoticeEntity.setUid(rst.getString("uid"));
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
-                    dragonGuildNoticeEntity.setName(rst.getString("name"));
-                    dragonGuildNoticeEntity.setLevel(rst.getInt("level"));
-                    dragonGuildNoticeEntity.setExpAll(rst.getInt("exp_all"));
-                    dragonGuildNoticeEntity.setExpCurrent(rst.getInt("exp_current"));
-                    dragonGuildNoticeEntity.setMaxMember(rst.getInt("max_member"));
+                    dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
+                    dragonGuildNoticeEntity.setTitle(rst.getString("title"));
+                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
@@ -138,11 +133,9 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setId(rst.getInt("id"));
                     dragonGuildNoticeEntity.setUid(rst.getString("uid"));
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
-                    dragonGuildNoticeEntity.setName(rst.getString("name"));
-                    dragonGuildNoticeEntity.setLevel(rst.getInt("level"));
-                    dragonGuildNoticeEntity.setExpAll(rst.getInt("exp_all"));
-                    dragonGuildNoticeEntity.setExpCurrent(rst.getInt("exp_current"));
-                    dragonGuildNoticeEntity.setMaxMember(rst.getInt("max_member"));
+                    dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
+                    dragonGuildNoticeEntity.setTitle(rst.getString("title"));
+                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
@@ -183,11 +176,9 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setId(rst.getInt("id"));
                     dragonGuildNoticeEntity.setUid(rst.getString("uid"));
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
-                    dragonGuildNoticeEntity.setName(rst.getString("name"));
-                    dragonGuildNoticeEntity.setLevel(rst.getInt("level"));
-                    dragonGuildNoticeEntity.setExpAll(rst.getInt("exp_all"));
-                    dragonGuildNoticeEntity.setExpCurrent(rst.getInt("exp_current"));
-                    dragonGuildNoticeEntity.setMaxMember(rst.getInt("max_member"));
+                    dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
+                    dragonGuildNoticeEntity.setTitle(rst.getString("title"));
+                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
@@ -212,20 +203,14 @@ public class DragonGuildNoticeDatabaseHandler {
         if (dragonGuildNoticeEntity.getCreator() != null) {
             stringBuffer.append(" creator = "+dragonGuildNoticeEntity.getCreator()+",");
         }
-        if (dragonGuildNoticeEntity.getName() != null && !dragonGuildNoticeEntity.getName().equals("")) {
-            stringBuffer.append(" name = "+"'"+dragonGuildNoticeEntity.getName()+"'"+",");
+        if (dragonGuildNoticeEntity.getGuildId() != null) {
+            stringBuffer.append(" guild_id = "+dragonGuildNoticeEntity.getGuildId()+",");
         }
-        if (dragonGuildNoticeEntity.getLevel() != null) {
-            stringBuffer.append(" level = "+dragonGuildNoticeEntity.getLevel()+",");
+        if (dragonGuildNoticeEntity.getTitle() != null && !dragonGuildNoticeEntity.getTitle().equals("")) {
+            stringBuffer.append(" title = "+"'"+dragonGuildNoticeEntity.getTitle()+"'"+",");
         }
-        if (dragonGuildNoticeEntity.getExpAll() != null) {
-            stringBuffer.append(" exp_all = "+dragonGuildNoticeEntity.getExpAll()+",");
-        }
-        if (dragonGuildNoticeEntity.getExpCurrent() != null) {
-            stringBuffer.append(" exp_current = "+dragonGuildNoticeEntity.getExpCurrent()+",");
-        }
-        if (dragonGuildNoticeEntity.getMaxMember() != null) {
-            stringBuffer.append(" max_member = "+dragonGuildNoticeEntity.getMaxMember()+",");
+        if (dragonGuildNoticeEntity.getDesc() != null && !dragonGuildNoticeEntity.getDesc().equals("")) {
+            stringBuffer.append(" desc = "+"'"+dragonGuildNoticeEntity.getDesc()+"'"+",");
         }
         if (dragonGuildNoticeEntity.getStatus() != null) {
             stringBuffer.append(" status = "+dragonGuildNoticeEntity.getStatus()+",");

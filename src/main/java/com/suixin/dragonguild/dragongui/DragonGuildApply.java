@@ -133,10 +133,10 @@ public class DragonGuildApply {
                 applylist.add(applyRepulseButton);
                 applylist.add(img);
             }else {
-                components.put("nameText",nameText);
-                components.put("applyAgreeButton#"+apply,applyAgreeButton);
-                components.put("applyRepulseButton"+apply,applyRepulseButton);
-                components.put("img",img);
+                list.add(img);
+                list.add(applyRepulseButton);
+                list.add(applyAgreeButton);
+                list.add(nameText);
                 applylist.add(nameText);
                 applylist.add(applyAgreeButton);
                 applylist.add(applyRepulseButton);
