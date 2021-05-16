@@ -88,7 +88,7 @@ public class DragonGuildChat {
         if (openedScreen != null) {
             components = openedScreen.getComponents();
         }
-        List<EasyComponent> applylist = component.getApplylist();
+        List<String> applylist = component.getApplylist();
         limit = (limit - 1) * 6;
         YamlConfiguration applyList = DragonGuiYml.getApplyList();
         YamlConfiguration applyAgree = DragonGuiYml.getApplyAgree();
@@ -104,8 +104,8 @@ public class DragonGuildChat {
             return list;
         }
 
-        for (EasyComponent easyComponent : applylist) {
-            components.remove(easyComponent.getId());
+        for (String easyComponent : applylist) {
+            components.remove(easyComponent);
         }
 
         for (DragonGuildApplyEntity dragonGuildApplyEntity: dragonGuildApplyEntities) {
@@ -130,19 +130,11 @@ public class DragonGuildChat {
                 list.add(applyRepulseButton);
                 list.add(applyAgreeButton);
                 list.add(nameText);
-                applylist.add(nameText);
-                applylist.add(applyAgreeButton);
-                applylist.add(applyRepulseButton);
-                applylist.add(img);
             }else {
                 components.put("nameText",nameText);
                 components.put("applyAgreeButton#"+apply,applyAgreeButton);
                 components.put("applyRepulseButton"+apply,applyRepulseButton);
                 components.put("img",img);
-                applylist.add(nameText);
-                applylist.add(applyAgreeButton);
-                applylist.add(applyRepulseButton);
-                applylist.add(img);
             }
             applyAgreeY = applyAgreeY + applyList.getInt("high") + 3;
             applyRepulseY = applyRepulseY + applyList.getInt("high")+ 3;

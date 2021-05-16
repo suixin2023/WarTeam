@@ -10,8 +10,8 @@ import java.util.List;
  */
 public class Component {
     private Integer current = 1;
-    private List<EasyComponent> memBerlist  = new ArrayList<>();
-    private List<EasyComponent> applylist  = new ArrayList<>();
+    private List<String> memBerlist  = new ArrayList<>();
+    private List<String> applylist  = new ArrayList<>();
     public Integer getCurrent() {
         return current;
     }
@@ -20,19 +20,19 @@ public class Component {
         this.current = current;
     }
 
-    public List<EasyComponent> getMemBerlist() {
+    public List<String> getMemBerlist() {
         return memBerlist;
     }
 
-    public void setMemBerlist(List<EasyComponent> memBerlist) {
+    public void setMemBerlist(List<String> memBerlist) {
         this.memBerlist = memBerlist;
     }
 
-    public List<EasyComponent> getApplylist() {
+    public List<String> getApplylist() {
         return applylist;
     }
 
-    public void setApplylist(List<EasyComponent> applylist) {
+    public void setApplylist(List<String> applylist) {
         this.applylist = applylist;
     }
 }

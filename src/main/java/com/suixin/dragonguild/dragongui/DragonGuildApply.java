@@ -27,7 +27,7 @@ public class DragonGuildApply {
 
     //创建组件
     public static EasyScreen createGui(Player player, Integer dragonGuildId) {
-        EasyScreen gui = getGui();
+        EasyScreen screen = getGui();
 
         //关闭
         YamlConfiguration applyClose = DragonGuiYml.getApplyClose();
@@ -51,7 +51,18 @@ public class DragonGuildApply {
                 if (currentPage == 1) {
                     return;
                 }
-                applyList(player,component,currentPage - 1,dragonGuildId,2);
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                List<EasyComponent> easyComponents1 = applyList(player, component, currentPage - 1, dragonGuildId, 2);
+                List<String> applylist = component.getApplylist();
+                Integer memBerId = 1;
+                for (EasyComponent easyComponent : easyComponents1) {
+                    openedScreen.addComponent(memBerId.toString(),easyComponent);
+                    applylist.add(memBerId.toString());
+                    memBerId = memBerId + 1;
+                }
+                component.setApplylist(applylist);
+                userComponent.put(player.getName(),component);
+                openedScreen.updateGui(player);
             }
         };
 
@@ -62,19 +73,34 @@ public class DragonGuildApply {
             public void onClick(Player player, ClickListener.Type type) {
                 Component component = DragonGuildGui.getUserComponent().get(player.getName());
                 Integer limit = component.getCurrent() + 1;
-                applyList(player,component,limit,dragonGuildId,2);
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                List<EasyComponent> easyComponents1 = applyList(player, component, limit, dragonGuildId, 2);
+                List<String> applylist = component.getApplylist();
+                Integer memBerId = 1;
+                for (EasyComponent easyComponent : easyComponents1) {
+                    openedScreen.addComponent(memBerId.toString(),easyComponent);
+                    applylist.add(memBerId.toString());
+                    memBerId = memBerId + 1;
+                }
+                component.setApplylist(applylist);
+                userComponent.put(player.getName(),component);
+                openedScreen.updateGui(player);
             }
         };
 
-        gui.addComponent(applyCloseButton);
-        gui.addComponent(shangyiyeButton);
-        gui.addComponent(xiayiyeButton);
+        screen.addComponent(applyCloseButton);
+        screen.addComponent(shangyiyeButton);
+        screen.addComponent(xiayiyeButton);
+        List<String> memBerlist = component.getMemBerlist();
+        Integer memBerId = 1;
         if (easyComponents.size()> 0) {
             for (EasyComponent easyComponent : easyComponents) {
-                gui.addComponent(easyComponent);
+                screen.addComponent(easyComponent);
+                memBerlist.add(memBerId.toString());
+                memBerId = memBerId + 1;
             }
         }
-        return gui;
+        return screen;
     }
 
     private static List<EasyComponent> applyList(Player player, Component component, Integer limit,Integer dragonGuildId,Integer type) {
@@ -86,7 +112,7 @@ public class DragonGuildApply {
         if (openedScreen != null) {
             components = openedScreen.getComponents();
         }
-        List<EasyComponent> applylist = component.getApplylist();
+        List<String> applylist = component.getApplylist();
         limit = (limit - 1) * 6;
         YamlConfiguration applyList = DragonGuiYml.getApplyList();
         YamlConfiguration applyAgree = DragonGuiYml.getApplyAgree();
@@ -102,10 +128,10 @@ public class DragonGuildApply {
             return list;
         }
 
-        for (EasyComponent easyComponent : applylist) {
-            components.remove(easyComponent.getId());
+        for (String easyComponent : applylist) {
+            components.remove(easyComponent);
         }
-
+        applylist.clear();
         for (DragonGuildApplyEntity dragonGuildApplyEntity: dragonGuildApplyEntities) {
             String apply = dragonGuildApplyEntity.getUid();
             EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(apply));
@@ -122,26 +148,10 @@ public class DragonGuildApply {
                 public void onClick(Player player, Type type) {
                 }
             };
-
-            if (type == 1) {
-                list.add(img);
-                list.add(applyRepulseButton);
-                list.add(applyAgreeButton);
-                list.add(nameText);
-                applylist.add(nameText);
-                applylist.add(applyAgreeButton);
-                applylist.add(applyRepulseButton);
-                applylist.add(img);
-            }else {
-                list.add(img);
-                list.add(applyRepulseButton);
-                list.add(applyAgreeButton);
-                list.add(nameText);
-                applylist.add(nameText);
-                applylist.add(applyAgreeButton);
-                applylist.add(applyRepulseButton);
-                applylist.add(img);
-            }
+            list.add(img);
+            list.add(applyRepulseButton);
+            list.add(applyAgreeButton);
+            list.add(nameText);
             applyAgreeY = applyAgreeY + applyList.getInt("high") + 3;
             applyRepulseY = applyRepulseY + applyList.getInt("high")+ 3;
             nameYmlY = nameYmlY + applyList.getInt("high")+ 3;
@@ -149,7 +159,6 @@ public class DragonGuildApply {
         }
 
         component.setCurrent(currentPage);
-        component.setApplylist(applylist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
         return list;
