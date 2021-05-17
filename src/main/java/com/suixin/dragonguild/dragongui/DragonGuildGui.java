@@ -17,7 +17,7 @@ import java.util.*;
 
 
 public class DragonGuildGui {
-    private static Map<String, Component> userComponent = new HashMap<>();
+    public static Map<String, Component> userComponent = new HashMap<>();
     //创建GUI
     public static EasyScreen getGui() {
         YamlConfiguration mainGui = DragonGuiYml.getBackground();
@@ -133,14 +133,12 @@ public class DragonGuildGui {
                 }
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 List<EasyComponent> easyComponents1 = memBerList(player, component, currentPage - 1, dragonGuildMemberEntity, 2);
-                List<String> memBerlist = component.getMemBerlist();
-                Integer memBerId = 1;
+                List<String> memBerlist = component.getMemBerList();
                 for (EasyComponent easyComponent : easyComponents1) {
-                    openedScreen.addComponent(memBerId.toString(),easyComponent);
-                    memBerlist.add(memBerId.toString());
-                    memBerId = memBerId + 1;
+                    openedScreen.addComponent(easyComponent);
+                    memBerlist.add(easyComponent.getId());
                 }
-                component.setMemBerlist(memBerlist);
+                component.setMemBerList(memBerlist);
                 userComponent.put(player.getName(),component);
                 openedScreen.updateGui(player);
             }
@@ -155,14 +153,12 @@ public class DragonGuildGui {
                 Integer limit = component.getCurrent() + 1;
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 List<EasyComponent> easyComponents1 = memBerList(player, component, limit, dragonGuildMemberEntity, 2);
-                List<String> memBerlist = component.getMemBerlist();
-                Integer memBerId = 1;
+                List<String> memBerlist = component.getMemBerList();
                 for (EasyComponent easyComponent : easyComponents1) {
-                    openedScreen.addComponent(memBerId.toString(),easyComponent);
-                    memBerlist.add(memBerId.toString());
-                    memBerId = memBerId + 1;
+                    openedScreen.addComponent(easyComponent);
+                    memBerlist.add(easyComponent.getId());
                 }
-                component.setMemBerlist(memBerlist);
+                component.setMemBerList(memBerlist);
                 userComponent.put(player.getName(),component);
                 openedScreen.updateGui(player);
             }
@@ -203,8 +199,7 @@ public class DragonGuildGui {
         YamlConfiguration backgroundOfNoTeam = DragonGuiYml.getBackgroundOfNoTeam();
         EasyImage backgroundOfNoTeamImage = new EasyImage( backgroundOfNoTeam.getInt("x"), backgroundOfNoTeam.getInt("y"), backgroundOfNoTeam.getInt("width"), backgroundOfNoTeam.getInt("high"),ImageUrlEnum.backgroundOfNoTeam.getUrl());
 
-        List<String> memBerlist = component.getMemBerlist();
-        Integer memBerId = 1;
+        List<String> memBerlist = component.getMemBerList();
         if (id != null) {
             if (dragonGuildMemberEntity.getUid().equals(dragonGuildEntity.getCreator())) {
                 screen.addComponent(updateNameButton);
@@ -222,9 +217,8 @@ public class DragonGuildGui {
             screen.addComponent("等级",levelText);
             if (easyComponents.size()> 0) {
                 for (EasyComponent easyComponent : easyComponents) {
-                    screen.addComponent(memBerId.toString(),easyComponent);
-                    memBerlist.add(memBerId.toString());
-                    memBerId = memBerId + 1;
+                    screen.addComponent(easyComponent);
+                    memBerlist.add(easyComponent.getId());
                 }
             }
         }else {
@@ -232,7 +226,7 @@ public class DragonGuildGui {
             screen.addComponent(joinButton);
             screen.addComponent(backgroundOfNoTeamImage);
         }
-        component.setMemBerlist(memBerlist);
+        component.setMemBerList(memBerlist);
         userComponent.put(player.getName(),component);
         return screen;
     }
@@ -246,7 +240,7 @@ public class DragonGuildGui {
         if(type != 1) {
             components = openedScreen.getComponents();
         }
-        List<String> memBerlist = component.getMemBerlist();
+        List<String> memBerlist = component.getMemBerList();
         limit = (limit - 1) * 14;
         YamlConfiguration pictureFrameYml = DragonGuiYml.getPictureFrame();
         YamlConfiguration nameYml = DragonGuiYml.getNickName();

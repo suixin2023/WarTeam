@@ -138,7 +138,7 @@
 			<artifactId>DragonCore</artifactId>
 			<version>2.3.5</version>
 			<scope>system</scope>
-			<systemPath>${project.basedir}/lib/[插件]DragonCore-2.3.9.3.jar
+			<systemPath>${project.basedir}/lib/[插件]DragonCore-2.3.9.4.jar
 			</systemPath>
 		</dependency>
 	</dependencies>

@@ -30,12 +30,12 @@ public class DragonGuildWindow {
 
     //打开GUI
     public static void openGameLobbyGui(Player player, Integer type) {
-        EasyScreen lhdGui = createGui(player,type);
+        EasyScreen lhdGui = createGui(type);
         lhdGui.openGui(player);
     }
 
     //创建组件
-    public static EasyScreen createGui(Player player,Integer type1) {
+    public static EasyScreen createGui(Integer type1) {
         EasyScreen gui = getGui(type1);
         YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();
         final EasyTextField shurukuangTextField = new EasyTextField(shurukuang.getInt("x"), shurukuang.getInt("y"), shurukuang.getInt("width"), "请输入");
@@ -44,12 +44,8 @@ public class DragonGuildWindow {
         EasyButton confirmButton = new EasyButton( confirm.getInt("x"), confirm.getInt("y"), confirm.getInt("width"), confirm.getInt("high"),  ImageUrlEnum.confirm.getUrl(), PImageUrlEnum.confirm.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                String typedText = shurukuangTextField.getText();
+                String teamName = shurukuangTextField.getText();
                 if (type1 == 1){
-                    player.chat("/gh create "+typedText);
-                }else if (type1 == 2){
-                    player.chat("/gh join "+typedText);
-                }else if (type1 == 3){
                     DragonGuildMemberEntity dragonGuildMemberEntity1 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
                     if (dragonGuildMemberEntity1.getId() == null) {
                         player.sendMessage(Message.not_join_oneTeam);
@@ -60,8 +56,6 @@ public class DragonGuildWindow {
                         player.sendMessage(Message.no_permission);
                         return;
                     }
-
-                    String teamName = typedText;
                     DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByName(teamName);
                     if (dragonGuildEntity.getId() != null) {
                         player.sendMessage(Message.update_failure);
@@ -86,7 +80,7 @@ public class DragonGuildWindow {
                     player.sendMessage(Message.update_successful);
                     VaultAPI.removeMoney(player.getName(),amount);
                 }else {
-                    player.chat("/gh out "+typedText);
+                    player.chat("/gh out "+teamName);
                 }
                 DragonGuildGui.openGameLobbyGui(player);
             }

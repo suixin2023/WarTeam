@@ -1,7 +1,5 @@
 package com.suixin.dragonguild.util;
 
-import eos.moe.dragoncore.api.easygui.component.EasyComponent;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +8,8 @@ import java.util.List;
  */
 public class Component {
     private Integer current = 1;
-    private List<String> memBerlist  = new ArrayList<>();
-    private List<String> applylist  = new ArrayList<>();
+    private List<String> memBerList  = new ArrayList<>();
+    private List<String> applyList  = new ArrayList<>();
     public Integer getCurrent() {
         return current;
     }
@@ -20,19 +18,19 @@ public class Component {
         this.current = current;
     }
 
-    public List<String> getMemBerlist() {
-        return memBerlist;
+    public List<String> getMemBerList() {
+        return memBerList;
     }
 
-    public void setMemBerlist(List<String> memBerlist) {
-        this.memBerlist = memBerlist;
+    public void setMemBerList(List<String> memBerList) {
+        this.memBerList = memBerList;
     }
 
-    public List<String> getApplylist() {
-        return applylist;
+    public List<String> getApplyList() {
+        return applyList;
     }
 
-    public void setApplylist(List<String> applylist) {
-        this.applylist = applylist;
+    public void setApplyList(List<String> applyList) {
+        this.applyList = applyList;
     }
 }

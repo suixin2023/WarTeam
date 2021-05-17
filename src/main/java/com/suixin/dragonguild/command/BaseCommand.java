@@ -6,9 +6,11 @@ import com.suixin.dragonguild.dragongui.DragonGuildWindow;
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
+import com.suixin.dragonguild.entity.DragonGuildNoticeEntity;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
+import com.suixin.dragonguild.handler.DragonGuildNoticeDatabaseHandler;
 import com.suixin.dragonguild.util.Message;
 import com.suixin.dragonguild.util.VaultAPI;
 import org.bukkit.Bukkit;
@@ -202,6 +204,17 @@ public class BaseCommand implements CommandExecutor {
 		DragonGuildMemBerDatabaseHandler.insert(dragonGuildMemberEntity);
 		player.sendMessage(Message.create_successful);
 		VaultAPI.removeMoney(player.getName(),amount);
+		DragonGuildNoticeEntity dragonGuildNoticeEntity = new DragonGuildNoticeEntity();
+		DragonGuildEntity dragonGuildEntity1 = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
+		Integer id = dragonGuildEntity1.getId();
+		dragonGuildNoticeEntity.setGuildId(id);
+		dragonGuildNoticeEntity.setCreated(new Date());
+		dragonGuildNoticeEntity.setTitle("");
+		dragonGuildNoticeEntity.setDesc("");
+		dragonGuildNoticeEntity.setUid(player.getUniqueId().toString());
+		dragonGuildNoticeEntity.setCreator(player.getName());
+		dragonGuildNoticeEntity.setStatus(1);
+		DragonGuildNoticeDatabaseHandler.insert(dragonGuildNoticeEntity);
 	}
 
 	private void updateDragonGuild ( List<String> argsList,Player player) {
@@ -337,6 +350,7 @@ public class BaseCommand implements CommandExecutor {
 		}
 		DragonGuildMemBerDatabaseHandler.deleteAll(dragonGuildEntity.getId());
 		DragonGuildApplyDatabaseHandler.deleteAll(dragonGuildEntity.getId());
+		DragonGuildNoticeDatabaseHandler.deleteById(dragonGuildEntity.getId());
 	}
 
 	private void outDragonGuild ( List<String> argsList,Player player) {

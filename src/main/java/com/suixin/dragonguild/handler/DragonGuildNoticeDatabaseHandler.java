@@ -123,8 +123,8 @@ public class DragonGuildNoticeDatabaseHandler {
         }
         return  dragonGuildNoticeEntity;
     }
-    public static DragonGuildNoticeEntity selectDragonGuildById(Integer id){
-        String sql = "select * from dragon_guild_notice where status = 1 and id =  '"+id+"'";
+    public static DragonGuildNoticeEntity selectDragonGuildByGuildId(Integer guildId){
+        String sql = "select * from dragon_guild_notice where status = 1 and guild_id =  '"+guildId+"'";
         DragonGuildNoticeEntity dragonGuildNoticeEntity = new DragonGuildNoticeEntity();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -233,7 +233,7 @@ public class DragonGuildNoticeDatabaseHandler {
 
     //删除公会
     public static void deleteById(Integer id){
-        String sql = "update dragon_guild_notice set status = -1 where id = "+id;
+        String sql = "update dragon_guild_notice set status = -1 where guild_id = "+id;
         try {
             int i = MysqlUtil.execCommand(sql);
         } catch (Exception e) {

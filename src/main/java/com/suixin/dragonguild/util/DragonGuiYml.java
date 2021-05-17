@@ -33,21 +33,22 @@ public class DragonGuiYml {
     private static YamlConfiguration window;
     private static YamlConfiguration shurukuang;
     private static YamlConfiguration confirm;
+    //公告
+    private static YamlConfiguration backGroundNotice;
+    private static YamlConfiguration title;
+    private static YamlConfiguration content;
+    private static YamlConfiguration save;
+    private static YamlConfiguration clear;
+    //聊天
+    private static YamlConfiguration backGroundChat;
+    private static YamlConfiguration chatContent;
+    private static YamlConfiguration messageList;
+    private static YamlConfiguration send;
 
     public static boolean loadGui( ) {
         try {
             shangyiye = DragonGuild.getYml("dragon/上一页.yml");
             xiayiye = DragonGuild.getYml("dragon/下一页.yml");
-            applyShangyiye = DragonGuild.getYml("dragon/审批上一页.yml");
-            applyXiayiye = DragonGuild.getYml("dragon/审批下一页.yml");
-            applyClose = DragonGuild.getYml("dragon/审批关闭.yml");
-            applyAgree = DragonGuild.getYml("dragon/审批同意.yml");
-            applyRepulse = DragonGuild.getYml("dragon/审批拒绝.yml");
-            applyList = DragonGuild.getYml("dragon/审批列表.yml");
-            applyButton = DragonGuild.getYml("dragon/审批按钮.yml");
-            applyPlayerName = DragonGuild.getYml("dragon/审批玩家名.yml");
-            applyBackground = DragonGuild.getYml("dragon/审批背景.yml");
-            applyNum = DragonGuild.getYml("dragon/审批数量.yml");
             kickOut = DragonGuild.getYml("dragon/踢人.yml");
             updateName = DragonGuild.getYml("dragon/修改公会.yml");
             renshu = DragonGuild.getYml("dragon/人数.yml");
@@ -62,9 +63,33 @@ public class DragonGuiYml {
             exp = DragonGuild.getYml("dragon/贡献值.yml");
             outTeam = DragonGuild.getYml("dragon/退出公会.yml");
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
-            window = DragonGuild.getYml("dragon/弹窗.yml");
-            shurukuang = DragonGuild.getYml("dragon/输入框.yml");
-            confirm = DragonGuild.getYml("dragon/确定.yml");
+
+
+            applyShangyiye = DragonGuild.getYml("dragon/apply/审批上一页.yml");
+            applyXiayiye = DragonGuild.getYml("dragon/apply/审批下一页.yml");
+            applyClose = DragonGuild.getYml("dragon/apply/审批关闭.yml");
+            applyAgree = DragonGuild.getYml("dragon/apply/审批同意.yml");
+            applyRepulse = DragonGuild.getYml("dragon/apply/审批拒绝.yml");
+            applyList = DragonGuild.getYml("dragon/apply/审批列表.yml");
+            applyButton = DragonGuild.getYml("dragon/apply/审批按钮.yml");
+            applyPlayerName = DragonGuild.getYml("dragon/apply/审批玩家名.yml");
+            applyBackground = DragonGuild.getYml("dragon/apply/审批背景.yml");
+            applyNum = DragonGuild.getYml("dragon/apply/审批数量.yml");
+
+            window = DragonGuild.getYml("dragon/window/弹窗.yml");
+            shurukuang = DragonGuild.getYml("dragon/window/输入框.yml");
+            confirm = DragonGuild.getYml("dragon/window/确定.yml");
+
+            backGroundNotice = DragonGuild.getYml("dragon/notice/公告背景.yml");
+            title = DragonGuild.getYml("dragon/notice/公告标题.yml");
+            content = DragonGuild.getYml("dragon/notice/公告内容.yml");
+            save = DragonGuild.getYml("dragon/notice/保存.yml");
+            clear = DragonGuild.getYml("dragon/notice/清空.yml");
+
+            backGroundChat = DragonGuild.getYml("dragon/notice/聊天背景.yml");
+            chatContent = DragonGuild.getYml("dragon/chat/聊天内容.yml");
+            messageList = DragonGuild.getYml("dragon/chat/消息列表.yml");
+            send = DragonGuild.getYml("dragon/chat/发送.yml");
             return true;
         }catch (Exception e){
             return false;
@@ -303,4 +328,77 @@ public class DragonGuiYml {
     public static void setApplyNum(YamlConfiguration applyNum) {
         DragonGuiYml.applyNum = applyNum;
     }
+
+    public static YamlConfiguration getTitle() {
+        return title;
+    }
+
+    public static void setTitle(YamlConfiguration title) {
+        DragonGuiYml.title = title;
+    }
+
+    public static YamlConfiguration getContent() {
+        return content;
+    }
+
+    public static void setContent(YamlConfiguration content) {
+        DragonGuiYml.content = content;
+    }
+
+    public static YamlConfiguration getChatContent() {
+        return chatContent;
+    }
+
+    public static void setChatContent(YamlConfiguration chatContent) {
+        DragonGuiYml.chatContent = chatContent;
+    }
+
+    public static YamlConfiguration getMessageList() {
+        return messageList;
+    }
+
+    public static void setMessageList(YamlConfiguration messageList) {
+        DragonGuiYml.messageList = messageList;
+    }
+
+    public static YamlConfiguration getSend() {
+        return send;
+    }
+
+    public static void setSend(YamlConfiguration send) {
+        DragonGuiYml.send = send;
+    }
+
+    public static YamlConfiguration getSave() {
+        return save;
+    }
+
+    public static void setSave(YamlConfiguration save) {
+        DragonGuiYml.save = save;
+    }
+
+    public static YamlConfiguration getClear() {
+        return clear;
+    }
+
+    public static void setClear(YamlConfiguration clear) {
+        DragonGuiYml.clear = clear;
+    }
+
+    public static YamlConfiguration getBackGroundNotice() {
+        return backGroundNotice;
+    }
+
+    public static void setBackGroundNotice(YamlConfiguration backGroundNotice) {
+        DragonGuiYml.backGroundNotice = backGroundNotice;
+    }
+
+    public static YamlConfiguration getBackGroundChat() {
+        return backGroundChat;
+    }
+
+    public static void setBackGroundChat(YamlConfiguration backGroundChat) {
+        DragonGuiYml.backGroundChat = backGroundChat;
+    }
+
 }

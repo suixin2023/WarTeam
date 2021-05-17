@@ -24,7 +24,7 @@ DragonGuild:
   no_more_team: '§c没有更多的公会了'
   apply_join: '§c该玩家已经加入其他公会'
   apply_join2: '§c申请失败！你已经加入了公会：'
-  no_more_member: '§c没有更多的队员了'
-  no_permission: '§c无权限,你不是队长'
+  no_more_member: '§c没有更多的成员了'
+  no_permission: '§c无权限,你不是会长'
   no_more_apply: '§c没有更多的申请了'
 
