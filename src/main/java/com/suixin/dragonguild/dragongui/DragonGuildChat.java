@@ -1,13 +1,11 @@
 package com.suixin.dragonguild.dragongui;
 
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
+import com.suixin.dragonguild.entity.DragonGuildChatEntity;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
-import eos.moe.dragoncore.api.easygui.component.EasyButton;
-import eos.moe.dragoncore.api.easygui.component.EasyComponent;
-import eos.moe.dragoncore.api.easygui.component.EasyImage;
-import eos.moe.dragoncore.api.easygui.component.EasyLabel;
+import eos.moe.dragoncore.api.easygui.component.*;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -43,34 +41,26 @@ public class DragonGuildChat {
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
         easyComponents = applyList(player, component, 1, dragonGuildId,1);
-        //上一页
-        YamlConfiguration shangyiye = DragonGuiYml.getApplyShangyiye();
-        EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
+        //聊天内容
+        YamlConfiguration content = DragonGuiYml.getChatContent();
+        final EasyTextField contentTextField = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"));
+        //发送
+        YamlConfiguration send = DragonGuiYml.getSend();
+        EasyButton shangyiyeButton = new EasyButton( send.getInt("x"), send.getInt("y"), send.getInt("width"), send.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                Component component = DragonGuildGui.getUserComponent().get(player.getName());
-                Integer currentPage = component.getCurrent();
-                if (currentPage == 1) {
-                    return;
-                }
-                applyList(player,component,currentPage - 1,dragonGuildId,2);
-            }
-        };
-
-        //下一页
-        YamlConfiguration xiayiye = DragonGuiYml.getApplyXiayiye();
-        EasyButton xiayiyeButton = new EasyButton( xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"),ImageUrlEnum.applyXiayiye.getUrl(), PImageUrlEnum.applyXiayiye.getUrl() ) {
-            @Override
-            public void onClick(Player player, Type type) {
-                Component component = DragonGuildGui.getUserComponent().get(player.getName());
-                Integer limit = component.getCurrent() + 1;
-                applyList(player,component,limit,dragonGuildId,2);
+                DragonGuildChatEntity dragonGuildChatEntity = new DragonGuildChatEntity();
+                dragonGuildChatEntity.setCreator(player.getName());
+                dragonGuildChatEntity.setGuildId(dragonGuildId);
+                dragonGuildChatEntity.setDesc(contentTextField.getText());
+                dragonGuildChatEntity.setUid(player.getUniqueId().toString());
+                dragonGuildChatEntity.setStatus(1);
+                dragonGuildChatEntity.setCreated(new Date());
             }
         };
 
         gui.addComponent(applyCloseButton);
         gui.addComponent(shangyiyeButton);
-        gui.addComponent(xiayiyeButton);
         if (easyComponents.size()> 0) {
             for (EasyComponent easyComponent : easyComponents) {
                 gui.addComponent(easyComponent);
@@ -88,7 +78,7 @@ public class DragonGuildChat {
         if (openedScreen != null) {
             components = openedScreen.getComponents();
         }
-        List<String> applylist = component.getApplylist();
+        List<String> applylist = component.getApplyList();
         limit = (limit - 1) * 6;
         YamlConfiguration applyList = DragonGuiYml.getApplyList();
         YamlConfiguration applyAgree = DragonGuiYml.getApplyAgree();
@@ -143,7 +133,7 @@ public class DragonGuildChat {
         }
 
         component.setCurrent(currentPage);
-        component.setApplylist(applylist);
+        component.setApplyList(applylist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
         return list;

@@ -43,7 +43,7 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 openedScreen.onClose(player);
-                DragonGuildWindow.openGameLobbyGui(player, 1);
+                DragonGuildOut.openGameLobbyGui(player, 1);
             }
         };
         EasyLabel nameText = null;
@@ -67,7 +67,7 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 openedScreen.onClose(player);
-                DragonGuildWindow.openGameLobbyGui(player,2);
+                DragonGuildOut.openGameLobbyGui(player,2);
             }
         };
         //解散公会
@@ -110,7 +110,7 @@ public class DragonGuildGui {
                 if (dragonGuildMemberEntity.getId() == null) {
                     player.sendMessage(Message.not_join_oneTeam);
                     return;
-                }
+                } 
                 DragonGuildMemBerDatabaseHandler.deleteById(player.getName());
                 player.sendMessage(Message.out_successful);
                 player.closeInventory();
@@ -169,7 +169,7 @@ public class DragonGuildGui {
         EasyButton updateNameButton = new EasyButton( updateName.getInt("x"), updateName.getInt("y"), updateName.getInt("width"), updateName.getInt("high"),ImageUrlEnum.updateName.getUrl(), PImageUrlEnum.updateName.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildWindow.openGameLobbyGui(player,3);
+                DragonGuildOut.openGameLobbyGui(player,3);
             }
         };
 
@@ -178,7 +178,7 @@ public class DragonGuildGui {
         EasyButton kickOutButton = new EasyButton(kickOut.getInt("x"), kickOut.getInt("y"), kickOut.getInt("width"), kickOut.getInt("high"), ImageUrlEnum.kickOut.getUrl(), PImageUrlEnum.kickOut.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
-                DragonGuildWindow.openGameLobbyGui(player,4);
+                DragonGuildOut.openGameLobbyGui(player,4);
             }
         };
 

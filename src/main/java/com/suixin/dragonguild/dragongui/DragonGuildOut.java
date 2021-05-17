@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 
-public class DragonGuildWindow {
+public class DragonGuildOut {
     //创建GUI
     public static EasyScreen getGui(Integer type) {
         String url = "";

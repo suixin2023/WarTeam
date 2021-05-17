@@ -86,7 +86,7 @@ public class DragonGuiYml {
             save = DragonGuild.getYml("dragon/notice/保存.yml");
             clear = DragonGuild.getYml("dragon/notice/清空.yml");
 
-            backGroundChat = DragonGuild.getYml("dragon/notice/聊天背景.yml");
+            backGroundChat = DragonGuild.getYml("dragon/chat/聊天背景.yml");
             chatContent = DragonGuild.getYml("dragon/chat/聊天内容.yml");
             messageList = DragonGuild.getYml("dragon/chat/消息列表.yml");
             send = DragonGuild.getYml("dragon/chat/发送.yml");

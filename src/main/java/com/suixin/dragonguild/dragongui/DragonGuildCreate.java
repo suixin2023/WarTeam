@@ -7,7 +7,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 
-public class DragonGuildPlayerWindow {
+public class DragonGuildCreate {
     //创建GUI
     public static EasyScreen getGui(Integer type) {
         String url = "";

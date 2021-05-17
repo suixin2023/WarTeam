@@ -2,7 +2,6 @@ package com.suixin.dragonguild.command;
 
 import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.dragongui.DragonGuildGui;
-import com.suixin.dragonguild.dragongui.DragonGuildWindow;
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
