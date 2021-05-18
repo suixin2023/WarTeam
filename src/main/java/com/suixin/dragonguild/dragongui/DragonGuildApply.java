@@ -15,8 +15,8 @@ import java.util.*;
 public class DragonGuildApply {
     //创建GUI
     public static EasyScreen getGui() {
-        YamlConfiguration window = DragonGuiYml.getApplyBackground();
-        return new EasyScreen(ImageUrlEnum.backgroundOfApply.getUrl(), window.getInt("width"), window.getInt("high"));
+        YamlConfiguration mainGui = DragonGuiYml.getBackground();
+        return new EasyScreen(ImageUrlEnum.background.getUrl(), mainGui.getInt("width"), mainGui.getInt("high"));
     }
 
     //打开GUI
@@ -28,16 +28,54 @@ public class DragonGuildApply {
     //创建组件
     public static EasyScreen createGui(Player player, Integer dragonGuildId) {
         EasyScreen screen = getGui();
-
-        //关闭
-        YamlConfiguration applyClose = DragonGuiYml.getApplyClose();
-        EasyButton applyCloseButton = new EasyButton( applyClose.getInt("x"), applyClose.getInt("y"), applyClose.getInt("width"), applyClose.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+        //大厅
+        YamlConfiguration lobby = DragonGuiYml.getLobby();
+        EasyButton lobbyButton = new EasyButton(lobby.getInt("x"), lobby.getInt("y"), lobby.getInt("width"), lobby.getInt("high"), ImageUrlEnum.lobby.getUrl(), PImageUrlEnum.lobby.getUrl()) {
             @Override
-            public void onClick(Player player, ClickListener.Type type) {
+            public void onClick(Player player, Type type) {
                 DragonGuildGui.openGameLobbyGui(player);
             }
         };
-        List<EasyComponent> easyComponents = new ArrayList<>();
+        //公告
+        YamlConfiguration notice = DragonGuiYml.getNotice();
+        EasyButton noticeButton = new EasyButton(notice.getInt("x"), notice.getInt("y"), notice.getInt("width"), notice.getInt("high"), ImageUrlEnum.notice.getUrl(), PImageUrlEnum.notice.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildNotice.openGameLobbyGui(player,dragonGuildId);
+            }
+        };
+        //聊天
+        YamlConfiguration chat = DragonGuiYml.getChat();
+        EasyButton chatButton = new EasyButton(chat.getInt("x"), chat.getInt("y"), chat.getInt("width"), chat.getInt("high"), ImageUrlEnum.chat.getUrl(), PImageUrlEnum.chat.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildChat.openGameLobbyGui(player,dragonGuildId);
+            }
+        };
+        //审批
+        YamlConfiguration apply = DragonGuiYml.getApply();
+        EasyButton applyButton = new EasyButton(apply.getInt("x"), apply.getInt("y"), apply.getInt("width"), apply.getInt("high"), PImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+            }
+        };
+        //排行
+        YamlConfiguration top = DragonGuiYml.getTop();
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+            }
+        };
+        //关闭
+        YamlConfiguration close = DragonGuiYml.getClose();
+        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+            @Override
+            public void onClick(Player player, ClickListener.Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                openedScreen.closeGui(player);
+            }
+        };
+        List<EasyComponent> easyComponents;
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
         easyComponents = applyList(player, component, 1, dragonGuildId,1);
@@ -83,8 +121,12 @@ public class DragonGuildApply {
                 openedScreen.updateGui(player);
             }
         };
-
-        screen.addComponent(applyCloseButton);
+        screen.addComponent(lobbyButton);
+        screen.addComponent(noticeButton);
+        screen.addComponent(chatButton);
+        screen.addComponent(applyButton);
+        screen.addComponent(topButton);
+        screen.addComponent(closeButton);
         screen.addComponent(shangyiyeButton);
         screen.addComponent(xiayiyeButton);
         if (easyComponents.size()> 0) {

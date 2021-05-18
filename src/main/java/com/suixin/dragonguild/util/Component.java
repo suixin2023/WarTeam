@@ -10,6 +10,7 @@ public class Component {
     private Integer current = 1;
     private List<String> memBerList  = new ArrayList<>();
     private List<String> applyList  = new ArrayList<>();
+    private List<String> chatList  = new ArrayList<>();
     public Integer getCurrent() {
         return current;
     }
@@ -32,5 +33,13 @@ public class Component {
 
     public void setApplyList(List<String> applyList) {
         this.applyList = applyList;
+    }
+
+    public List<String> getChatList() {
+        return chatList;
+    }
+
+    public void setChatList(List<String> chatList) {
+        this.chatList = chatList;
     }
 }

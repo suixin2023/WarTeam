@@ -28,6 +28,14 @@ public enum ImageUrlEnum {
     backgroundOfApply("applyRepulse","审批背景.png", "审批背景"),
     applyList("applyRepulse","审批列表.png", "审批列表"),
     applyModel("applyRepulse","审批组件.png", "审批组件"),
+
+    chatImg("applyRepulse","头像.png", "头像"),
+
+    lobby("applyRepulse","大厅.png", "大厅"),
+    notice("applyRepulse","公告.png", "公告"),
+    chat("applyRepulse","聊天.png", "聊天"),
+    apply("applyRepulse","审批.png", "审批"),
+    top("applyRepulse","排行.png", "排行"),
     ;
 
     private String id;

@@ -67,8 +67,8 @@ public class DragonGuildChatDatabaseHandler {
             }
         }
 
-        public static List<DragonGuildChatEntity> selectDragonGuildDataNum(Integer current){
-            String sql = "select * from dragon_guild_chat where status = 1 limit "+current+", 5";
+        public static List<DragonGuildChatEntity> selectDragonGuildDataNum(Integer current,Integer guildId){
+            String sql = "select * from dragon_guild_chat where status = 1 and guild_id = "+guildId+" limit "+current+", 5";
             List<DragonGuildChatEntity> dragonGuildChatEntitys = new ArrayList<>();
             try {
                 ResultSet rst = MysqlUtil.execQuery(sql);

@@ -20,6 +20,12 @@ public enum PImageUrlEnum {
     applyAgree("applyAgree","同意2.png", "同意"),
     applyList("applyRepulse","审批列表2.png", "审批列表"),
     applyRepulse("applyRepulse","不同意2.png", "不同意"),
+
+    lobby("applyRepulse","大厅2.png", "大厅"),
+    notice("applyRepulse","公告2.png", "公告"),
+    chat("applyRepulse","聊天2.png", "聊天"),
+    apply("applyRepulse","审批2.png", "审批"),
+    top("applyRepulse","排行2.png", "排行"),
     ;
 
     private String id;

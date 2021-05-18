@@ -17,15 +17,9 @@ import java.util.List;
 
 public class DragonGuildOut {
     //创建GUI
-    public static EasyScreen getGui(Integer type) {
-        String url = "";
-        if (type == 4) {
-            url =  ImageUrlEnum.window2.getUrl();
-        }else{
-            url =  ImageUrlEnum.window.getUrl();
-        }
-        YamlConfiguration window = DragonGuiYml.getWindow();
-        return new EasyScreen(url, window.getInt("width"), window.getInt("high"));
+    public static EasyScreen getGui() {
+        YamlConfiguration mainGui = DragonGuiYml.getBackground();
+        return new EasyScreen(ImageUrlEnum.background.getUrl(), mainGui.getInt("width"), mainGui.getInt("high"));
     }
 
     //打开GUI
@@ -36,7 +30,45 @@ public class DragonGuildOut {
 
     //创建组件
     public static EasyScreen createGui(Integer type1) {
-        EasyScreen gui = getGui(type1);
+        EasyScreen gui = getGui();
+        //大厅
+        YamlConfiguration lobby = DragonGuiYml.getLobby();
+        EasyButton lobbyButton = new EasyButton(lobby.getInt("x"), lobby.getInt("y"), lobby.getInt("width"), lobby.getInt("high"), PImageUrlEnum.lobby.getUrl(), PImageUrlEnum.lobby.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+            }
+        };
+        //公告
+        YamlConfiguration notice = DragonGuiYml.getNotice();
+        EasyButton noticeButton = new EasyButton(notice.getInt("x"), notice.getInt("y"), notice.getInt("width"), notice.getInt("high"), ImageUrlEnum.notice.getUrl(), PImageUrlEnum.notice.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildNotice.openGameLobbyGui(player,id);
+            }
+        };
+        //聊天
+        YamlConfiguration chat = DragonGuiYml.getChat();
+        EasyButton chatButton = new EasyButton(chat.getInt("x"), chat.getInt("y"), chat.getInt("width"), chat.getInt("high"), ImageUrlEnum.chat.getUrl(), PImageUrlEnum.chat.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildChat.openGameLobbyGui(player,id);
+            }
+        };
+        //审批
+        YamlConfiguration apply = DragonGuiYml.getApply();
+        EasyButton applyButton = new EasyButton(apply.getInt("x"), apply.getInt("y"), apply.getInt("width"), apply.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildApply.openGameLobbyGui(player,id);
+            }
+        };
+        //排行
+        YamlConfiguration top = DragonGuiYml.getTop();
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+            }
+        };
         YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();
         final EasyTextField shurukuangTextField = new EasyTextField(shurukuang.getInt("x"), shurukuang.getInt("y"), shurukuang.getInt("width"), "请输入");
         //确定键
