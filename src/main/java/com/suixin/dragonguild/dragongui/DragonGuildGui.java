@@ -81,7 +81,7 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 openedScreen.onClose(player);
-                DragonGuildOut.openGameLobbyGui(player, 1);
+                DragonGuildCreate.openGameLobbyGui(player, 1,dragonGuildMemberEntity.getDragonGuildId());
             }
         };
         EasyLabel nameText = null;
@@ -105,7 +105,7 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                 openedScreen.onClose(player);
-                DragonGuildOut.openGameLobbyGui(player,2);
+                DragonGuildCreate.openGameLobbyGui(player,2,dragonGuildMemberEntity.getDragonGuildId());
             }
         };
         //解散公会
@@ -207,7 +207,7 @@ public class DragonGuildGui {
         EasyButton updateNameButton = new EasyButton( updateName.getInt("x"), updateName.getInt("y"), updateName.getInt("width"), updateName.getInt("high"),ImageUrlEnum.updateName.getUrl(), PImageUrlEnum.updateName.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildOut.openGameLobbyGui(player,3);
+                DragonGuildOut.openGameLobbyGui(player,1,dragonGuildMemberEntity.getDragonGuildId());
             }
         };
 
@@ -216,7 +216,7 @@ public class DragonGuildGui {
         EasyButton kickOutButton = new EasyButton(kickOut.getInt("x"), kickOut.getInt("y"), kickOut.getInt("width"), kickOut.getInt("high"), ImageUrlEnum.kickOut.getUrl(), PImageUrlEnum.kickOut.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
-                DragonGuildOut.openGameLobbyGui(player,4);
+                DragonGuildOut.openGameLobbyGui(player,2,dragonGuildMemberEntity.getDragonGuildId());
             }
         };
 

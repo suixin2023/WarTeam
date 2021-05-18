@@ -23,13 +23,13 @@ public class DragonGuildOut {
     }
 
     //打开GUI
-    public static void openGameLobbyGui(Player player, Integer type) {
-        EasyScreen lhdGui = createGui(type);
+    public static void openGameLobbyGui(Player player, Integer type,Integer gragonGuildId) {
+        EasyScreen lhdGui = createGui(type, gragonGuildId);
         lhdGui.openGui(player);
     }
 
     //创建组件
-    public static EasyScreen createGui(Integer type1) {
+    public static EasyScreen createGui(Integer type1,Integer gragonGuildId) {
         EasyScreen gui = getGui();
         //大厅
         YamlConfiguration lobby = DragonGuiYml.getLobby();
@@ -43,7 +43,7 @@ public class DragonGuildOut {
         EasyButton noticeButton = new EasyButton(notice.getInt("x"), notice.getInt("y"), notice.getInt("width"), notice.getInt("high"), ImageUrlEnum.notice.getUrl(), PImageUrlEnum.notice.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildNotice.openGameLobbyGui(player,id);
+                DragonGuildNotice.openGameLobbyGui(player,gragonGuildId);
             }
         };
         //聊天
@@ -51,7 +51,7 @@ public class DragonGuildOut {
         EasyButton chatButton = new EasyButton(chat.getInt("x"), chat.getInt("y"), chat.getInt("width"), chat.getInt("high"), ImageUrlEnum.chat.getUrl(), PImageUrlEnum.chat.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildChat.openGameLobbyGui(player,id);
+                DragonGuildChat.openGameLobbyGui(player,gragonGuildId);
             }
         };
         //审批
@@ -59,7 +59,7 @@ public class DragonGuildOut {
         EasyButton applyButton = new EasyButton(apply.getInt("x"), apply.getInt("y"), apply.getInt("width"), apply.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildApply.openGameLobbyGui(player,id);
+                DragonGuildApply.openGameLobbyGui(player,gragonGuildId);
             }
         };
         //排行
@@ -117,7 +117,11 @@ public class DragonGuildOut {
                 DragonGuildGui.openGameLobbyGui(player);
             }
         };
-
+        gui.addComponent(lobbyButton);
+        gui.addComponent(noticeButton);
+        gui.addComponent(chatButton);
+        gui.addComponent(applyButton);
+        gui.addComponent(topButton);
         gui.addComponent(shurukuangTextField);
         gui.addComponent(confirmButton);
         return gui;
