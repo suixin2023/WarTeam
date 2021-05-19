@@ -65,14 +65,6 @@ public class DragonGuildNoticeEdit {
             public void onClick(Player player, ClickListener.Type type) {
             }
         };
-        //编辑公告
-        YamlConfiguration edit = DragonGuiYml.getEdit();
-        EasyButton editButton = new EasyButton(edit.getInt("x"), edit.getInt("y"), edit.getInt("width"), edit.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
-            @Override
-            public void onClick(Player player, ClickListener.Type type) {
-                DragonGuildNoticeEdit.openGameLobbyGui(player,dragonGuildId);
-            }
-        };
         //关闭
         YamlConfiguration applyClose = DragonGuiYml.getClose();
         EasyButton applyCloseButton = new EasyButton( applyClose.getInt("x"), applyClose.getInt("y"), applyClose.getInt("width"), applyClose.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
