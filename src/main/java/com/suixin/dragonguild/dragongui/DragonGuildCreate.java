@@ -23,7 +23,7 @@ public class DragonGuildCreate {
     }
 
     //创建组件
-    public static EasyScreen createGui(Integer type1,Integer gragonGuildId) {
+    public static EasyScreen createGui(Integer type1,Integer dragonGuildId) {
         EasyScreen gui = getGui(type1);
         //大厅
         YamlConfiguration lobby = DragonGuiYml.getLobby();
@@ -37,7 +37,7 @@ public class DragonGuildCreate {
         EasyButton noticeButton = new EasyButton(notice.getInt("x"), notice.getInt("y"), notice.getInt("width"), notice.getInt("high"), ImageUrlEnum.notice.getUrl(), PImageUrlEnum.notice.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildNotice.openGameLobbyGui(player,gragonGuildId);
+                DragonGuildNotice.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //聊天
@@ -45,7 +45,7 @@ public class DragonGuildCreate {
         EasyButton chatButton = new EasyButton(chat.getInt("x"), chat.getInt("y"), chat.getInt("width"), chat.getInt("high"), ImageUrlEnum.chat.getUrl(), PImageUrlEnum.chat.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildChat.openGameLobbyGui(player,gragonGuildId);
+                DragonGuildChat.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //审批
@@ -53,7 +53,7 @@ public class DragonGuildCreate {
         EasyButton applyButton = new EasyButton(apply.getInt("x"), apply.getInt("y"), apply.getInt("width"), apply.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildApply.openGameLobbyGui(player,gragonGuildId);
+                DragonGuildApply.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //排行
@@ -61,6 +61,7 @@ public class DragonGuildCreate {
         EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
+                DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //关闭

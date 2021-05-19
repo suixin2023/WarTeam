@@ -72,6 +72,7 @@ public class DragonGuildGui {
         EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
+                DragonGuildTop.openGameLobbyGui(player,id);
             }
         };
         //创建公会
@@ -235,7 +236,6 @@ public class DragonGuildGui {
         Integer integer = DragonGuildApplyDatabaseHandler.selectCount(dragonGuildMemberEntity.getDragonGuildId());
         EasyLabel applyNumText = new EasyLabel(applyNum.getInt("x"), applyNum.getInt("y"), 1, Arrays.asList(integer.toString()));
         YamlConfiguration backgroundOfNoTeam = DragonGuiYml.getBackgroundOfNoTeam();
-        EasyImage backgroundOfNoTeamImage = new EasyImage( backgroundOfNoTeam.getInt("x"), backgroundOfNoTeam.getInt("y"), backgroundOfNoTeam.getInt("width"), backgroundOfNoTeam.getInt("high"),ImageUrlEnum.backgroundOfNoTeam.getUrl());
 
         List<String> memBerlist = component.getMemBerList();
         if (id != null) {
@@ -262,7 +262,6 @@ public class DragonGuildGui {
         }else {
             screen.addComponent(createButton);
             screen.addComponent(joinButton);
-            screen.addComponent(backgroundOfNoTeamImage);
         }
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);

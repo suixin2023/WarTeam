@@ -68,7 +68,6 @@ public class DragonGuiYml {
             pictureFrame = DragonGuild.getYml("dragon/头像框.yml");
             name = DragonGuild.getYml("dragon/公会名.yml");
             background = DragonGuild.getYml("dragon/背景.yml");
-            backgroundOfNoTeam = DragonGuild.getYml("dragon/无公会背景.yml");
             nickName = DragonGuild.getYml("dragon/游戏名.yml");
             level = DragonGuild.getYml("dragon/等级.yml");
             exp = DragonGuild.getYml("dragon/贡献值.yml");

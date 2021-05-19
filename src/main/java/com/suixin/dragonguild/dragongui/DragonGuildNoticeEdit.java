@@ -63,6 +63,7 @@ public class DragonGuildNoticeEdit {
         EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
+                DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //关闭

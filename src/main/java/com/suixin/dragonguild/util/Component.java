@@ -1,5 +1,7 @@
 package com.suixin.dragonguild.util;
 
+import eos.moe.dragoncore.api.easygui.component.EasyScrollingList;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ public class Component {
     private List<String> memBerList  = new ArrayList<>();
     private List<String> applyList  = new ArrayList<>();
     private List<String> chatList  = new ArrayList<>();
+    private EasyScrollingList scrollingList;
     public Integer getCurrent() {
         return current;
     }
@@ -41,5 +44,13 @@ public class Component {
 
     public void setChatList(List<String> chatList) {
         this.chatList = chatList;
+    }
+
+    public EasyScrollingList getScrollingList() {
+        return scrollingList;
+    }
+
+    public void setScrollingList(EasyScrollingList scrollingList) {
+        this.scrollingList = scrollingList;
     }
 }
