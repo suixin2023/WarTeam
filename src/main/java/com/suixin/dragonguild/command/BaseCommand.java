@@ -2,6 +2,7 @@ package com.suixin.dragonguild.command;
 
 import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.dragongui.DragonGuildGui;
+import com.suixin.dragonguild.dragongui.DragonGuildNoTeam;
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
@@ -56,7 +57,12 @@ public class BaseCommand implements CommandExecutor {
 			String arg1 = argsList.get(0);
 			if (arg1.equals("open")) {
 				//打开公会
-				DragonGuildGui.openGameLobbyGui(player);
+				DragonGuildMemberEntity dragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
+				if (dragonGuildMemberEntity.getId() == null) {
+					DragonGuildNoTeam.openGameLobbyGui(player);
+				}else {
+					DragonGuildGui.openGameLobbyGui(player);
+				}
 			} else if (arg1.equals("list")) {
 				//打开公会列表
 				dragonGuildList(argsList,player);

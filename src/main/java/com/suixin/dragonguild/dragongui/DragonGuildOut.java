@@ -8,7 +8,9 @@ import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.EasyButton;
+import eos.moe.dragoncore.api.easygui.component.EasyImage;
 import eos.moe.dragoncore.api.easygui.component.EasyTextField;
+import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
@@ -64,12 +66,14 @@ public class DragonGuildOut {
         };
         //排行
         YamlConfiguration top = DragonGuiYml.getTop();
-        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.top.getUrl(), PImageUrlEnum.top.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        YamlConfiguration window = DragonGuiYml.getWindow();
+        EasyImage img = new EasyImage( window.getInt("x"), window.getInt("y"), window.getInt("width"), window.getInt("high"),ImageUrlEnum.window.getUrl());
         YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();
         final EasyTextField shurukuangTextField = new EasyTextField(shurukuang.getInt("x"), shurukuang.getInt("y"), shurukuang.getInt("width"), "请输入");
         //确定键
@@ -118,13 +122,25 @@ public class DragonGuildOut {
                 DragonGuildGui.openGameLobbyGui(player);
             }
         };
+
+        //取消
+        YamlConfiguration cancel = DragonGuiYml.getCancel();
+        EasyButton cancelButton = new EasyButton( cancel.getInt("x"), cancel.getInt("y"), cancel.getInt("width"), cancel.getInt("high"), ImageUrlEnum.cancel.getUrl(), PImageUrlEnum.cancel.getUrl() ) {
+            @Override
+            public void onClick(Player player, ClickListener.Type type) {
+                DragonGuildGui.openGameLobbyGui(player);
+            }
+        };
+
         gui.addComponent(lobbyButton);
         gui.addComponent(noticeButton);
         gui.addComponent(chatButton);
         gui.addComponent(applyButton);
         gui.addComponent(topButton);
+        gui.addComponent(img);
         gui.addComponent(shurukuangTextField);
         gui.addComponent(confirmButton);
+        gui.addComponent(cancelButton);
         return gui;
     }
 }

@@ -17,56 +17,25 @@ public class DragonGuildCreate {
     }
 
     //打开GUI
-    public static void openGameLobbyGui(Player player, Integer type,Integer dragonGuildId) {
-        EasyScreen lhdGui = createGui(type,dragonGuildId);
+    public static void openGameLobbyGui(Player player, Integer type) {
+        EasyScreen lhdGui = createGui(type);
         lhdGui.openGui(player);
     }
 
     //创建组件
-    public static EasyScreen createGui(Integer type1,Integer dragonGuildId) {
+    public static EasyScreen createGui(Integer type1) {
         EasyScreen gui = getGui(type1);
-        //大厅
-        YamlConfiguration lobby = DragonGuiYml.getLobby();
-        EasyButton lobbyButton = new EasyButton(lobby.getInt("x"), lobby.getInt("y"), lobby.getInt("width"), lobby.getInt("high"), PImageUrlEnum.lobby.getUrl(), PImageUrlEnum.lobby.getUrl()) {
-            @Override
-            public void onClick(Player player, Type type) {
-            }
-        };
-        //公告
-        YamlConfiguration notice = DragonGuiYml.getNotice();
-        EasyButton noticeButton = new EasyButton(notice.getInt("x"), notice.getInt("y"), notice.getInt("width"), notice.getInt("high"), ImageUrlEnum.notice.getUrl(), PImageUrlEnum.notice.getUrl()) {
-            @Override
-            public void onClick(Player player, Type type) {
-                DragonGuildNotice.openGameLobbyGui(player,dragonGuildId);
-            }
-        };
-        //聊天
-        YamlConfiguration chat = DragonGuiYml.getChat();
-        EasyButton chatButton = new EasyButton(chat.getInt("x"), chat.getInt("y"), chat.getInt("width"), chat.getInt("high"), ImageUrlEnum.chat.getUrl(), PImageUrlEnum.chat.getUrl()) {
-            @Override
-            public void onClick(Player player, Type type) {
-                DragonGuildChat.openGameLobbyGui(player,dragonGuildId);
-            }
-        };
-        //审批
-        YamlConfiguration apply = DragonGuiYml.getApply();
-        EasyButton applyButton = new EasyButton(apply.getInt("x"), apply.getInt("y"), apply.getInt("width"), apply.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
-            @Override
-            public void onClick(Player player, Type type) {
-                DragonGuildApply.openGameLobbyGui(player,dragonGuildId);
-            }
-        };
         //排行
         YamlConfiguration top = DragonGuiYml.getTop();
-        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.top.getUrl(), PImageUrlEnum.top.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
+                DragonGuildNoTeam.openGameLobbyGui(player);
             }
         };
         //关闭
         YamlConfiguration close = DragonGuiYml.getClose();
-        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 DragonGuildGui.openGameLobbyGui(player);
@@ -74,7 +43,7 @@ public class DragonGuildCreate {
         };
         //取消
         YamlConfiguration cancel = DragonGuiYml.getCancel();
-        EasyButton cancelButton = new EasyButton( cancel.getInt("x"), cancel.getInt("y"), cancel.getInt("width"), cancel.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+        EasyButton cancelButton = new EasyButton( cancel.getInt("x"), cancel.getInt("y"), cancel.getInt("width"), cancel.getInt("high"), ImageUrlEnum.cancel.getUrl(), PImageUrlEnum.cancel.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 DragonGuildGui.openGameLobbyGui(player);
@@ -82,8 +51,8 @@ public class DragonGuildCreate {
         };
 
         //聊天内容
-        YamlConfiguration content = DragonGuiYml.getChatContent();
-        final EasyTextField contentTextField = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"));
+        YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();
+        final EasyTextField contentTextField = new EasyTextField(shurukuang.getInt("x"), shurukuang.getInt("y"), shurukuang.getInt("width"));
 
 
         //确定键
@@ -99,10 +68,6 @@ public class DragonGuildCreate {
                 }
             }
         };
-        gui.addComponent(lobbyButton);
-        gui.addComponent(noticeButton);
-        gui.addComponent(chatButton);
-        gui.addComponent(applyButton);
         gui.addComponent(topButton);
         gui.addComponent(closeButton);
         gui.addComponent(cancelButton);

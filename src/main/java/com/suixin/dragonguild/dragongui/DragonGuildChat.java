@@ -2,8 +2,10 @@ package com.suixin.dragonguild.dragongui;
 
 import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildChatEntity;
+import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
 import com.suixin.dragonguild.handler.DragonGuildChatDatabaseHandler;
+import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
@@ -66,7 +68,7 @@ public class DragonGuildChat {
         };
         //排行
         YamlConfiguration top = DragonGuiYml.getTop();
-        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.top.getUrl(), PImageUrlEnum.top.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
@@ -74,7 +76,7 @@ public class DragonGuildChat {
         };
         //关闭
         YamlConfiguration close = DragonGuiYml.getClose();
-        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
@@ -94,7 +96,7 @@ public class DragonGuildChat {
 
         //发送
         YamlConfiguration send = DragonGuiYml.getSend();
-        EasyButton shangyiyeButton = new EasyButton( send.getInt("x"), send.getInt("y"), send.getInt("width"), send.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
+        EasyButton shangyiyeButton = new EasyButton( send.getInt("x"), send.getInt("y"), send.getInt("width"), send.getInt("high"), ImageUrlEnum.send.getUrl(), PImageUrlEnum.send.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildChatEntity dragonGuildChatEntity = new DragonGuildChatEntity();
@@ -151,12 +153,17 @@ public class DragonGuildChat {
         for (String easyComponent : chatlist) {
             components.remove(easyComponent);
         }
-
+        chatlist.clear();
         for (DragonGuildChatEntity dragonGuildChatEntity: dragonGuildChatEntities) {
             String creator = dragonGuildChatEntity.getCreator();
             String desc = dragonGuildChatEntity.getDesc();
-
-            EasyImage img = new EasyImage( chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.chatImg.getUrl());
+            DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(creator);
+            EasyImage img = null;
+            if (dragonGuildEntity.getId() == null) {
+                img = new EasyImage(chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
+            }else {
+                img = new EasyImage(chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.creator.getUrl());
+            }
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
             String format = simpleDateFormat.format(new Date());
             EasyLabel nameText = new EasyLabel(chatName.getInt("x"), chatNameY, 1,Arrays.asList(" §d"+creator+" "+format));

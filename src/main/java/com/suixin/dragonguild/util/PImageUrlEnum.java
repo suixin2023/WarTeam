@@ -30,6 +30,11 @@ public enum PImageUrlEnum {
     memberList("memberList","成员列表2.png", "成员列表"),
     guildList("guildList","公会列表2.png", "公会列表"),
     lobby("lobby","大厅2.png", "大厅"),
+
+    //暂无图片
+    edit("edit","编辑2.png", "编辑"),
+    save("save","保存2.png", "保存"),
+    clear("clear","清空2.png", "清空"),
     ;
 
     private String id;

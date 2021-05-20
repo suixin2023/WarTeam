@@ -10,6 +10,7 @@ import com.suixin.dragonguild.util.ImageUrlEnum;
 import com.suixin.dragonguild.util.PImageUrlEnum;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.EasyButton;
+import eos.moe.dragoncore.api.easygui.component.EasyImage;
 import eos.moe.dragoncore.api.easygui.component.EasyLabel;
 import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -66,15 +67,17 @@ public class DragonGuildNotice {
         };
         //排行
         YamlConfiguration top = DragonGuiYml.getTop();
-        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.top.getUrl(), PImageUrlEnum.top.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        YamlConfiguration backGroundNotice = DragonGuiYml.getBackGroundNotice();
+        EasyImage img = new EasyImage( backGroundNotice.getInt("x"), backGroundNotice.getInt("y"), backGroundNotice.getInt("width"), backGroundNotice.getInt("high"),ImageUrlEnum.neirong.getUrl());
         //编辑公告
         YamlConfiguration edit = DragonGuiYml.getEdit();
-        EasyButton editButton = new EasyButton(edit.getInt("x"), edit.getInt("y"), edit.getInt("width"), edit.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton editButton = new EasyButton(edit.getInt("x"), edit.getInt("y"), edit.getInt("width"), edit.getInt("high"), ImageUrlEnum.edit.getUrl(), PImageUrlEnum.edit.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 DragonGuildNoticeEdit.openGameLobbyGui(player,dragonGuildId);
@@ -93,6 +96,7 @@ public class DragonGuildNotice {
         gui.addComponent(chatButton);
         gui.addComponent(applyButton);
         gui.addComponent(topButton);
+        gui.addComponent(img);
         //会长显示编辑公告按钮
         if (dragonGuildEntity.getId() != null) {
             gui.addComponent(editButton);

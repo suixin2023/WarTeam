@@ -23,23 +23,27 @@ public class DragonGuiYml {
     private static YamlConfiguration pictureFrame;
     private static YamlConfiguration name;
     private static YamlConfiguration background;
-    private static YamlConfiguration backgroundOfNoTeam;
     private static YamlConfiguration nickName;
     private static YamlConfiguration level;
     private static YamlConfiguration exp;
+    private static YamlConfiguration memberList;
     private static YamlConfiguration outTeam;
     private static YamlConfiguration dissolveTeam;
     private static YamlConfiguration window;
     private static YamlConfiguration shurukuang;
     private static YamlConfiguration confirm;
-    private static YamlConfiguration close;
     private static YamlConfiguration cancel;
+    private static YamlConfiguration close;
 
     private static YamlConfiguration lobby;
     private static YamlConfiguration notice;
     private static YamlConfiguration chat;
     private static YamlConfiguration apply;
+
     private static YamlConfiguration top;
+    private static YamlConfiguration topImg;
+    private static YamlConfiguration topName;
+    private static YamlConfiguration topJoinApply;
     //公告
     private static YamlConfiguration backGroundNotice;
     private static YamlConfiguration title;
@@ -55,6 +59,8 @@ public class DragonGuiYml {
     private static YamlConfiguration chatImg;
     private static YamlConfiguration chatName;
     private static YamlConfiguration chatBar;
+    private static YamlConfiguration chatConfirm;
+    private static YamlConfiguration chatCancel;
 
     public static boolean loadGui( ) {
         try {
@@ -71,6 +77,7 @@ public class DragonGuiYml {
             nickName = DragonGuild.getYml("dragon/游戏名.yml");
             level = DragonGuild.getYml("dragon/等级.yml");
             exp = DragonGuild.getYml("dragon/贡献值.yml");
+            memberList = DragonGuild.getYml("dragon/成员列表.yml");
             outTeam = DragonGuild.getYml("dragon/退出公会.yml");
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
             close = DragonGuild.getYml("dragon/关闭.yml");
@@ -81,6 +88,9 @@ public class DragonGuiYml {
             chat = DragonGuild.getYml("dragon/聊天.yml");
             apply = DragonGuild.getYml("dragon/审批.yml");
             top = DragonGuild.getYml("dragon/排行.yml");
+            topImg = DragonGuild.getYml("dragon/top/头像.yml");
+            topName = DragonGuild.getYml("dragon/top/名字.yml");
+            topJoinApply = DragonGuild.getYml("dragon/top/申请加入.yml");
 
             applyShangyiye = DragonGuild.getYml("dragon/apply/审批上一页.yml");
             applyXiayiye = DragonGuild.getYml("dragon/apply/审批下一页.yml");
@@ -110,6 +120,8 @@ public class DragonGuiYml {
             chatImg = DragonGuild.getYml("dragon/chat/头像.yml");
             chatName = DragonGuild.getYml("dragon/chat/名字.yml");
             chatBar = DragonGuild.getYml("dragon/chat/bar.yml");
+            chatConfirm = DragonGuild.getYml("dragon/chat/确定.yml");
+            chatCancel = DragonGuild.getYml("dragon/chat/取消.yml");
             return true;
         }catch (Exception e){
             return false;
@@ -179,14 +191,6 @@ public class DragonGuiYml {
 
     public static void setBackground(YamlConfiguration background) {
         DragonGuiYml.background = background;
-    }
-
-    public static YamlConfiguration getBackgroundOfNoTeam() {
-        return backgroundOfNoTeam;
-    }
-
-    public static void setBackgroundOfNoTeam(YamlConfiguration backgroundOfNoTeam) {
-        DragonGuiYml.backgroundOfNoTeam = backgroundOfNoTeam;
     }
 
     public static YamlConfiguration getNickName() {
@@ -499,5 +503,53 @@ public class DragonGuiYml {
 
     public static void setEdit(YamlConfiguration edit) {
         DragonGuiYml.edit = edit;
+    }
+
+    public static YamlConfiguration getTopImg() {
+        return topImg;
+    }
+
+    public static void setTopImg(YamlConfiguration topImg) {
+        DragonGuiYml.topImg = topImg;
+    }
+
+    public static YamlConfiguration getTopName() {
+        return topName;
+    }
+
+    public static void setTopName(YamlConfiguration topName) {
+        DragonGuiYml.topName = topName;
+    }
+
+    public static YamlConfiguration getTopJoinApply() {
+        return topJoinApply;
+    }
+
+    public static void setTopJoinApply(YamlConfiguration topJoinApply) {
+        DragonGuiYml.topJoinApply = topJoinApply;
+    }
+
+    public static YamlConfiguration getChatConfirm() {
+        return chatConfirm;
+    }
+
+    public static void setChatConfirm(YamlConfiguration chatConfirm) {
+        DragonGuiYml.chatConfirm = chatConfirm;
+    }
+
+    public static YamlConfiguration getChatCancel() {
+        return chatCancel;
+    }
+
+    public static void setChatCancel(YamlConfiguration chatCancel) {
+        DragonGuiYml.chatCancel = chatCancel;
+    }
+
+    public static YamlConfiguration getMemberList() {
+        return memberList;
+    }
+
+    public static void setMemberList(YamlConfiguration memberList) {
+        DragonGuiYml.memberList = memberList;
     }
 }

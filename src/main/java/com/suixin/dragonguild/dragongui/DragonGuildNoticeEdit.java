@@ -1,15 +1,20 @@
 package com.suixin.dragonguild.dragongui;
 
+import com.suixin.dragonguild.DragonGuild;
+import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
 import com.suixin.dragonguild.entity.DragonGuildNoticeEntity;
+import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildNoticeDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.*;
 import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.Date;
+import java.util.List;
 
 public class DragonGuildNoticeEdit {
     //创建GUI
@@ -60,7 +65,7 @@ public class DragonGuildNoticeEdit {
         };
         //排行
         YamlConfiguration top = DragonGuiYml.getTop();
-        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.apply.getUrl(), PImageUrlEnum.apply.getUrl()) {
+        EasyButton topButton = new EasyButton(top.getInt("x"), top.getInt("y"), top.getInt("width"), top.getInt("high"), ImageUrlEnum.top.getUrl(), PImageUrlEnum.top.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
@@ -68,7 +73,7 @@ public class DragonGuildNoticeEdit {
         };
         //关闭
         YamlConfiguration applyClose = DragonGuiYml.getClose();
-        EasyButton applyCloseButton = new EasyButton( applyClose.getInt("x"), applyClose.getInt("y"), applyClose.getInt("width"), applyClose.getInt("high"), ImageUrlEnum.applyClose.getUrl(), PImageUrlEnum.applyClose.getUrl() ) {
+        EasyButton applyCloseButton = new EasyButton( applyClose.getInt("x"), applyClose.getInt("y"), applyClose.getInt("width"), applyClose.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildGui.openGameLobbyGui(player);
@@ -88,7 +93,7 @@ public class DragonGuildNoticeEdit {
         final EasyTextField contentTextField8 = new EasyTextField(content.getInt("x"), content.getInt("y")+35, content.getInt("width"));
         //保存
         YamlConfiguration save = DragonGuiYml.getSave();
-        EasyButton saveButton = new EasyButton( save.getInt("x"), save.getInt("y"), save.getInt("width"), save.getInt("high"),ImageUrlEnum.applyXiayiye.getUrl(), PImageUrlEnum.applyXiayiye.getUrl() ) {
+        EasyButton saveButton = new EasyButton( save.getInt("x"), save.getInt("y"), save.getInt("width"), save.getInt("high"),ImageUrlEnum.save.getUrl(), PImageUrlEnum.save.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildNoticeEntity dragonGuildNoticeEntity = new DragonGuildNoticeEntity();
@@ -102,11 +107,19 @@ public class DragonGuildNoticeEdit {
                 dragonGuildNoticeEntity.setStatus(1);
                 DragonGuildNoticeEntity dragonGuildNoticeEntity1 = DragonGuildNoticeDatabaseHandler.selectDragonGuildByGuildId(dragonGuildId);
                 DragonGuildNoticeDatabaseHandler.updateUserConfigDataNum(dragonGuildNoticeEntity1.getId(),dragonGuildNoticeEntity);
+                List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByDragonGuildId(dragonGuildId);
+                for (DragonGuildMemberEntity dragonGuildMemberEntity : dragonGuildMemberEntities) {
+                    String uid = dragonGuildMemberEntity.getUid();
+                    Player member = Bukkit.getServer().getPlayer(uid);
+                    if (member != null) {
+                        member.sendMessage(DragonGuild.getSystemConfig().getString("DragonGuild.prefix") + "§a§l会长发布了新公告");
+                    }
+                }
             }
         };
         //清空
         YamlConfiguration clear = DragonGuiYml.getClear();
-        EasyButton clearButton = new EasyButton( clear.getInt("x"), clear.getInt("y"), clear.getInt("width"), clear.getInt("high"),ImageUrlEnum.applyAgree.getUrl(), PImageUrlEnum.applyAgree.getUrl() ) {
+        EasyButton clearButton = new EasyButton( clear.getInt("x"), clear.getInt("y"), clear.getInt("width"), clear.getInt("high"),ImageUrlEnum.clear.getUrl(), PImageUrlEnum.clear.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
                 EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);

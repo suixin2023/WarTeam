@@ -42,6 +42,10 @@ public enum ImageUrlEnum {
     guild("creator","公会.png", "公会"),
     title("title","标题.png", "标题"),
     bar("bar","bar.png", "bar"),
+    //暂无图片
+    edit("edit","编辑.png", "编辑"),
+    save("save","保存.png", "保存"),
+    clear("clear","清空.png", "清空"),
     ;
 
     private String id;
