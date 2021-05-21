@@ -78,13 +78,15 @@ public class DragonGuildTop {
         };
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
-        YamlConfiguration messageListYml = DragonGuiYml.getMessageList();
-        EasyScrollingList scrollingList = new EasyScrollingList(messageListYml.getInt("x"), messageListYml.getInt("y"), messageListYml.getInt("width"), messageListYml.getInt("high"), "0,102,255,255");
-        scrollingList.setBar(10, 28, 500, ImageUrlEnum.bar.getUrl());
+        YamlConfiguration topbgYml = DragonGuiYml.getTopbg();
+        EasyScrollingList scrollingList = new EasyScrollingList(topbgYml.getInt("x"), topbgYml.getInt("y"), topbgYml.getInt("width"), topbgYml.getInt("high"), "0,102,255,255");
+        YamlConfiguration barYml = DragonGuiYml.getBar();
+        scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
         easyScrollList(scrollingList,player, component, 1);
+        component.setScrollingList(scrollingList);
         //上一页
-        YamlConfiguration shangyiye = DragonGuiYml.getShangyiye();
-        EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
+        YamlConfiguration shangyiye = DragonGuiYml.getTopShangyiye();
+        EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.shangyiye.getUrl(), PImageUrlEnum.shangyiye.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
                 Component component = DragonGuildGui.getUserComponent().get(player.getName());
@@ -102,8 +104,8 @@ public class DragonGuildTop {
         };
 
         //下一页
-        YamlConfiguration xiayiye = DragonGuiYml.getXiayiye();
-        EasyButton xiayiyeButton = new EasyButton( xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"),ImageUrlEnum.applyXiayiye.getUrl(), PImageUrlEnum.applyXiayiye.getUrl() ) {
+        YamlConfiguration xiayiye = DragonGuiYml.getTopXiayiye();
+        EasyButton xiayiyeButton = new EasyButton( xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"),ImageUrlEnum.xiayiye.getUrl(), PImageUrlEnum.xiayiye.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
                 Component component = DragonGuildGui.getUserComponent().get(player.getName());
@@ -116,6 +118,10 @@ public class DragonGuildTop {
                 openedScreen.updateGui(player);
             }
         };
+        YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
+        EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
+        screen.addComponent(listBgkImg);
+        screen.addComponent(scrollingList);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);
@@ -134,36 +140,44 @@ public class DragonGuildTop {
         Map<String, EasyComponent> components = new HashMap<>();
         if (openedScreen != null) {
             components = openedScreen.getComponents();
-            components.remove(scrollingList.getId());
         }
-        YamlConfiguration topYml = DragonGuiYml.getTop();
+        limit = (limit - 1) * 6;
+        List<EasyComponent> list = new ArrayList<>();
+        List<String> guildList = component.getGuildList();
+        YamlConfiguration topYml = DragonGuiYml.getTopList();
         YamlConfiguration topImgYml = DragonGuiYml.getTopImg();
         YamlConfiguration nameYml = DragonGuiYml.getTopName();
         int topYmlY = topYml.getInt("y");
         int topImgYmlY = topImgYml.getInt("y");
         int nameYmlY = nameYml.getInt("y");
-        List<DragonGuildEntity> dragonGuildEntities = DragonGuildDatabaseHandler.selectDragonGuildDataNum(currentPage);
+        List<DragonGuildEntity> dragonGuildEntities = DragonGuildDatabaseHandler.selectDragonGuildDataNum(limit);
         if (dragonGuildEntities.size() == 0) {
             player.sendMessage(Message.no_more_apply);
             return;
         }
-        Map<String, EasyComponent> components1 = scrollingList.getComponents();
-        for (String key : components1.keySet()) {
-            components.remove(key);
+        for (String easyComponent : guildList) {
+            components.remove(easyComponent);
         }
         for (DragonGuildEntity dragonGuildEntity: dragonGuildEntities) {
             String name = dragonGuildEntity.getName();
             EasyImage topUmg = new EasyImage( topYml.getInt("x"), topYmlY, topYml.getInt("width"), topYml.getInt("high"),ImageUrlEnum.guildList.getUrl());
             EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(name));
             EasyImage img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild.getUrl());
+            list.add(topUmg);
+            list.add(nameText);
+            list.add(img);
+            scrollingList.addComponent(topUmg);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(img);
-            topYmlY = topYmlY + topYml.getInt("high")+ 3;
-            nameYmlY = nameYmlY + topYml.getInt("high")+ 3;
-            topImgYmlY = topImgYmlY + topYml.getInt("high")+ 3;
+            topYmlY = topYmlY + topYml.getInt("interval");
+            nameYmlY = nameYmlY + topYml.getInt("interval");
+            topImgYmlY = topImgYmlY + topYml.getInt("interval");
         }
-
+        for (EasyComponent easyComponent : list) {
+            guildList.add(easyComponent.getId());
+        }
         component.setCurrent(currentPage);
+        component.setGuildList(guildList);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
     }

@@ -86,10 +86,12 @@ public class DragonGuildChat {
         //聊天记录
         YamlConfiguration messageListYml = DragonGuiYml.getMessageList();
         EasyScrollingList scrollingList = new EasyScrollingList(messageListYml.getInt("x"), messageListYml.getInt("y"), messageListYml.getInt("width"), messageListYml.getInt("high"), "0,102,255,255");
-        scrollingList.setBar(10, 28, 500, ImageUrlEnum.bar.getUrl());
+        YamlConfiguration barYml = DragonGuiYml.getBar();
+        scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
         chatList(scrollingList,player, component, 1, dragonGuildId,1);
+        component.setScrollingList(scrollingList);
         //聊天内容
         YamlConfiguration content = DragonGuiYml.getChatContent();
         final EasyTextField contentTextField = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"));

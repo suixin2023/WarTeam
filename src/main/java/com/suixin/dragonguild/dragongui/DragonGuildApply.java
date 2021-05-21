@@ -80,8 +80,10 @@ public class DragonGuildApply {
         Component component = userComponent.get(player.getName());
         YamlConfiguration messageListYml = DragonGuiYml.getMessageList();
         EasyScrollingList scrollingList = new EasyScrollingList(messageListYml.getInt("x"), messageListYml.getInt("y"), messageListYml.getInt("width"), messageListYml.getInt("high"), "0,102,255,255");
-        scrollingList.setBar(10, 28, 500, ImageUrlEnum.bar.getUrl());
+        YamlConfiguration barYml = DragonGuiYml.getBar();
+        scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
         applyList(scrollingList,player, component, 1, dragonGuildId,1);
+        component.setScrollingList(scrollingList);
         //上一页
         YamlConfiguration shangyiye = DragonGuiYml.getApplyShangyiye();
         EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
@@ -116,6 +118,9 @@ public class DragonGuildApply {
                 openedScreen.updateGui(player);
             }
         };
+        YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
+        EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
+        screen.addComponent(listBgkImg);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);
@@ -190,6 +195,7 @@ public class DragonGuildApply {
             applylist.add(easyComponent.getId());
         }
         component.setCurrent(currentPage);
+        component.setApplyList(applylist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
     }

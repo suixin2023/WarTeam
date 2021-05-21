@@ -13,6 +13,7 @@ public class Component {
     private List<String> memBerList  = new ArrayList<>();
     private List<String> applyList  = new ArrayList<>();
     private List<String> chatList  = new ArrayList<>();
+    private List<String> guildList  = new ArrayList<>();
     private EasyScrollingList scrollingList;
     public Integer getCurrent() {
         return current;
@@ -52,5 +53,13 @@ public class Component {
 
     public void setScrollingList(EasyScrollingList scrollingList) {
         this.scrollingList = scrollingList;
+    }
+
+    public List<String> getGuildList() {
+        return guildList;
+    }
+
+    public void setGuildList(List<String> guildList) {
+        this.guildList = guildList;
     }
 }

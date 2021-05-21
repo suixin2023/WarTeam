@@ -34,6 +34,10 @@ public class DragonGuiYml {
     private static YamlConfiguration confirm;
     private static YamlConfiguration cancel;
     private static YamlConfiguration close;
+    private static YamlConfiguration guildImg;
+    private static YamlConfiguration memberBg;
+    private static YamlConfiguration bar;
+    private static YamlConfiguration listBgk;
 
     private static YamlConfiguration lobby;
     private static YamlConfiguration notice;
@@ -41,9 +45,13 @@ public class DragonGuiYml {
     private static YamlConfiguration apply;
 
     private static YamlConfiguration top;
+    private static YamlConfiguration topList;
+    private static YamlConfiguration topbg;
     private static YamlConfiguration topImg;
     private static YamlConfiguration topName;
     private static YamlConfiguration topJoinApply;
+    private static YamlConfiguration topShangyiye;
+    private static YamlConfiguration topXiayiye;
     //公告
     private static YamlConfiguration backGroundNotice;
     private static YamlConfiguration title;
@@ -66,7 +74,7 @@ public class DragonGuiYml {
         try {
             shangyiye = DragonGuild.getYml("dragon/上一页.yml");
             xiayiye = DragonGuild.getYml("dragon/下一页.yml");
-            kickOut = DragonGuild.getYml("dragon/踢人.yml");
+            kickOut = DragonGuild.getYml("dragon/踢出成员.yml");
             updateName = DragonGuild.getYml("dragon/修改公会.yml");
             renshu = DragonGuild.getYml("dragon/人数.yml");
             create = DragonGuild.getYml("dragon/创建公会.yml");
@@ -82,6 +90,10 @@ public class DragonGuiYml {
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
             close = DragonGuild.getYml("dragon/关闭.yml");
             cancel = DragonGuild.getYml("dragon/取消.yml");
+            guildImg = DragonGuild.getYml("dragon/图腾.yml");
+            memberBg = DragonGuild.getYml("dragon/成员背景.yml");
+            bar = DragonGuild.getYml("dragon/bar.yml");
+            listBgk = DragonGuild.getYml("dragon/列表背景框.yml");
 
             lobby = DragonGuild.getYml("dragon/大厅.yml");
             notice = DragonGuild.getYml("dragon/公告.yml");
@@ -91,6 +103,10 @@ public class DragonGuiYml {
             topImg = DragonGuild.getYml("dragon/top/头像.yml");
             topName = DragonGuild.getYml("dragon/top/名字.yml");
             topJoinApply = DragonGuild.getYml("dragon/top/申请加入.yml");
+            topList = DragonGuild.getYml("dragon/top/排行列表.yml");
+            topbg = DragonGuild.getYml("dragon/top/列表背景.yml");
+            topShangyiye = DragonGuild.getYml("dragon/top/上一页.yml");
+            topXiayiye = DragonGuild.getYml("dragon/top/下一页.yml");
 
             applyShangyiye = DragonGuild.getYml("dragon/apply/审批上一页.yml");
             applyXiayiye = DragonGuild.getYml("dragon/apply/审批下一页.yml");
@@ -551,5 +567,70 @@ public class DragonGuiYml {
 
     public static void setMemberList(YamlConfiguration memberList) {
         DragonGuiYml.memberList = memberList;
+    }
+
+    public static YamlConfiguration getGuildImg() {
+        return guildImg;
+    }
+
+    public static void setGuildImg(YamlConfiguration guildImg) {
+        DragonGuiYml.guildImg = guildImg;
+    }
+
+    public static YamlConfiguration getMemberBg() {
+        return memberBg;
+    }
+
+    public static void setMemberBg(YamlConfiguration memberBg) {
+        DragonGuiYml.memberBg = memberBg;
+    }
+
+    public static YamlConfiguration getTopList() {
+        return topList;
+    }
+
+    public static void setTopList(YamlConfiguration topList) {
+        DragonGuiYml.topList = topList;
+    }
+
+    public static YamlConfiguration getTopShangyiye() {
+        return topShangyiye;
+    }
+
+    public static void setTopShangyiye(YamlConfiguration topShangyiye) {
+        DragonGuiYml.topShangyiye = topShangyiye;
+    }
+
+    public static YamlConfiguration getTopXiayiye() {
+        return topXiayiye;
+    }
+
+    public static void setTopXiayiye(YamlConfiguration topXiayiye) {
+        DragonGuiYml.topXiayiye = topXiayiye;
+    }
+
+    public static YamlConfiguration getTopbg() {
+        return topbg;
+    }
+
+    public static void setTopbg(YamlConfiguration topbg) {
+        DragonGuiYml.topbg = topbg;
+    }
+
+
+    public static YamlConfiguration getBar() {
+        return bar;
+    }
+
+    public static void setBar(YamlConfiguration bar) {
+        DragonGuiYml.bar = bar;
+    }
+
+    public static YamlConfiguration getListBgk() {
+        return listBgk;
+    }
+
+    public static void setListBgk(YamlConfiguration listBgk) {
+        DragonGuiYml.listBgk = listBgk;
     }
 }

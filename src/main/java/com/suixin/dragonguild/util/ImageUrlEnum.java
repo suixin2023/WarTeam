@@ -20,7 +20,8 @@ public enum ImageUrlEnum {
     applyRepulse("applyRepulse","拒绝.png", "不同意"),
     applyShangyiye("applyShangyiye","审批上一页.png", "审批上一页"),
     applyXiayiye("applyXiayiye","审批下一页.png", "审批下一页"),
-    apply("apply","入会申请.png", "入会申请"),
+    apply("apply","审批.png", "审批"),
+    applyJoin("apply","申请加入.png", "申请加入"),
     close("close","close.png", "close"),
     back("back","back.png", "back"),
     notice("notice","公告.png", "公告"),
@@ -30,7 +31,10 @@ public enum ImageUrlEnum {
     lobby("lobby","大厅.png", "大厅"),
     applyList("applyList","申请列表.png", "申请列表"),
     memberList("memberList","成员列表.png", "成员列表"),
+    memberBackground("memberBackground","列表背景.png", "列表背景"),
     guildList("guildList","公会列表.png", "公会列表"),
+    listbg("listbg","列表背景.png", "列表背景"),
+    listbgk("listbgk","列表背景框.png", "列表背景"),
 
 
     neirong("neirong","内容.png", "内容"),
@@ -40,6 +44,7 @@ public enum ImageUrlEnum {
     pictureFrame("pictureFrame","成员.png", "成员"),
     creator("creator","会长.png", "会长"),
     guild("creator","公会.png", "公会"),
+    guildImg("creator","公会图腾.png", "图腾"),
     title("title","标题.png", "标题"),
     bar("bar","bar.png", "bar"),
     //暂无图片
