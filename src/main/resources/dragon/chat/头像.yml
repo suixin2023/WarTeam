@@ -1,9 +1,8 @@
 #此组件由VexEdit生成
-x: 2
-y: 216
+x: 21
+y: 16
 
-width: 21
-high: 21
+width: 20
+high: 20
 
-xshow: 21
-yshow: 21
+interval: 65

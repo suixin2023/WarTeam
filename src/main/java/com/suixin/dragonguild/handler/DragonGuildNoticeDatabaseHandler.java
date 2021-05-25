@@ -15,7 +15,7 @@ public class DragonGuildNoticeDatabaseHandler {
 //            `creator` varchar(255) DEFAULT NULL COMMENT '创建人',
 //            `guild_id` int(11) DEFAULT NULL COMMENT '公会',
 //            `title` varchar(20) DEFAULT NULL COMMENT '标题',
-//            `desc` varchar(255) DEFAULT NULL COMMENT '公告内容',
+//            `descs` varchar(255) DEFAULT NULL COMMENT '公告内容',
 //            `status` int(11) DEFAULT NULL COMMENT '有效性1有效-1无效',
 //            `created` datetime DEFAULT NULL COMMENT '创建时间',
 //            `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间',
@@ -24,24 +24,24 @@ public class DragonGuildNoticeDatabaseHandler {
 
     //配置写入
     public static int insert(DragonGuildNoticeEntity dragonGuildNoticeEntity){
-        String sql = "insert into dragon_guild_notice(uid, creator, guild_id , title,desc,status,created,modified)"
-                + " values(?,?, ?, ?, ?,?,?, ?, ?, ?)";
+        String sql = "insert into dragon_guild_notice(uid, creator, guild_id , title,descs,status,created,modified)"
+                + " values(?,?, ?, ?, ?,?,?, ?)";
         Object [] params = new Object[8];
         params[0]= dragonGuildNoticeEntity.getUid();
         params[1]= dragonGuildNoticeEntity.getCreator();
         params[2]= dragonGuildNoticeEntity.getGuildId();
         params[3]= dragonGuildNoticeEntity.getTitle();
-        params[4]= dragonGuildNoticeEntity.getDesc();
+        params[4]= dragonGuildNoticeEntity.getDescs();
         params[5]= dragonGuildNoticeEntity.getStatus();
         params[6]= dragonGuildNoticeEntity.getCreated();
         params[7]= dragonGuildNoticeEntity.getModified();
         try {
             ResultSet rst= MysqlUtil.getInsertObjectIDs(sql, params);
             if (rst != null) {
+                MysqlUtil.close(rst);
                 return 1;
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -57,7 +57,7 @@ public class DragonGuildNoticeDatabaseHandler {
                     "  `creator` varchar(255) DEFAULT NULL COMMENT '创建人'," +
                     "  `guild_id` int(11) DEFAULT NULL COMMENT '公会'," +
                     "  `title` varchar(20) DEFAULT NULL COMMENT '标题'," +
-                    "  `desc` varchar(255) DEFAULT NULL COMMENT '公告内容'," +
+                    "  `descs` varchar(255) DEFAULT NULL COMMENT '公告内容'," +
                     "  `status` int(11) DEFAULT NULL COMMENT '有效性1有效-1无效'," +
                     "  `created` datetime DEFAULT NULL COMMENT '创建时间'," +
                     "  `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间'," +
@@ -82,15 +82,15 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
                     dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
                     dragonGuildNoticeEntity.setTitle(rst.getString("title"));
-                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
+                    dragonGuildNoticeEntity.setDescs(rst.getString("descs"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
                     dragonGuildNoticeEntitys.add(dragonGuildNoticeEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -109,14 +109,14 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
                     dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
                     dragonGuildNoticeEntity.setTitle(rst.getString("title"));
-                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
+                    dragonGuildNoticeEntity.setDescs(rst.getString("descs"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -135,14 +135,14 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
                     dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
                     dragonGuildNoticeEntity.setTitle(rst.getString("title"));
-                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
+                    dragonGuildNoticeEntity.setDescs(rst.getString("descs"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -178,14 +178,14 @@ public class DragonGuildNoticeDatabaseHandler {
                     dragonGuildNoticeEntity.setCreator(rst.getString("creator"));
                     dragonGuildNoticeEntity.setGuildId(rst.getInt("guild_id"));
                     dragonGuildNoticeEntity.setTitle(rst.getString("title"));
-                    dragonGuildNoticeEntity.setDesc(rst.getString("desc"));
+                    dragonGuildNoticeEntity.setDescs(rst.getString("descs"));
                     dragonGuildNoticeEntity.setStatus(rst.getInt("status"));
                     dragonGuildNoticeEntity.setCreated(rst.getDate("created"));
                     dragonGuildNoticeEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -201,7 +201,7 @@ public class DragonGuildNoticeDatabaseHandler {
             stringBuffer.append(" uid = "+"'"+dragonGuildNoticeEntity.getUid()+"'"+",");
         }
         if (dragonGuildNoticeEntity.getCreator() != null) {
-            stringBuffer.append(" creator = "+dragonGuildNoticeEntity.getCreator()+",");
+            stringBuffer.append(" creator = "+"'"+dragonGuildNoticeEntity.getCreator()+"'"+",");
         }
         if (dragonGuildNoticeEntity.getGuildId() != null) {
             stringBuffer.append(" guild_id = "+dragonGuildNoticeEntity.getGuildId()+",");
@@ -209,8 +209,8 @@ public class DragonGuildNoticeDatabaseHandler {
         if (dragonGuildNoticeEntity.getTitle() != null && !dragonGuildNoticeEntity.getTitle().equals("")) {
             stringBuffer.append(" title = "+"'"+dragonGuildNoticeEntity.getTitle()+"'"+",");
         }
-        if (dragonGuildNoticeEntity.getDesc() != null && !dragonGuildNoticeEntity.getDesc().equals("")) {
-            stringBuffer.append(" desc = "+"'"+dragonGuildNoticeEntity.getDesc()+"'"+",");
+        if (dragonGuildNoticeEntity.getDescs() != null && !dragonGuildNoticeEntity.getDescs().equals("")) {
+            stringBuffer.append(" descs = "+"'"+dragonGuildNoticeEntity.getDescs()+"'"+",");
         }
         if (dragonGuildNoticeEntity.getStatus() != null) {
             stringBuffer.append(" status = "+dragonGuildNoticeEntity.getStatus()+",");

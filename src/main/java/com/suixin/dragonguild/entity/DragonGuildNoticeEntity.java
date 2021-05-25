@@ -16,7 +16,7 @@ public class DragonGuildNoticeEntity {
     //标题
     private String title;
     //公告内容
-    private String desc;
+    private String descs;
     //有效性
     private Integer status;
     private Date created;
@@ -62,12 +62,12 @@ public class DragonGuildNoticeEntity {
         this.title = title;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescs() {
+        return descs;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescs(String descs) {
+        this.descs = descs;
     }
 
     public Integer getStatus() {

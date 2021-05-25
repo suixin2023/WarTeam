@@ -15,6 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -79,22 +80,21 @@ public class DragonGuildChat {
         EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
-                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
-                openedScreen.closeGui(player);
+                player.closeInventory();
             }
         };
         //聊天记录
-        YamlConfiguration messageListYml = DragonGuiYml.getMessageList();
-        EasyScrollingList scrollingList = new EasyScrollingList(messageListYml.getInt("x"), messageListYml.getInt("y"), messageListYml.getInt("width"), messageListYml.getInt("high"), "0,102,255,255");
+        YamlConfiguration backGroundChatYml = DragonGuiYml.getBackGroundChat();
+        EasyScrollingList scrollingList = new EasyScrollingList(backGroundChatYml.getInt("x"), backGroundChatYml.getInt("y"), backGroundChatYml.getInt("width"), backGroundChatYml.getInt("high"), ImageUrlEnum.listbg.getUrl());
         YamlConfiguration barYml = DragonGuiYml.getBar();
-        scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
+        scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high")*3, ImageUrlEnum.bar.getUrl());
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
         chatList(scrollingList,player, component, 1, dragonGuildId,1);
         component.setScrollingList(scrollingList);
         //聊天内容
-        YamlConfiguration content = DragonGuiYml.getChatContent();
-        final EasyTextField contentTextField = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"));
+        YamlConfiguration shuruContent = DragonGuiYml.getShuruContent();
+        final EasyTextField contentTextField = new EasyTextField(shuruContent.getInt("x"), shuruContent.getInt("y"), shuruContent.getInt("width"));
 
         //发送
         YamlConfiguration send = DragonGuiYml.getSend();
@@ -104,7 +104,8 @@ public class DragonGuildChat {
                 DragonGuildChatEntity dragonGuildChatEntity = new DragonGuildChatEntity();
                 dragonGuildChatEntity.setCreator(player.getName());
                 dragonGuildChatEntity.setGuildId(dragonGuildId);
-                dragonGuildChatEntity.setDesc(contentTextField.getText());
+                String text = contentTextField.getText();
+                dragonGuildChatEntity.setDescs(text);
                 dragonGuildChatEntity.setUid(player.getUniqueId().toString());
                 dragonGuildChatEntity.setStatus(1);
                 dragonGuildChatEntity.setCreated(new Date());
@@ -114,11 +115,31 @@ public class DragonGuildChat {
                     String uid = dragonGuildMemberEntity.getUid();
                     Player member = Bukkit.getServer().getPlayer(uid);
                     if (member != null) {
-                        member.sendMessage(DragonGuild.getSystemConfig().getString("DragonGuild.prefix") + "§a§l"+contentTextField.getText());
+                        member.sendMessage(DragonGuild.getSystemConfig().getString("DragonGuild.prefix") +"§e§l" +player.getName() +": §a§l"+text);
                     }
                 }
+                DragonGuildChat.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
+        EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
+        YamlConfiguration name = DragonGuiYml.getName();
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        Integer count = DragonGuildMemBerDatabaseHandler.selectCount(dragonGuildId);
+        YamlConfiguration renshu = DragonGuiYml.getRenshu();
+        YamlConfiguration level = DragonGuiYml.getLevel();
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList("成员:"+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList("等级:"+dragonGuildEntity.getLevel()+""));
+
+        //图标
+        YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
+        EasyImage guildImg = new EasyImage( guildImgYml.getInt("x"), guildImgYml.getInt("y"), guildImgYml.getInt("width"), guildImgYml.getInt("high"),ImageUrlEnum.guildImg.getUrl());
+        screen.addComponent(listBgkImg);
+        screen.addComponent(nameText);
+        screen.addComponent(renshuText);
+        screen.addComponent(levelText);
+        screen.addComponent(guildImg);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);
@@ -126,10 +147,10 @@ public class DragonGuildChat {
         screen.addComponent(topButton);
         screen.addComponent(scrollingList);
         screen.addComponent(closeButton);
+        screen.addComponent(contentTextField);
         screen.addComponent(shangyiyeButton);
         return screen;
     }
-
     private static void chatList(EasyScrollingList scrollingList,Player player, Component component, Integer limit,Integer dragonGuildId,Integer type) {
         List<EasyComponent> list = new ArrayList<>();
         int currentPage = limit;
@@ -141,10 +162,12 @@ public class DragonGuildChat {
         }
         List<String> chatlist = component.getChatList();
         limit = (limit - 1) * 10;
+        YamlConfiguration chatBox = DragonGuiYml.getChatBox();
         YamlConfiguration chatImg = DragonGuiYml.getChatImg();
         YamlConfiguration chatName = DragonGuiYml.getChatName();
         YamlConfiguration chatContent = DragonGuiYml.getChatContent();
         int chatImgY = chatImg.getInt("y");
+        int chatBoxY = chatBox.getInt("y");
         int chatNameY = chatName.getInt("y");
         int chatContentY = chatContent.getInt("y");
         List<DragonGuildChatEntity> dragonGuildChatEntities = DragonGuildChatDatabaseHandler.selectDragonGuildDataNum(limit, dragonGuildId);
@@ -158,7 +181,7 @@ public class DragonGuildChat {
         chatlist.clear();
         for (DragonGuildChatEntity dragonGuildChatEntity: dragonGuildChatEntities) {
             String creator = dragonGuildChatEntity.getCreator();
-            String desc = dragonGuildChatEntity.getDesc();
+            String descs = dragonGuildChatEntity.getDescs();
             DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(creator);
             EasyImage img = null;
             if (dragonGuildEntity.getId() == null) {
@@ -166,20 +189,53 @@ public class DragonGuildChat {
             }else {
                 img = new EasyImage(chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.creator.getUrl());
             }
+            int length = 0;
+            try {
+                length = descs.getBytes("GBK").length;
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
+            }
+            List<String> descList = new ArrayList<>();
+            int y = length;
+            while (y > 0){
+                String s = "";
+                try {
+                    s = bSubstring(descs, 20);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                descs = descs.replace(s,"");
+                y = y - 20;
+                descList.add(s);
+            }
+            
+            int high = chatBox.getInt("high");
+            int chatBoxY2 = chatBoxY;
+            if (descList.size() == 3) {
+                high = high + 13;
+                chatBoxY2 = chatBoxY2 - 2;
+            }else if (descList.size() > 3){
+                high = high*2;
+                chatBoxY2 = chatBoxY2 - 4;
+            }
+            EasyImage chatBoxImg = new EasyImage(chatBox.getInt("x"), chatBoxY2, chatBox.getInt("width"), high,ImageUrlEnum.chatBox.getUrl());
+
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
             String format = simpleDateFormat.format(new Date());
             EasyLabel nameText = new EasyLabel(chatName.getInt("x"), chatNameY, 1,Arrays.asList(" §d"+creator+" "+format));
-            EasyLabel chatContentText = new EasyLabel(chatContent.getInt("x"), chatContentY, 1,Arrays.asList(desc));
-
+            EasyLabel chatContentText = new EasyLabel(chatContent.getInt("x"), chatContentY, 1,descList);
             list.add(img);
+            list.add(chatBoxImg);
             list.add(nameText);
             list.add(chatContentText);
             scrollingList.addComponent(img);
+            scrollingList.addComponent(chatBoxImg);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(chatContentText);
-            chatImgY = chatImgY + chatImg.getInt("high") + 3;
-            chatNameY = chatNameY + chatImg.getInt("high")+ 3;
-            chatContentY = chatContentY + chatImg.getInt("high")+ 3;
+            chatImgY = chatImgY + chatImg.getInt("interval");
+            chatBoxY = chatBoxY + chatImg.getInt("interval");
+            chatNameY = chatNameY + chatImg.getInt("interval");
+            chatContentY = chatContentY + chatImg.getInt("interval");
         }
 
         component.setCurrent(currentPage);
@@ -189,5 +245,44 @@ public class DragonGuildChat {
         component.setChatList(chatlist);
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
+    }
+
+    public static String bSubstring(String s, int length) throws Exception
+    {
+
+        byte[] bytes = s.getBytes("Unicode");
+        int n = 0; // 表示当前的字节数
+        int i = 2; // 要截取的字节数，从第3个字节开始
+        for (; i < bytes.length && n < length; i++)
+        {
+            // 奇数位置，如3、5、7等，为UCS2编码中两个字节的第二个字节
+            if (i % 2 == 1)
+            {
+                n++; // 在UCS2第二个字节时n加1
+            }
+            else
+            {
+                // 当UCS2编码的第一个字节不等于0时，该UCS2字符为汉字，一个汉字算两个字节
+                if (bytes[i] != 0)
+                {
+                    n++;
+                }
+            }
+        }
+        // 如果i为奇数时，处理成偶数
+        if (i % 2 == 1)
+
+        {
+            // 该UCS2字符是汉字时，去掉这个截一半的汉字
+            if (bytes[i - 1] != 0) {
+                i = i - 1;
+            }
+                // 该UCS2字符是字母或数字，则保留该字符
+            else {
+                i = i + 1;
+            }
+        }
+
+        return new String(bytes, 0, i, "Unicode");
     }
 }

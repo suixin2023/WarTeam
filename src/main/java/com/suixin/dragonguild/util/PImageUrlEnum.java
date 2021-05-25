@@ -17,8 +17,6 @@ public enum PImageUrlEnum {
     outTeam("outTeam","退出公会2.png", "退出公会"),
     applyAgree("applyAgree","同意2.png", "同意"),
     applyRepulse("applyRepulse","拒绝2.png", "不同意"),
-    applyShangyiye("applyShangyiye","审批上一页2.png", "审批上一页"),
-    applyXiayiye("applyXiayiye","审批下一页2.png", "审批下一页"),
     apply("apply","审批2.png", "审批"),
     applyJoin("apply","申请加入2.png", "申请加入"),
     close("close","close2.png", "close"),

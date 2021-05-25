@@ -1,8 +1,10 @@
 package com.suixin.dragonguild.dragongui;
 
 import com.suixin.dragonguild.DragonGuild;
+import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
 import com.suixin.dragonguild.entity.DragonGuildNoticeEntity;
+import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildNoticeDatabaseHandler;
 import com.suixin.dragonguild.util.*;
@@ -13,8 +15,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 public class DragonGuildNoticeEdit {
     //创建GUI
@@ -76,21 +77,43 @@ public class DragonGuildNoticeEdit {
         EasyButton applyCloseButton = new EasyButton( applyClose.getInt("x"), applyClose.getInt("y"), applyClose.getInt("width"), applyClose.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildGui.openGameLobbyGui(player);
+                player.closeInventory();
             }
         };
+
+        //返回
+        YamlConfiguration back = DragonGuiYml.getBack();
+        EasyButton backButton = new EasyButton( back.getInt("x"), back.getInt("y"), back.getInt("width"), back.getInt("high"), ImageUrlEnum.back.getUrl(), PImageUrlEnum.back.getUrl() ) {
+            @Override
+            public void onClick(Player player, ClickListener.Type type) {
+                DragonGuildNotice.openGameLobbyGui(player,dragonGuildId);
+            }
+        };
+        //内容
+        YamlConfiguration backGroundNotice = DragonGuiYml.getBackGroundNotice();
+        EasyImage img = new EasyImage( backGroundNotice.getInt("x"), backGroundNotice.getInt("y"), backGroundNotice.getInt("width"), backGroundNotice.getInt("high"),ImageUrlEnum.neirong.getUrl());
+        DragonGuildNoticeEntity dragonGuildNoticeEntity1 = DragonGuildNoticeDatabaseHandler.selectDragonGuildByGuildId(dragonGuildId);
+        String descs = dragonGuildNoticeEntity1.getDescs();
+        String[] split = descs.split("#");
+        Map<Integer, String> map = new HashMap<>();
+        int a = 1;
+        for (String s : split) {
+            map.put(a,s);
+            a++;
+        }
         //标题
         YamlConfiguration title = DragonGuiYml.getTitle();
-        final EasyTextField titleTextField = new EasyTextField(title.getInt("x"), title.getInt("y"), title.getInt("width"));
+        final EasyTextField titleTextField = new EasyTextField(title.getInt("x"), title.getInt("y"), title.getInt("width"),dragonGuildNoticeEntity1.getTitle());
         YamlConfiguration content = DragonGuiYml.getContent();
-        final EasyTextField contentTextField1 = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"));
-        final EasyTextField contentTextField2 = new EasyTextField(content.getInt("x"), content.getInt("y")+5, content.getInt("width"));
-        final EasyTextField contentTextField3 = new EasyTextField(content.getInt("x"), content.getInt("y")+10, content.getInt("width"));
-        final EasyTextField contentTextField4 = new EasyTextField(content.getInt("x"), content.getInt("y")+15, content.getInt("width"));
-        final EasyTextField contentTextField5 = new EasyTextField(content.getInt("x"), content.getInt("y")+20, content.getInt("width"));
-        final EasyTextField contentTextField6 = new EasyTextField(content.getInt("x"), content.getInt("y")+25, content.getInt("width"));
-        final EasyTextField contentTextField7 = new EasyTextField(content.getInt("x"), content.getInt("y")+30, content.getInt("width"));
-        final EasyTextField contentTextField8 = new EasyTextField(content.getInt("x"), content.getInt("y")+35, content.getInt("width"));
+        final EasyTextField contentTextField1 = new EasyTextField(content.getInt("x"), content.getInt("y"), content.getInt("width"),map.get(1));
+        final EasyTextField contentTextField2 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval"), content.getInt("width"),map.get(2));
+        final EasyTextField contentTextField3 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*2, content.getInt("width"),map.get(3));
+        final EasyTextField contentTextField4 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*3, content.getInt("width"),map.get(4));
+        final EasyTextField contentTextField5 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*4, content.getInt("width"),map.get(5));
+        final EasyTextField contentTextField6 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*5, content.getInt("width"),map.get(6));
+        final EasyTextField contentTextField7 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*6, content.getInt("width"),map.get(7));
+        final EasyTextField contentTextField8 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*7, content.getInt("width"),map.get(8));
+        final EasyTextField contentTextField9 = new EasyTextField(content.getInt("x"), content.getInt("y")+content.getInt("interval")*8, content.getInt("width"),map.get(9));
         //保存
         YamlConfiguration save = DragonGuiYml.getSave();
         EasyButton saveButton = new EasyButton( save.getInt("x"), save.getInt("y"), save.getInt("width"), save.getInt("high"),ImageUrlEnum.save.getUrl(), PImageUrlEnum.save.getUrl() ) {
@@ -99,13 +122,13 @@ public class DragonGuildNoticeEdit {
                 DragonGuildNoticeEntity dragonGuildNoticeEntity = new DragonGuildNoticeEntity();
                 dragonGuildNoticeEntity.setGuildId(dragonGuildId);
                 dragonGuildNoticeEntity.setTitle(titleTextField.getText());
-                dragonGuildNoticeEntity.setDesc(contentTextField1.getText()+"#"+contentTextField2.getText()+"#"+contentTextField3.getText()+"#"+contentTextField4.getText()+"#"+contentTextField5.getText()+"#"+contentTextField6.getText()+"#"
-                +contentTextField7.getText()+"#"+contentTextField8.getText());
-                dragonGuildNoticeEntity.setCreated(new Date());
+                String deacs = contentTextField1.getText()+"#"+contentTextField2.getText()+"#"+contentTextField3.getText()+"#"+contentTextField4.getText()+"#"+contentTextField5.getText()+"#"+contentTextField6.getText()+"#"
+                +contentTextField7.getText()+"#"+contentTextField8.getText()+"#"+contentTextField9.getText();
+                String aNull = deacs.replace("null", "");
+                dragonGuildNoticeEntity.setDescs(aNull);
                 dragonGuildNoticeEntity.setUid(player.getUniqueId().toString());
                 dragonGuildNoticeEntity.setCreator(player.getName());
                 dragonGuildNoticeEntity.setStatus(1);
-                DragonGuildNoticeEntity dragonGuildNoticeEntity1 = DragonGuildNoticeDatabaseHandler.selectDragonGuildByGuildId(dragonGuildId);
                 DragonGuildNoticeDatabaseHandler.updateUserConfigDataNum(dragonGuildNoticeEntity1.getId(),dragonGuildNoticeEntity);
                 List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByDragonGuildId(dragonGuildId);
                 for (DragonGuildMemberEntity dragonGuildMemberEntity : dragonGuildMemberEntities) {
@@ -115,6 +138,7 @@ public class DragonGuildNoticeEdit {
                         member.sendMessage(DragonGuild.getSystemConfig().getString("DragonGuild.prefix") + "§a§l会长发布了新公告");
                     }
                 }
+                DragonGuildNotice.openGameLobbyGui(player,dragonGuildId);
             }
         };
         //清空
@@ -132,6 +156,7 @@ public class DragonGuildNoticeEdit {
                 EasyTextField content6 = (EasyTextField)openedScreen.getComponent("content6");
                 EasyTextField content7 = (EasyTextField)openedScreen.getComponent("content7");
                 EasyTextField content8 = (EasyTextField)openedScreen.getComponent("content8");
+                EasyTextField content9 = (EasyTextField)openedScreen.getComponent("content9");
                 title.setText("");
                 content.setText("");
                 content2.setText("");
@@ -141,9 +166,15 @@ public class DragonGuildNoticeEdit {
                 content6.setText("");
                 content7.setText("");
                 content8.setText("");
+                content9.setText("");
                 openedScreen.updateGui(player);
             }
         };
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
+        YamlConfiguration name = DragonGuiYml.getName();
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        gui.addComponent(img);
+        gui.addComponent(nameText);
         gui.addComponent(applyCloseButton);
         gui.addComponent(saveButton);
         gui.addComponent(lobbyButton);
@@ -160,7 +191,9 @@ public class DragonGuildNoticeEdit {
         gui.addComponent("content6",contentTextField6);
         gui.addComponent("content7",contentTextField7);
         gui.addComponent("content8",contentTextField8);
+        gui.addComponent("content9",contentTextField9);
         gui.addComponent(clearButton);
+        gui.addComponent(backButton);
         return gui;
     }
 

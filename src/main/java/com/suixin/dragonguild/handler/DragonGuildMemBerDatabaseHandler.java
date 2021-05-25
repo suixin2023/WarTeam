@@ -38,10 +38,10 @@ public class DragonGuildMemBerDatabaseHandler {
         try {
             ResultSet rst= MysqlUtil.getInsertObjectIDs(sql, params);
             if (rst != null) {
+                MysqlUtil.close(rst);
                 return 1;
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -88,9 +88,9 @@ public class DragonGuildMemBerDatabaseHandler {
                     dragonGuildMemberEntity.setModified(rst.getDate("modified"));
                     dragonGuildMemberEntitys.add(dragonGuildMemberEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,9 +132,9 @@ public class DragonGuildMemBerDatabaseHandler {
                     dragonGuildMemberEntity.setModified(rst.getDate("modified"));
                     dragonGuildMemberEntitys.add(dragonGuildMemberEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -159,9 +159,9 @@ public class DragonGuildMemBerDatabaseHandler {
                     dragonGuildMemberEntity.setCreated(rst.getDate("created"));
                     dragonGuildMemberEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -41,11 +41,9 @@ public class DragonGuildApplyDatabaseHandler {
         try {
             ResultSet rst= MysqlUtil.getInsertObjectIDs(sql, params);
             if (rst != null) {
+                MysqlUtil.close(rst);
                 return 1;
             }
-
-            MysqlUtil.close(rst);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,9 +87,9 @@ public class DragonGuildApplyDatabaseHandler {
                     dragonGuildApplyEntity.setModified(rst.getDate("modified"));
                     dragonGuildApplyEntitys.add(dragonGuildApplyEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -130,9 +128,9 @@ public class DragonGuildApplyDatabaseHandler {
                     dragonGuildApplyEntity.setCreated(rst.getDate("created"));
                     dragonGuildApplyEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -141,7 +139,7 @@ public class DragonGuildApplyDatabaseHandler {
     }
 
     public static  List<DragonGuildApplyEntity> selectDragonGuildApplyByDragonGuildId(Integer limit, Integer dragonGuildId){
-        String sql = "select * from dragon_guild_apply where status = 0 and dragon_guild_id = " +dragonGuildId+" limit "+limit+", 6";
+        String sql = "select * from dragon_guild_apply where status = 0 and dragon_guild_id = " +dragonGuildId+" order by created desc limit "+limit+", 6";
         List<DragonGuildApplyEntity> dragonGuildApplyEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -158,9 +156,9 @@ public class DragonGuildApplyDatabaseHandler {
                     dragonGuildApplyEntity.setModified(rst.getDate("modified"));
                     dragonGuildApplyEntitys.add(dragonGuildApplyEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -184,9 +182,9 @@ public class DragonGuildApplyDatabaseHandler {
                     dragonGuildApplyEntity.setCreated(rst.getDate("created"));
                     dragonGuildApplyEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();

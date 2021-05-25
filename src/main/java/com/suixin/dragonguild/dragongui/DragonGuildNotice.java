@@ -73,6 +73,15 @@ public class DragonGuildNotice {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        //关闭
+        YamlConfiguration close = DragonGuiYml.getClose();
+        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
+            @Override
+            public void onClick(Player player, ClickListener.Type type) {
+                player.closeInventory();
+            }
+        };
+        //内容
         YamlConfiguration backGroundNotice = DragonGuiYml.getBackGroundNotice();
         EasyImage img = new EasyImage( backGroundNotice.getInt("x"), backGroundNotice.getInt("y"), backGroundNotice.getInt("width"), backGroundNotice.getInt("high"),ImageUrlEnum.neirong.getUrl());
         //编辑公告
@@ -85,12 +94,16 @@ public class DragonGuildNotice {
         };
         DragonGuildNoticeEntity dragonGuildNoticeEntity = DragonGuildNoticeDatabaseHandler.selectDragonGuildByGuildId(dragonGuildId);
         YamlConfiguration title = DragonGuiYml.getTitle();
-        EasyLabel titleText = new EasyLabel(title.getInt("x"), title.getInt("y"), 1, Arrays.asList(dragonGuildNoticeEntity.getTitle()));
-        String desc = dragonGuildNoticeEntity.getDesc();
-        String[] split = desc.split("#");
-        YamlConfiguration chatContent = DragonGuiYml.getChatContent();
-        EasyLabel chatContentText = new EasyLabel(chatContent.getInt("x"), chatContent.getInt("y"), 1, Arrays.asList(split));
-        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
+        EasyLabel titleText = new EasyLabel(title.getInt("x"), title.getInt("y"), 2, Arrays.asList(dragonGuildNoticeEntity.getTitle()));
+        String descs = dragonGuildNoticeEntity.getDescs();
+        String[] split = descs.split("#");
+        YamlConfiguration content = DragonGuiYml.getContent();
+        EasyLabel contentText = new EasyLabel(content.getInt("x"), content.getInt("y"), 2, Arrays.asList(split));
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
+        YamlConfiguration name = DragonGuiYml.getName();
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        gui.addComponent(closeButton);
+        gui.addComponent(nameText);
         gui.addComponent(lobbyButton);
         gui.addComponent(noticeButton);
         gui.addComponent(chatButton);
@@ -98,11 +111,11 @@ public class DragonGuildNotice {
         gui.addComponent(topButton);
         gui.addComponent(img);
         //会长显示编辑公告按钮
-        if (dragonGuildEntity.getId() != null) {
+        if (dragonGuildEntity.getCreator().equals(player.getName())) {
             gui.addComponent(editButton);
         }
         gui.addComponent(titleText);
-        gui.addComponent(chatContentText);
+        gui.addComponent(contentText);
         return gui;
     }
 }

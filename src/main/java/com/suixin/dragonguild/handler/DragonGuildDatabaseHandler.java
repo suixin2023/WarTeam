@@ -41,10 +41,10 @@ public class DragonGuildDatabaseHandler {
         try {
             ResultSet rst= MysqlUtil.getInsertObjectIDs(sql, params);
             if (rst != null) {
+                MysqlUtil.close(rst);
                 return 1;
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -75,7 +75,7 @@ public class DragonGuildDatabaseHandler {
     }
 
     public static  List<DragonGuildEntity> selectDragonGuildDataNum(Integer limit){
-        String sql = "select * from dragon_guild where status = 1 limit "+limit+", 5";
+        String sql = "select * from dragon_guild where status = 1 order by level desc limit "+limit+", 5";
         List<DragonGuildEntity> dragonGuildEntitys = new ArrayList<>();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);
@@ -95,9 +95,9 @@ public class DragonGuildDatabaseHandler {
                     dragonGuildEntity.setModified(rst.getDate("modified"));
                     dragonGuildEntitys.add(dragonGuildEntity);
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -123,9 +123,9 @@ public class DragonGuildDatabaseHandler {
                     dragonGuildEntity.setCreated(rst.getDate("created"));
                     dragonGuildEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -151,9 +151,9 @@ public class DragonGuildDatabaseHandler {
                     dragonGuildEntity.setCreated(rst.getDate("created"));
                     dragonGuildEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -196,9 +196,9 @@ public class DragonGuildDatabaseHandler {
                     dragonGuildEntity.setCreated(rst.getDate("created"));
                     dragonGuildEntity.setModified(rst.getDate("modified"));
                 }
+                MysqlUtil.close(rst);
             }
 
-            MysqlUtil.close(rst);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -14,7 +14,7 @@ public class DragonGuildChatEntity {
     //公会Id
     private Integer guildId;
     //聊天内容
-    private String desc;
+    private String descs;
     //有效性
     private Integer status;
     private Date created;
@@ -52,12 +52,12 @@ public class DragonGuildChatEntity {
         this.guildId = guildId;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescs() {
+        return descs;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescs(String descs) {
+        this.descs = descs;
     }
 
     public Integer getStatus() {

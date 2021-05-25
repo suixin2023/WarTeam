@@ -6,14 +6,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 public class DragonGuiYml {
     private static YamlConfiguration shangyiye;
     private static YamlConfiguration xiayiye;
-    private static YamlConfiguration applyShangyiye;
-    private static YamlConfiguration applyXiayiye;
     private static YamlConfiguration applyAgree;
     private static YamlConfiguration applyRepulse;
     private static YamlConfiguration applyList;
     private static YamlConfiguration applyNum;
     private static YamlConfiguration applyButton;
     private static YamlConfiguration applyPlayerName;
+    private static YamlConfiguration applyTime;
     private static YamlConfiguration applyBackground;
     private static YamlConfiguration kickOut;
     private static YamlConfiguration updateName;
@@ -34,6 +33,7 @@ public class DragonGuiYml {
     private static YamlConfiguration confirm;
     private static YamlConfiguration cancel;
     private static YamlConfiguration close;
+    private static YamlConfiguration back;
     private static YamlConfiguration guildImg;
     private static YamlConfiguration memberBg;
     private static YamlConfiguration bar;
@@ -49,6 +49,7 @@ public class DragonGuiYml {
     private static YamlConfiguration topbg;
     private static YamlConfiguration topImg;
     private static YamlConfiguration topName;
+    private static YamlConfiguration topLevel;
     private static YamlConfiguration topJoinApply;
     private static YamlConfiguration topShangyiye;
     private static YamlConfiguration topXiayiye;
@@ -62,6 +63,8 @@ public class DragonGuiYml {
     //聊天
     private static YamlConfiguration backGroundChat;
     private static YamlConfiguration chatContent;
+    private static YamlConfiguration chatBox;
+    private static YamlConfiguration shuruContent;
     private static YamlConfiguration messageList;
     private static YamlConfiguration send;
     private static YamlConfiguration chatImg;
@@ -89,7 +92,8 @@ public class DragonGuiYml {
             outTeam = DragonGuild.getYml("dragon/退出公会.yml");
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
             close = DragonGuild.getYml("dragon/关闭.yml");
-            cancel = DragonGuild.getYml("dragon/取消.yml");
+            back = DragonGuild.getYml("dragon/返回.yml");
+            cancel = DragonGuild.getYml("dragon/window/取消.yml");
             guildImg = DragonGuild.getYml("dragon/图腾.yml");
             memberBg = DragonGuild.getYml("dragon/成员背景.yml");
             bar = DragonGuild.getYml("dragon/bar.yml");
@@ -102,19 +106,19 @@ public class DragonGuiYml {
             top = DragonGuild.getYml("dragon/排行.yml");
             topImg = DragonGuild.getYml("dragon/top/头像.yml");
             topName = DragonGuild.getYml("dragon/top/名字.yml");
+            topLevel = DragonGuild.getYml("dragon/top/等级.yml");
             topJoinApply = DragonGuild.getYml("dragon/top/申请加入.yml");
             topList = DragonGuild.getYml("dragon/top/排行列表.yml");
             topbg = DragonGuild.getYml("dragon/top/列表背景.yml");
             topShangyiye = DragonGuild.getYml("dragon/top/上一页.yml");
             topXiayiye = DragonGuild.getYml("dragon/top/下一页.yml");
 
-            applyShangyiye = DragonGuild.getYml("dragon/apply/审批上一页.yml");
-            applyXiayiye = DragonGuild.getYml("dragon/apply/审批下一页.yml");
             applyAgree = DragonGuild.getYml("dragon/apply/审批同意.yml");
             applyRepulse = DragonGuild.getYml("dragon/apply/审批拒绝.yml");
             applyList = DragonGuild.getYml("dragon/apply/审批列表.yml");
             applyButton = DragonGuild.getYml("dragon/apply/审批按钮.yml");
             applyPlayerName = DragonGuild.getYml("dragon/apply/审批玩家名.yml");
+            applyTime = DragonGuild.getYml("dragon/apply/申请时间.yml");
             applyBackground = DragonGuild.getYml("dragon/apply/审批背景.yml");
             applyNum = DragonGuild.getYml("dragon/apply/审批数量.yml");
 
@@ -133,6 +137,8 @@ public class DragonGuiYml {
             messageList = DragonGuild.getYml("dragon/chat/消息列表.yml");
             send = DragonGuild.getYml("dragon/chat/发送.yml");
             chatContent = DragonGuild.getYml("dragon/chat/聊天内容.yml");
+            chatBox = DragonGuild.getYml("dragon/chat/消息框.yml");
+            shuruContent = DragonGuild.getYml("dragon/chat/输入内容.yml");
             chatImg = DragonGuild.getYml("dragon/chat/头像.yml");
             chatName = DragonGuild.getYml("dragon/chat/名字.yml");
             chatBar = DragonGuild.getYml("dragon/chat/bar.yml");
@@ -287,22 +293,6 @@ public class DragonGuiYml {
 
     public static void setUpdateName(YamlConfiguration updateName) {
         DragonGuiYml.updateName = updateName;
-    }
-
-    public static YamlConfiguration getApplyShangyiye() {
-        return applyShangyiye;
-    }
-
-    public static void setApplyShangyiye(YamlConfiguration applyShangyiye) {
-        DragonGuiYml.applyShangyiye = applyShangyiye;
-    }
-
-    public static YamlConfiguration getApplyXiayiye() {
-        return applyXiayiye;
-    }
-
-    public static void setApplyXiayiye(YamlConfiguration applyXiayiye) {
-        DragonGuiYml.applyXiayiye = applyXiayiye;
     }
 
     public static YamlConfiguration getClose() {
@@ -632,5 +622,45 @@ public class DragonGuiYml {
 
     public static void setListBgk(YamlConfiguration listBgk) {
         DragonGuiYml.listBgk = listBgk;
+    }
+
+    public static YamlConfiguration getTopLevel() {
+        return topLevel;
+    }
+
+    public static void setTopLevel(YamlConfiguration topLevel) {
+        DragonGuiYml.topLevel = topLevel;
+    }
+
+    public static YamlConfiguration getApplyTime() {
+        return applyTime;
+    }
+
+    public static void setApplyTime(YamlConfiguration applyTime) {
+        DragonGuiYml.applyTime = applyTime;
+    }
+
+    public static YamlConfiguration getShuruContent() {
+        return shuruContent;
+    }
+
+    public static void setShuruContent(YamlConfiguration shuruContent) {
+        DragonGuiYml.shuruContent = shuruContent;
+    }
+
+    public static YamlConfiguration getChatBox() {
+        return chatBox;
+    }
+
+    public static void setChatBox(YamlConfiguration chatBox) {
+        DragonGuiYml.chatBox = chatBox;
+    }
+
+    public static YamlConfiguration getBack() {
+        return back;
+    }
+
+    public static void setBack(YamlConfiguration back) {
+        DragonGuiYml.back = back;
     }
 }

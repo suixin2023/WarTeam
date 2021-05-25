@@ -4,10 +4,13 @@ import com.suixin.dragonguild.dragongui.DragonGuildApply;
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
+import com.suixin.dragonguild.entity.EasyButtonEx;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.util.Message;
+import eos.moe.dragoncore.api.easygui.EasyScreen;
+import eos.moe.dragoncore.api.easygui.component.EasyComponent;
 import eos.moe.dragoncore.api.gui.event.CustomPacketEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -15,22 +18,26 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
 import java.util.Date;
+import java.util.List;
 
 public class EasyButtonClickListener implements Listener {
     @EventHandler
     public void buttonClick(CustomPacketEvent event){
-        String id = event.getIdentifier();
-        String[] split = id.split("#");
-        String applyUserName = null;
-        String buttonId = null;
-        if (split.length > 1) {
-            buttonId = split[0];
-            applyUserName = split[1];
-        }else {
+        Player player = event.getPlayer();
+        if (!"EasyScreenEvent".equals(event.getIdentifier())) return;
+        List<String> data = event.getData();
+        EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+        if (openedScreen == null) {
             return;
         }
-        Player player = event.getPlayer();
-        if (buttonId.equals("applyAgreeButton")) {
+        EasyComponent component = openedScreen.getComponentById(data.get(0));
+        if (!(component instanceof EasyButtonEx)) {
+            return;
+        }
+        EasyButtonEx buttonEx = (EasyButtonEx) component;
+        String applyUserName = buttonEx.getApplyName();
+        String type = buttonEx.getType();
+        if (type.equals("applyAgreeButton")) {
             DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(applyUserName,player.getName());
             DragonGuildMemberEntity dragonGuildMemberEntity1 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(applyUserName);
             if (dragonGuildMemberEntity1.getId() != null) {
@@ -40,8 +47,11 @@ public class EasyButtonClickListener implements Listener {
                 DragonGuildApplyDatabaseHandler.updateUserConfigDataNum(dragonGuildApplyEntity.getId(),dragonGuildApplyEntity);
                 return;
             }
-            DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByName(dragonGuildApplyEntity.getDragonGuildName());
-
+            if (dragonGuildApplyEntity.getId() == null) {
+                player.sendMessage(Message.apply_inexistence);
+                return;
+            }
+            DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildApplyEntity.getDragonGuildId());
             DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
             dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity.getId());
             dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity.getName());
@@ -60,7 +70,7 @@ public class EasyButtonClickListener implements Listener {
             }
             player.sendMessage(Message.apply_pass);
             DragonGuildApply.openGameLobbyGui(player,dragonGuildApplyEntity.getDragonGuildId());
-        }else {
+        }else if (type.equals("applyRepulseButton")){
 
             DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(applyUserName,player.getName());
             DragonGuildMemberEntity dragonGuildMemberEntity1 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(applyUserName);
@@ -79,6 +89,10 @@ public class EasyButtonClickListener implements Listener {
             }
             player.sendMessage(Message.apply_nopass);
             DragonGuildApply.openGameLobbyGui(player,dragonGuildApplyEntity.getDragonGuildId());
+        }else {
+            //申请加入
+            String guildName = buttonEx.getGuildName();
+            player.chat("/gh join " + guildName);
         }
 
     }

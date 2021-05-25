@@ -18,8 +18,6 @@ public enum ImageUrlEnum {
     background("background","公会主页.png", "公会主页"),
     applyAgree("applyAgree","同意.png", "同意"),
     applyRepulse("applyRepulse","拒绝.png", "不同意"),
-    applyShangyiye("applyShangyiye","审批上一页.png", "审批上一页"),
-    applyXiayiye("applyXiayiye","审批下一页.png", "审批下一页"),
     apply("apply","审批.png", "审批"),
     applyJoin("apply","申请加入.png", "申请加入"),
     close("close","close.png", "close"),
@@ -43,7 +41,10 @@ public enum ImageUrlEnum {
     window2("window2","弹窗2.png", "弹窗2"),
     pictureFrame("pictureFrame","成员.png", "成员"),
     creator("creator","会长.png", "会长"),
-    guild("creator","公会.png", "公会"),
+    guild("guild","公会.png", "公会"),
+    guild2("guild2","公会2.png", "公会"),
+    guild3("guild3","公会3.png", "公会"),
+    guild4("guild4","公会4.png", "公会"),
     guildImg("creator","公会图腾.png", "图腾"),
     title("title","标题.png", "标题"),
     bar("bar","bar.png", "bar"),
@@ -51,6 +52,7 @@ public enum ImageUrlEnum {
     edit("edit","编辑.png", "编辑"),
     save("save","保存.png", "保存"),
     clear("clear","清空.png", "清空"),
+    chatBox("chatBox","消息框.png", "消息框"),
     ;
 
     private String id;

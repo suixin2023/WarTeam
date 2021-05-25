@@ -9,11 +9,14 @@ import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.EasyButton;
 import eos.moe.dragoncore.api.easygui.component.EasyImage;
+import eos.moe.dragoncore.api.easygui.component.EasyLabel;
 import eos.moe.dragoncore.api.easygui.component.EasyTextField;
 import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -72,6 +75,22 @@ public class DragonGuildOut {
                 DragonGuildTop.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        //关闭
+        YamlConfiguration close = DragonGuiYml.getClose();
+        EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
+            @Override
+            public void onClick(Player player, Type type) {
+                player.closeInventory();
+            }
+        };
+        //返回
+        YamlConfiguration back = DragonGuiYml.getBack();
+        EasyButton backButton = new EasyButton( back.getInt("x"), back.getInt("y"), back.getInt("width"), back.getInt("high"), ImageUrlEnum.back.getUrl(), PImageUrlEnum.back.getUrl() ) {
+            @Override
+            public void onClick(Player player, ClickListener.Type type) {
+                DragonGuildGui.openGameLobbyGui(player);
+            }
+        };
         YamlConfiguration window = DragonGuiYml.getWindow();
         EasyImage img = new EasyImage( window.getInt("x"), window.getInt("y"), window.getInt("width"), window.getInt("high"),ImageUrlEnum.window.getUrl());
         YamlConfiguration shurukuang = DragonGuiYml.getShurukuang();
@@ -83,6 +102,7 @@ public class DragonGuildOut {
             public void onClick(Player player, Type type) {
                 String teamName = shurukuangTextField.getText();
                 if (type1 == 1){
+                    //修改公会名
                     DragonGuildMemberEntity dragonGuildMemberEntity1 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
                     if (dragonGuildMemberEntity1.getId() == null) {
                         player.sendMessage(Message.not_join_oneTeam);
@@ -117,7 +137,8 @@ public class DragonGuildOut {
                     player.sendMessage(Message.update_successful);
                     VaultAPI.removeMoney(player.getName(),amount);
                 }else {
-                    player.chat("/gh out "+teamName);
+                    //踢人
+                    player.chat("/gh kick "+teamName);
                 }
                 DragonGuildGui.openGameLobbyGui(player);
             }
@@ -131,7 +152,12 @@ public class DragonGuildOut {
                 DragonGuildGui.openGameLobbyGui(player);
             }
         };
-
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
+        YamlConfiguration name = DragonGuiYml.getName();
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        gui.addComponent(closeButton);
+        gui.addComponent(backButton);
+        gui.addComponent(nameText);
         gui.addComponent(lobbyButton);
         gui.addComponent(noticeButton);
         gui.addComponent(chatButton);

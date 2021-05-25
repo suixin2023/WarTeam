@@ -15,7 +15,7 @@ public class DragonGuildChatDatabaseHandler {
         //            `creator` varchar(255) DEFAULT NULL COMMENT '创建人',
         //            `guild_id` int(11) DEFAULT NULL COMMENT '公会',
         //            `title` varchar(20) DEFAULT NULL COMMENT '标题',
-        //            `desc` varchar(255) DEFAULT NULL COMMENT '聊天内容',
+        //            `descs` varchar(255) DEFAULT NULL COMMENT '聊天内容',
         //            `status` int(11) DEFAULT NULL COMMENT '有效性1有效-1无效',
         //            `created` datetime DEFAULT NULL COMMENT '创建时间',
         //            `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间',
@@ -24,23 +24,22 @@ public class DragonGuildChatDatabaseHandler {
 
         //配置写入
         public static int insert(DragonGuildChatEntity dragonGuildChatEntity){
-            String sql = "insert into dragon_guild_chat(uid, creator, guild_id , title,desc,status,created,modified)"
-                    + " values(?,?, ?, ?, ?,?,?, ?, ?, ?)";
+            String sql = "insert into dragon_guild_chat(uid, creator, guild_id,descs,status,created,modified)"
+                    + " values(?,?, ?, ?, ?,?,?)";
             Object [] params = new Object[7];
             params[0]= dragonGuildChatEntity.getUid();
             params[1]= dragonGuildChatEntity.getCreator();
             params[2]= dragonGuildChatEntity.getGuildId();
-            params[3]= dragonGuildChatEntity.getDesc();
+            params[3]= dragonGuildChatEntity.getDescs();
             params[4]= dragonGuildChatEntity.getStatus();
             params[5]= dragonGuildChatEntity.getCreated();
             params[6]= dragonGuildChatEntity.getModified();
             try {
                 ResultSet rst= MysqlUtil.getInsertObjectIDs(sql, params);
                 if (rst != null) {
+                    MysqlUtil.close(rst);
                     return 1;
                 }
-
-                MysqlUtil.close(rst);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -55,7 +54,7 @@ public class DragonGuildChatDatabaseHandler {
                     "  `uid` varchar(100) DEFAULT NULL COMMENT '创建人uuid'," +
                     "  `creator` varchar(255) DEFAULT NULL COMMENT '创建人'," +
                     "  `guild_id` int(11) DEFAULT NULL COMMENT '公会'," +
-                    "  `desc` varchar(255) DEFAULT NULL COMMENT '聊天内容'," +
+                    "  `descs` varchar(255) DEFAULT NULL COMMENT '聊天内容'," +
                     "  `status` int(11) DEFAULT NULL COMMENT '有效性1有效-1无效'," +
                     "  `created` datetime DEFAULT NULL COMMENT '创建时间'," +
                     "  `modified` timestamp NULL DEFAULT NULL COMMENT '修改时间'," +
@@ -68,7 +67,7 @@ public class DragonGuildChatDatabaseHandler {
         }
 
         public static List<DragonGuildChatEntity> selectDragonGuildDataNum(Integer current,Integer guildId){
-            String sql = "select * from dragon_guild_chat where status = 1 and guild_id = "+guildId+" limit "+current+", 5";
+            String sql = "select * from dragon_guild_chat where status = 1 and guild_id = "+guildId+" order by created desc limit "+current+", 20";
             List<DragonGuildChatEntity> dragonGuildChatEntitys = new ArrayList<>();
             try {
                 ResultSet rst = MysqlUtil.execQuery(sql);
@@ -79,7 +78,7 @@ public class DragonGuildChatDatabaseHandler {
                         dragonGuildChatEntity.setUid(rst.getString("uid"));
                         dragonGuildChatEntity.setCreator(rst.getString("creator"));
                         dragonGuildChatEntity.setGuildId(rst.getInt("guild_id"));
-                        dragonGuildChatEntity.setDesc(rst.getString("desc"));
+                        dragonGuildChatEntity.setDescs(rst.getString("descs"));
                         dragonGuildChatEntity.setStatus(rst.getInt("status"));
                         dragonGuildChatEntity.setCreated(rst.getDate("created"));
                         dragonGuildChatEntity.setModified(rst.getDate("modified"));
@@ -87,6 +86,7 @@ public class DragonGuildChatDatabaseHandler {
                     }
                 }
 
+                assert rst != null;
                 MysqlUtil.close(rst);
 
             } catch (Exception e) {
@@ -105,14 +105,14 @@ public class DragonGuildChatDatabaseHandler {
                         dragonGuildChatEntity.setUid(rst.getString("uid"));
                         dragonGuildChatEntity.setCreator(rst.getString("creator"));
                         dragonGuildChatEntity.setGuildId(rst.getInt("guild_id"));
-                        dragonGuildChatEntity.setDesc(rst.getString("desc"));
+                        dragonGuildChatEntity.setDescs(rst.getString("descs"));
                         dragonGuildChatEntity.setStatus(rst.getInt("status"));
                         dragonGuildChatEntity.setCreated(rst.getDate("created"));
                         dragonGuildChatEntity.setModified(rst.getDate("modified"));
                     }
+                    MysqlUtil.close(rst);
                 }
 
-                MysqlUtil.close(rst);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -130,14 +130,14 @@ public class DragonGuildChatDatabaseHandler {
                         dragonGuildChatEntity.setUid(rst.getString("uid"));
                         dragonGuildChatEntity.setCreator(rst.getString("creator"));
                         dragonGuildChatEntity.setGuildId(rst.getInt("guild_id"));
-                        dragonGuildChatEntity.setDesc(rst.getString("desc"));
+                        dragonGuildChatEntity.setDescs(rst.getString("descs"));
                         dragonGuildChatEntity.setStatus(rst.getInt("status"));
                         dragonGuildChatEntity.setCreated(rst.getDate("created"));
                         dragonGuildChatEntity.setModified(rst.getDate("modified"));
                     }
+                    MysqlUtil.close(rst);
                 }
 
-                MysqlUtil.close(rst);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -172,14 +172,14 @@ public class DragonGuildChatDatabaseHandler {
                         dragonGuildChatEntity.setUid(rst.getString("uid"));
                         dragonGuildChatEntity.setCreator(rst.getString("creator"));
                         dragonGuildChatEntity.setGuildId(rst.getInt("guild_id"));
-                        dragonGuildChatEntity.setDesc(rst.getString("desc"));
+                        dragonGuildChatEntity.setDescs(rst.getString("descs"));
                         dragonGuildChatEntity.setStatus(rst.getInt("status"));
                         dragonGuildChatEntity.setCreated(rst.getDate("created"));
                         dragonGuildChatEntity.setModified(rst.getDate("modified"));
                     }
+                    MysqlUtil.close(rst);
                 }
 
-                MysqlUtil.close(rst);
 
             } catch (Exception e) {
                 e.printStackTrace();
@@ -200,8 +200,8 @@ public class DragonGuildChatDatabaseHandler {
             if (dragonGuildChatEntity.getGuildId() != null) {
                 stringBuffer.append(" guild_id = "+dragonGuildChatEntity.getGuildId()+",");
             }
-            if (dragonGuildChatEntity.getDesc() != null && !dragonGuildChatEntity.getDesc().equals("")) {
-                stringBuffer.append(" desc = "+"'"+dragonGuildChatEntity.getDesc()+"'"+",");
+            if (dragonGuildChatEntity.getDescs() != null && !dragonGuildChatEntity.getDescs().equals("")) {
+                stringBuffer.append(" descs = "+"'"+dragonGuildChatEntity.getDescs()+"'"+",");
             }
             if (dragonGuildChatEntity.getStatus() != null) {
                 stringBuffer.append(" status = "+dragonGuildChatEntity.getStatus()+",");

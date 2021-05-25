@@ -5,6 +5,7 @@ import com.suixin.dragonguild.command.BaseCommand;
 import com.suixin.dragonguild.dragongui.DragonGuildNotice;
 import com.suixin.dragonguild.handler.*;
 import com.suixin.dragonguild.listener.EasyButtonClickListener;
+import com.suixin.dragonguild.task.ActivationCodeTask;
 import com.suixin.dragonguild.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -16,18 +17,23 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DragonGuild extends JavaPlugin {
 	private static DragonGuild instance;
 	private static YamlConfiguration systemConfig;
 	private static HashMap<Integer,Integer> levelMap = new HashMap<>();
 	private static HashMap<Integer,Integer> maxNumMap = new HashMap<>();
+	private static List<String> updateContent = new ArrayList<>();
+	private static String version;
+
 	@Override
 	public void onEnable() {
-
 		instance = this;
 		//初始化配置文件
+		version = JavaPlugin.getPlugin(DragonGuild.class).getDescription().getVersion();
 		getCommand("gh").setExecutor(new BaseCommand());
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"==================[DragonGuild]==================");
 		Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"第一次运行，请先检查配置文件");
@@ -50,6 +56,7 @@ public class DragonGuild extends JavaPlugin {
 		if (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
 			new SomeExpansion(this).register();
 		}
+		ActivationCodeTask.timeTask(this);
 	}
 	// 加载配置
 	public static void loadPlugin(Player player) {
@@ -157,5 +164,25 @@ public class DragonGuild extends JavaPlugin {
 
 	public static void setMaxNumMap(HashMap<Integer, Integer> maxNumMap) {
 		DragonGuild.maxNumMap = maxNumMap;
+	}
+
+	public static List<String> getUpdateContent() {
+		return updateContent;
+	}
+
+	public static void setUpdateContent(List<String> updateContent) {
+		DragonGuild.updateContent = updateContent;
+	}
+
+	public static String getVersion() {
+		return version;
+	}
+
+	public static void setVersion(String version) {
+		DragonGuild.version = version;
+	}
+
+	public static void main(String[] args) {
+
 	}
 }

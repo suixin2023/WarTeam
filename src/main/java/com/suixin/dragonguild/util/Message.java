@@ -38,6 +38,7 @@ public class Message {
     public static String apply_join2;
     public static String no_more_member;
     public static String no_more_apply;
+    public static String no_more_guild;
     public static String no_permission;
 
     public static boolean loadMessage( ){
@@ -72,8 +73,9 @@ public class Message {
             no_more_team = prefix + config.getString("DragonGuild.no_more_team","§c没有更多的公会了");
             apply_join = prefix + config.getString("DragonGuild.apply_join","§c该玩家已经加入其他公会");
             apply_join2 = prefix + config.getString("DragonGuild.apply_join2","§c申请失败！你已经加入了公会：");
-            no_more_member = prefix + config.getString("DragonGuild.no_more_member","§c没有更多的队员了");
+            no_more_member = prefix + config.getString("DragonGuild.no_more_member","§c没有更多的成员了");
             no_more_apply = prefix + config.getString("DragonGuild.no_more_apply","§c没有更多的申请了");
+            no_more_guild = prefix + config.getString("DragonGuild.no_more_guild","§c没有更多的公会了");
             no_permission = prefix + config.getString("DragonGuild.no_permission","§c无权限,你不是队长");
             return true;
         }else {

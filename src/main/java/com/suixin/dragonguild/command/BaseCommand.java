@@ -44,7 +44,7 @@ public class BaseCommand implements CommandExecutor {
 				player.sendMessage("§6●§a/gh join <公会> §e加入一个公会!");
 				player.sendMessage("§6●§a/gh dismiss  §e解散公会!");
 				player.sendMessage("§6●§a/gh out  §e退出公会!");
-				player.sendMessage("§6●§a/gh out <玩家> §e踢出公会!");
+				player.sendMessage("§6●§a/gh kick <玩家> §e踢出公会!");
 				player.sendMessage("§6●§a/gh agree <玩家> §e同意玩家加入公会!");
 				player.sendMessage("§6●§a/gh refuse <玩家> §e拒绝玩家加入公会!");
 				if (op) {
@@ -87,12 +87,13 @@ public class BaseCommand implements CommandExecutor {
 			} else if (arg1.equals("update")) {
 				//修改公会名
 				updateDragonGuild(argsList,player);
-			}else if (arg1.equals("out") && argsList.size() == 2) {
+			}else if (arg1.equals("kick") && argsList.size() == 2) {
 				//踢出公会
 				kickOutPlayer(argsList,player);
 			}else if (arg1.equals("reload")) {
 				if (!op) {
 					player.sendMessage("§c无权限");
+					return false;
 				}
 				//重载插件
 				DragonGuild.loadPlugin(player);
@@ -214,8 +215,8 @@ public class BaseCommand implements CommandExecutor {
 		Integer id = dragonGuildEntity1.getId();
 		dragonGuildNoticeEntity.setGuildId(id);
 		dragonGuildNoticeEntity.setCreated(new Date());
-		dragonGuildNoticeEntity.setTitle("");
-		dragonGuildNoticeEntity.setDesc("");
+		dragonGuildNoticeEntity.setTitle("§a["+teamName+"]"+"公会成立啦!");
+		dragonGuildNoticeEntity.setDescs("§b兄弟们多多拉人#§c做大做强,再创辉煌!");
 		dragonGuildNoticeEntity.setUid(player.getUniqueId().toString());
 		dragonGuildNoticeEntity.setCreator(player.getName());
 		dragonGuildNoticeEntity.setStatus(1);
@@ -402,7 +403,7 @@ public class BaseCommand implements CommandExecutor {
 			DragonGuildApplyDatabaseHandler.updateUserConfigDataNum(dragonGuildApplyEntity.getId(),dragonGuildApplyEntity);
 			return;
 		}
-		DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByName(dragonGuildApplyEntity.getDragonGuildName());
+		DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildApplyEntity.getDragonGuildId());
 
 		DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
 		dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity.getId());

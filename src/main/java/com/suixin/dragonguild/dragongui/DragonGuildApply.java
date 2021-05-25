@@ -1,7 +1,11 @@
 package com.suixin.dragonguild.dragongui;
 
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
+import com.suixin.dragonguild.entity.DragonGuildEntity;
+import com.suixin.dragonguild.entity.EasyButtonEx;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
+import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
+import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.*;
@@ -9,6 +13,7 @@ import eos.moe.dragoncore.api.easygui.component.listener.ClickListener;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 
@@ -72,21 +77,20 @@ public class DragonGuildApply {
         EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
-                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
-                openedScreen.closeGui(player);
+                player.closeInventory();
             }
         };
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         Component component = userComponent.get(player.getName());
-        YamlConfiguration messageListYml = DragonGuiYml.getMessageList();
-        EasyScrollingList scrollingList = new EasyScrollingList(messageListYml.getInt("x"), messageListYml.getInt("y"), messageListYml.getInt("width"), messageListYml.getInt("high"), "0,102,255,255");
+        YamlConfiguration applyBackgroundYml = DragonGuiYml.getApplyBackground();
+        EasyScrollingList scrollingList = new EasyScrollingList(applyBackgroundYml.getInt("x"), applyBackgroundYml.getInt("y"), applyBackgroundYml.getInt("width"), applyBackgroundYml.getInt("high"), ImageUrlEnum.listbg.getUrl());
         YamlConfiguration barYml = DragonGuiYml.getBar();
         scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
         applyList(scrollingList,player, component, 1, dragonGuildId,1);
         component.setScrollingList(scrollingList);
         //上一页
-        YamlConfiguration shangyiye = DragonGuiYml.getApplyShangyiye();
-        EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.applyShangyiye.getUrl(), PImageUrlEnum.applyShangyiye.getUrl()) {
+        YamlConfiguration shangyiye = DragonGuiYml.getShangyiye();
+        EasyButton shangyiyeButton = new EasyButton( shangyiye.getInt("x"), shangyiye.getInt("y"), shangyiye.getInt("width"), shangyiye.getInt("high"), ImageUrlEnum.shangyiye.getUrl(), PImageUrlEnum.shangyiye.getUrl()) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 Component component = DragonGuildGui.getUserComponent().get(player.getName());
@@ -104,8 +108,8 @@ public class DragonGuildApply {
         };
 
         //下一页
-        YamlConfiguration xiayiye = DragonGuiYml.getApplyXiayiye();
-        EasyButton xiayiyeButton = new EasyButton( xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"),ImageUrlEnum.applyXiayiye.getUrl(), PImageUrlEnum.applyXiayiye.getUrl() ) {
+        YamlConfiguration xiayiye = DragonGuiYml.getXiayiye();
+        EasyButton xiayiyeButton = new EasyButton( xiayiye.getInt("x"), xiayiye.getInt("y"), xiayiye.getInt("width"), xiayiye.getInt("high"),ImageUrlEnum.xiayiye.getUrl(), PImageUrlEnum.xiayiye.getUrl() ) {
             @Override
             public void onClick(Player player, ClickListener.Type type) {
                 Component component = DragonGuildGui.getUserComponent().get(player.getName());
@@ -120,7 +124,24 @@ public class DragonGuildApply {
         };
         YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
         EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
+        YamlConfiguration name = DragonGuiYml.getName();
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        Integer count = DragonGuildMemBerDatabaseHandler.selectCount(dragonGuildId);
+        YamlConfiguration renshu = DragonGuiYml.getRenshu();
+        YamlConfiguration level = DragonGuiYml.getLevel();
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList("成员:"+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList("等级:"+dragonGuildEntity.getLevel()+""));
+
+        //图标
+        YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
+        EasyImage guildImg = new EasyImage( guildImgYml.getInt("x"), guildImgYml.getInt("y"), guildImgYml.getInt("width"), guildImgYml.getInt("high"),ImageUrlEnum.guildImg.getUrl());
         screen.addComponent(listBgkImg);
+        screen.addComponent(scrollingList);
+        screen.addComponent(guildImg);
+        screen.addComponent(nameText);
+        screen.addComponent(renshuText);
+        screen.addComponent(levelText);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);
@@ -147,9 +168,11 @@ public class DragonGuildApply {
         YamlConfiguration applyAgree = DragonGuiYml.getApplyAgree();
         YamlConfiguration applyRepulse = DragonGuiYml.getApplyRepulse();
         YamlConfiguration nameYml = DragonGuiYml.getApplyPlayerName();
+        YamlConfiguration applyTimeYml = DragonGuiYml.getApplyTime();
         int applyAgreeY = applyAgree.getInt("y");
         int applyRepulseY = applyRepulse.getInt("y");
         int nameYmlY = nameYml.getInt("y");
+        int applyTimeYmlY = applyTimeYml.getInt("y");
         int applyListY = applyList.getInt("y");
         List<DragonGuildApplyEntity> dragonGuildApplyEntities = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByDragonGuildId(limit, dragonGuildId);
         if (dragonGuildApplyEntities.size() == 0) {
@@ -163,33 +186,45 @@ public class DragonGuildApply {
         applylist.clear();
         for (DragonGuildApplyEntity dragonGuildApplyEntity: dragonGuildApplyEntities) {
             String apply = dragonGuildApplyEntity.getUid();
-            EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(apply));
+            Date created = dragonGuildApplyEntity.getCreated();
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日");
+            String format = simpleDateFormat.format(created);
+            EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList("申请人： "+apply));
+            EasyLabel timeText = new EasyLabel(applyTimeYml.getInt("x"), applyTimeYmlY, 1,Arrays.asList(format));
             EasyImage applyListImg = new EasyImage( applyList.getInt("x"), applyListY, applyList.getInt("width"), applyList.getInt("high"),ImageUrlEnum.applyList.getUrl());
             //同意
-            EasyButton applyAgreeButton = new EasyButton( applyAgree.getInt("x"), applyAgreeY, applyAgree.getInt("width"), applyAgree.getInt("high"),ImageUrlEnum.applyAgree.getUrl(), PImageUrlEnum.applyAgree.getUrl() ) {
+            EasyButtonEx applyAgreeButton = new EasyButtonEx( applyAgree.getInt("x"), applyAgreeY, applyAgree.getInt("width"), applyAgree.getInt("high"),ImageUrlEnum.applyAgree.getUrl(), PImageUrlEnum.applyAgree.getUrl() ) {
                 @Override
                 public void onClick(Player player, Type type) {
+
                 }
             };
             //不同意
-            EasyButton applyRepulseButton = new EasyButton(applyRepulse.getInt("x"), applyRepulseY, applyRepulse.getInt("width"), applyRepulse.getInt("high"), ImageUrlEnum.applyRepulse.getUrl(), PImageUrlEnum.applyRepulse.getUrl()) {
+            EasyButtonEx applyRepulseButton = new EasyButtonEx(applyRepulse.getInt("x"), applyRepulseY, applyRepulse.getInt("width"), applyRepulse.getInt("high"), ImageUrlEnum.applyRepulse.getUrl(), PImageUrlEnum.applyRepulse.getUrl()) {
                 @Override
                 public void onClick(Player player, Type type) {
+
                 }
             };
             list.add(applyListImg);
             list.add(applyRepulseButton);
             list.add(applyAgreeButton);
             list.add(nameText);
-
+            list.add(timeText);
+            applyRepulseButton.setApplyName(apply);
+            applyRepulseButton.setType("applyRepulseButton");
+            applyAgreeButton.setApplyName(apply);
+            applyAgreeButton.setType("applyAgreeButton");
             scrollingList.addComponent(applyListImg);
             scrollingList.addComponent(applyRepulseButton);
             scrollingList.addComponent(applyAgreeButton);
             scrollingList.addComponent(nameText);
-            applyAgreeY = applyAgreeY + applyList.getInt("high") + 3;
-            applyRepulseY = applyRepulseY + applyList.getInt("high")+ 3;
-            nameYmlY = nameYmlY + applyList.getInt("high")+ 3;
-            applyListY = applyListY + applyList.getInt("high")+ 3;
+            scrollingList.addComponent(timeText);
+            applyAgreeY = applyAgreeY + applyList.getInt("interval");
+            applyRepulseY = applyRepulseY + applyList.getInt("interval");
+            nameYmlY = nameYmlY + applyList.getInt("interval");
+            applyListY = applyListY + applyList.getInt("interval");
+            applyTimeYmlY = applyTimeYmlY + applyList.getInt("interval");
         }
         for (EasyComponent easyComponent : list) {
             applylist.add(easyComponent.getId());

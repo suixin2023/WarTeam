@@ -1,6 +1,7 @@
 package com.suixin.dragonguild.dragongui;
 
 import com.suixin.dragonguild.entity.DragonGuildEntity;
+import com.suixin.dragonguild.entity.EasyButtonEx;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
@@ -33,14 +34,13 @@ public class DragonGuildNoTeam {
         EasyButton closeButton = new EasyButton( close.getInt("x"), close.getInt("y"), close.getInt("width"), close.getInt("high"), ImageUrlEnum.close.getUrl(), PImageUrlEnum.close.getUrl() ) {
             @Override
             public void onClick(Player player, Type type) {
-                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
-                openedScreen.closeGui(player);
+                player.closeInventory();
             }
         };
         Map<String, Component> userComponent = DragonGuildGui.getUserComponent();
         userComponent.put(player.getName(),component);
         YamlConfiguration topbgYml = DragonGuiYml.getTopbg();
-        EasyScrollingList scrollingList = new EasyScrollingList(topbgYml.getInt("x"), topbgYml.getInt("y"), topbgYml.getInt("width"), topbgYml.getInt("high"), "DragonGuild/列表背景.png");
+        EasyScrollingList scrollingList = new EasyScrollingList(topbgYml.getInt("x"), topbgYml.getInt("y"), topbgYml.getInt("width"), topbgYml.getInt("high"), ImageUrlEnum.listbg.getUrl());
         YamlConfiguration barYml = DragonGuiYml.getBar();
         scrollingList.setBar(barYml.getInt("w"), barYml.getInt("h"), barYml.getInt("high"), ImageUrlEnum.bar.getUrl());
         easyScrollList(scrollingList,player, component, 1,1);
@@ -99,8 +99,11 @@ public class DragonGuildNoTeam {
                 DragonGuildCreate.openGameLobbyGui(player,2);
             }
         };
+        YamlConfiguration name = DragonGuiYml.getName();
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList("[龙之公会]"));
         YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
         EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
+        screen.addComponent(nameText);
         screen.addComponent(listBgkImg);
         screen.addComponent(scrollingList);
         screen.addComponent(closeButton);
@@ -122,45 +125,64 @@ public class DragonGuildNoTeam {
         limit = (limit - 1) * 6;
         List<EasyComponent> list = new ArrayList<>();
         List<String> guildList = component.getGuildList();
-        YamlConfiguration topListYml = DragonGuiYml.getTopList();
+        YamlConfiguration topYml = DragonGuiYml.getTopList();
         YamlConfiguration topImgYml = DragonGuiYml.getTopImg();
         YamlConfiguration nameYml = DragonGuiYml.getTopName();
-        YamlConfiguration joinApply = DragonGuiYml.getTopJoinApply();
-        int topListYmlY = topListYml.getInt("y");
+        YamlConfiguration topLevelYml = DragonGuiYml.getTopLevel();
+        int topYmlY = topYml.getInt("y");
         int topImgYmlY = topImgYml.getInt("y");
         int nameYmlY = nameYml.getInt("y");
+        int topLevelYmlY = topLevelYml.getInt("y");
+        YamlConfiguration joinApply = DragonGuiYml.getTopJoinApply();
         int joinApplyY = joinApply.getInt("y");
         List<DragonGuildEntity> dragonGuildEntities = DragonGuildDatabaseHandler.selectDragonGuildDataNum(limit);
         if (dragonGuildEntities.size() == 0) {
-            player.sendMessage(Message.no_more_apply);
+            player.sendMessage(Message.no_more_guild);
             return;
         }
         for (String easyComponent : guildList) {
             components.remove(easyComponent);
         }
-        for (DragonGuildEntity dragonGuildEntity: dragonGuildEntities) {
-            String name = dragonGuildEntity.getName();
-            EasyImage topUmg = new EasyImage( topListYml.getInt("x"), topListYmlY, topListYml.getInt("width"), topListYml.getInt("high"),ImageUrlEnum.guildList.getUrl());
+        for (int i = 0; i < dragonGuildEntities.size(); i ++) {
+            String name = dragonGuildEntities.get(i).getName();
+            Integer level = dragonGuildEntities.get(i).getLevel();
+            EasyImage topUmg = new EasyImage( topYml.getInt("x"), topYmlY, topYml.getInt("width"), topYml.getInt("high"),ImageUrlEnum.guildList.getUrl());
             EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(name));
-            EasyImage img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild.getUrl());
+            EasyLabel topLevelText = new EasyLabel(topLevelYml.getInt("x"), topLevelYmlY, 1,Arrays.asList("LV: "+level));
+            EasyImage img;
+            if (currentPage == 1 && i == 0) {
+                img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild.getUrl());
+            }else if (currentPage == 1 && i == 1) {
+                img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild2.getUrl());
+            }else if (currentPage == 1 && i == 2) {
+                img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild3.getUrl());
+            }else{
+                img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild4.getUrl());
+            }
             //申请加入
-            EasyButton joinApplyButton = new EasyButton( joinApply.getInt("x"), joinApplyY, joinApply.getInt("width"), joinApply.getInt("high"),ImageUrlEnum.applyJoin.getUrl(), PImageUrlEnum.applyJoin.getUrl() ) {
+            EasyButtonEx joinApplyButton = new EasyButtonEx( joinApply.getInt("x"), joinApplyY, joinApply.getInt("width"), joinApply.getInt("high"),ImageUrlEnum.applyJoin.getUrl(), PImageUrlEnum.applyJoin.getUrl() ) {
                 @Override
                 public void onClick(Player player, Type type) {
-                    player.chat("/gh join " + name);
                 }
             };
+
             list.add(topUmg);
             list.add(nameText);
             list.add(img);
+            list.add(topLevelText);
             list.add(joinApplyButton);
+            joinApplyButton.setGuildName(name);
+            joinApplyButton.setType("joinApplyButton");
             scrollingList.addComponent(topUmg);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(img);
+            scrollingList.addComponent(topLevelText);
             scrollingList.addComponent(joinApplyButton);
-            joinApplyY = joinApplyY + topImgYml.getInt("high") + 3;
-            nameYmlY = nameYmlY + topImgYml.getInt("high")+ 3;
-            topImgYmlY = topImgYmlY + topImgYml.getInt("high")+ 3;
+            topYmlY = topYmlY + topYml.getInt("interval");
+            nameYmlY = nameYmlY + topYml.getInt("interval");
+            topImgYmlY = topImgYmlY + topYml.getInt("interval");
+            topLevelYmlY = topLevelYmlY + topYml.getInt("interval");
+            joinApplyY = joinApplyY + topYml.getInt("interval");
         }
         for (EasyComponent easyComponent : list) {
             guildList.add(easyComponent.getId());

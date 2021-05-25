@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class MysqlUtil {
     private static Connection conn = null;
+    private static HikariDataSource ds = null;
     private static String dbDriver;    //定义驱动
     private static String dbURL;        //定义URL
     private static String userName;    //定义用户名
@@ -37,7 +38,7 @@ public class MysqlUtil {
             hikariConfig.addDataSourceProperty("cachePrepStmts", "true");
             hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
             hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
-            HikariDataSource ds = new HikariDataSource(hikariConfig);
+            ds = new HikariDataSource(hikariConfig);
             conn = ds.getConnection();
             return true;
         } catch (ClassNotFoundException classnotfoundexception) {
@@ -50,24 +51,24 @@ public class MysqlUtil {
         }
     }
 
-    @Override
-    protected void finalize() throws Exception {
-        try {
-            if (null != conn){
-                conn.close();
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
+//    @Override
+//    protected void finalize() throws Exception {
+//        try {
+//            if (null != conn){
+//                conn.close();
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//
+//    }
 
     // 查询并得到结果集
     public static ResultSet execQuery(String sql) throws Exception {
         ResultSet rstSet = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                conn = ds.getConnection();
             }
             Statement stmt = conn.createStatement();
             rstSet = stmt.executeQuery(sql);
@@ -118,7 +119,7 @@ public class MysqlUtil {
         PreparedStatement pstmt = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                conn = ds.getConnection();
             }
             pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 
@@ -141,7 +142,7 @@ public class MysqlUtil {
         int flag = 0;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
+                conn = ds.getConnection();
             }
             Statement stmt = conn.createStatement();
             flag = stmt.executeUpdate(sql);
@@ -193,7 +194,6 @@ public void callStordProc(String sql, Object[] inParams, SqlParameter[] outParam
         PreparedStatement pstmt = null;
         try {
             if (null == conn){
-                throw new Exception("Database not connected!");
             }
             pstmt = conn.prepareStatement(psql);
         } catch (SQLException e) {
