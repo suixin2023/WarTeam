@@ -48,6 +48,12 @@ public enum ImageUrlEnum {
     guildImg("creator","公会图腾.png", "图腾"),
     title("title","标题.png", "标题"),
     bar("bar","bar.png", "bar"),
+
+    vice_chairman("vice_chairman","副会长.png", "副会长"),
+    veteran("veteran","元老.png", "元老"),
+    god_of_war("god_of_war","战神.png", "战神"),
+    elite("elite","精英.png", "精英"),
+    ordinary("ordinary","普通成员.png", "普通成员"),
     //暂无图片
     edit("edit","编辑.png", "编辑"),
     save("save","保存.png", "保存"),

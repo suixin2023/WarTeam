@@ -1,10 +1,15 @@
 package com.suixin.dragonguild.util;
 
 import com.suixin.dragonguild.DragonGuild;
+import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
+import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.entity.Player;
+
+import java.util.HashMap;
+import java.util.List;
 
 /**
  * This class will be registered through the register-method in the plugins
@@ -82,7 +87,7 @@ public class SomeExpansion extends PlaceholderExpansion {
      */
     @Override
     public String getIdentifier() {
-        return "DragonGuild";
+        return "dragonguild";
     }
 
     /**
@@ -124,8 +129,41 @@ public class SomeExpansion extends PlaceholderExpansion {
         if (dragonGuildMemberEntity.getId() == null) {
             return "-";
         }
+        Integer dragonGuildId = dragonGuildMemberEntity.getDragonGuildId();
+        DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
         if (identifier.equals("name")) {
-            return dragonGuildMemberEntity.getDragonGuildName();
+            return dragonGuildEntity.getName();
+        }
+        if (identifier.equals("level")) {
+            return dragonGuildEntity.getLevel().toString();
+        }
+        if (identifier.equals("exp")) {
+            return dragonGuildMemberEntity.getExp().toString();
+        }
+        if (identifier.equals("member_num")) {
+            Integer integer = DragonGuildMemBerDatabaseHandler.selectCount(dragonGuildId);
+            return integer.toString();
+        }
+        if (identifier.equals("max_num")) {
+            Integer integer = dragonGuildEntity.getMaxMember();
+            return integer.toString();
+        }
+        if (identifier.equals("top")) {
+            List<DragonGuildEntity> dragonGuildEntities = DragonGuildDatabaseHandler.selectDragonGuildAll();
+            Integer top = 1;
+            for (DragonGuildEntity guildEntity : dragonGuildEntities) {
+                if (guildEntity.getId().equals(dragonGuildId)) {
+                    return top.toString();
+                }
+                top++;
+            }
+        }
+        if (identifier.equals("is_creator")) {
+            if (dragonGuildEntity.getCreator().equals(player.getName())) {
+                return "是";
+            }else{
+                return "否";
+            }
         }
         return null;
     }

@@ -89,8 +89,8 @@ public class DragonGuildGui {
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
-        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList("成员:"+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList("等级:"+dragonGuildEntity.getLevel()+""));
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(Message.member+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(Message.level+dragonGuildEntity.getLevel()+""));
 
         //解散公会
         YamlConfiguration dissolveTeam = DragonGuiYml.getDissolveTeam();
@@ -248,15 +248,18 @@ public class DragonGuildGui {
         YamlConfiguration pictureFrameYml = DragonGuiYml.getPictureFrame();
         YamlConfiguration nameYml = DragonGuiYml.getNickName();
         YamlConfiguration expYml = DragonGuiYml.getExp();
+        YamlConfiguration positionYml = DragonGuiYml.getPosition();
         int memberListx = memberList.getInt("x");
         int pictureFramedefx = pictureFrameYml.getInt("x");
         int namex = nameYml.getInt("x");
         int expx = expYml.getInt("x");
+        int positionYmlx = positionYml.getInt("x");
 
         int memberListY = memberList.getInt("y");
         int pictureFramey = pictureFrameYml.getInt("y");
         int namey = nameYml.getInt("y");
         int expy = expYml.getInt("y");
+        int positionYmlY = positionYml.getInt("y");
 
         List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerDataNum(limit, id);
         DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(id);
@@ -271,6 +274,7 @@ public class DragonGuildGui {
         for (DragonGuildMemberEntity dragonGuildMember: dragonGuildMemberEntities) {
             String playerName = dragonGuildMember.getUid();
             Integer exp = dragonGuildMember.getExp();
+            String position = dragonGuildMember.getPosition();
             EasyImage listImage = new EasyImage( memberListx, memberListY, memberList.getInt("width"), memberList.getInt("high"),ImageUrlEnum.memberList.getUrl());
             EasyImage pictureFrameImage = null;
             if (dragonGuildMember.getUid().equals(dragonGuildEntity.getCreator())) {
@@ -278,20 +282,24 @@ public class DragonGuildGui {
             }else {
                 pictureFrameImage = new EasyImage(pictureFramedefx, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }
-            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList("游戏名："+playerName));
-            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList("贡献： "+exp));
+            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(Message.name+playerName));
+            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(Message.contribution+exp));
+            EasyLabel positionText = new EasyLabel(positionYmlx, positionYmlY, 1 ,Arrays.asList(position));
             list.add(listImage);
             list.add(pictureFrameImage);
             list.add(nameText);
             list.add(expText);
+            list.add(positionText);
             scrollingList.addComponent(listImage);
             scrollingList.addComponent(pictureFrameImage);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(expText);
+            scrollingList.addComponent(positionText);
             memberListY = memberListY + memberList.getInt("interval");
             pictureFramey = pictureFramey + memberList.getInt("interval");
             namey = namey + memberList.getInt("interval");
             expy = expy + memberList.getInt("interval");
+            positionYmlY = positionYmlY + memberList.getInt("interval");
         }
 
         component.setCurrent(currentPage);
@@ -308,5 +316,52 @@ public class DragonGuildGui {
 
     public static void setUserComponent(Map<String, Component> userComponent) {
         DragonGuildGui.userComponent = userComponent;
+    }
+
+    private void jklj() {
+//        vice_chairman("vice_chairman","副会长2.png", "副会长"),
+//                veteran("veteran","元老2.png", "元老"),
+//                god_of_war("god_of_war","战神2.png", "战神"),
+//                elite("elite","精英2.png", "精英"),
+//                ordinary("ordinary","普通成员2.png", "普通成员"),
+        //副会长
+        YamlConfiguration vice_chairmanYml = DragonGuiYml.getVice_chairman();
+        EasyButton vice_chairmanButton = new EasyButton(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), PImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+            }
+        };
+        //元老
+        YamlConfiguration veteran = DragonGuiYml.getVeteran();
+        EasyButton noticeButton = new EasyButton(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildNotice.openGameLobbyGui(player,id);
+            }
+        };
+        //战神
+        YamlConfiguration god_of_war = DragonGuiYml.getGod_of_war();
+        EasyButton god_of_warButton = new EasyButton(god_of_war.getInt("x"), god_of_war.getInt("y"), god_of_war.getInt("width"), god_of_war.getInt("high"), ImageUrlEnum.god_of_war.getUrl(), PImageUrlEnum.god_of_war.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildChat.openGameLobbyGui(player,id);
+            }
+        };
+        //精英
+        YamlConfiguration elite = DragonGuiYml.getElite();
+        EasyButton eliteButton = new EasyButton(elite.getInt("x"), elite.getInt("y"), elite.getInt("width"), elite.getInt("high"), ImageUrlEnum.elite.getUrl(), PImageUrlEnum.elite.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildApply.openGameLobbyGui(player,id);
+            }
+        };
+        //普通成员
+        YamlConfiguration ordinary = DragonGuiYml.getOrdinary();
+        EasyButton topButton = new EasyButton(ordinary.getInt("x"), ordinary.getInt("y"), ordinary.getInt("width"), ordinary.getInt("high"), ImageUrlEnum.ordinary.getUrl(), PImageUrlEnum.ordinary.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildTop.openGameLobbyGui(player,id);
+            }
+        };
     }
 }

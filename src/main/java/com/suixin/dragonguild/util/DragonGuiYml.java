@@ -72,7 +72,14 @@ public class DragonGuiYml {
     private static YamlConfiguration chatBar;
     private static YamlConfiguration chatConfirm;
     private static YamlConfiguration chatCancel;
-
+    //任职
+    private static YamlConfiguration position;
+    private static YamlConfiguration appoint;
+    private static YamlConfiguration vice_chairman;
+    private static YamlConfiguration veteran;
+    private static YamlConfiguration god_of_war;
+    private static YamlConfiguration elite;
+    private static YamlConfiguration ordinary;
     public static boolean loadGui( ) {
         try {
             shangyiye = DragonGuild.getYml("dragon/上一页.yml");
@@ -88,6 +95,15 @@ public class DragonGuiYml {
             nickName = DragonGuild.getYml("dragon/游戏名.yml");
             level = DragonGuild.getYml("dragon/等级.yml");
             exp = DragonGuild.getYml("dragon/贡献值.yml");
+
+            position = DragonGuild.getYml("dragon/职位.yml");
+            appoint = DragonGuild.getYml("dragon/任职.yml");
+            vice_chairman = DragonGuild.getYml("dragon/副会长.yml");
+            veteran = DragonGuild.getYml("dragon/元老.yml");
+            god_of_war = DragonGuild.getYml("dragon/战神.yml");
+            elite = DragonGuild.getYml("dragon/精英.yml");
+            ordinary = DragonGuild.getYml("dragon/普通成员.yml");
+
             memberList = DragonGuild.getYml("dragon/成员列表.yml");
             outTeam = DragonGuild.getYml("dragon/退出公会.yml");
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
@@ -662,5 +678,61 @@ public class DragonGuiYml {
 
     public static void setBack(YamlConfiguration back) {
         DragonGuiYml.back = back;
+    }
+
+    public static YamlConfiguration getPosition() {
+        return position;
+    }
+
+    public static void setPosition(YamlConfiguration position) {
+        DragonGuiYml.position = position;
+    }
+
+    public static YamlConfiguration getAppoint() {
+        return appoint;
+    }
+
+    public static void setAppoint(YamlConfiguration appoint) {
+        DragonGuiYml.appoint = appoint;
+    }
+
+    public static YamlConfiguration getVice_chairman() {
+        return vice_chairman;
+    }
+
+    public static void setVice_chairman(YamlConfiguration vice_chairman) {
+        DragonGuiYml.vice_chairman = vice_chairman;
+    }
+
+    public static YamlConfiguration getVeteran() {
+        return veteran;
+    }
+
+    public static void setVeteran(YamlConfiguration veteran) {
+        DragonGuiYml.veteran = veteran;
+    }
+
+    public static YamlConfiguration getGod_of_war() {
+        return god_of_war;
+    }
+
+    public static void setGod_of_war(YamlConfiguration god_of_war) {
+        DragonGuiYml.god_of_war = god_of_war;
+    }
+
+    public static YamlConfiguration getElite() {
+        return elite;
+    }
+
+    public static void setElite(YamlConfiguration elite) {
+        DragonGuiYml.elite = elite;
+    }
+
+    public static YamlConfiguration getOrdinary() {
+        return ordinary;
+    }
+
+    public static void setOrdinary(YamlConfiguration ordinary) {
+        DragonGuiYml.ordinary = ordinary;
     }
 }

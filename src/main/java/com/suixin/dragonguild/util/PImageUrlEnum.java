@@ -30,6 +30,12 @@ public enum PImageUrlEnum {
     guildList("guildList","公会列表2.png", "公会列表"),
     lobby("lobby","大厅2.png", "大厅"),
 
+    vice_chairman("vice_chairman","副会长2.png", "副会长"),
+    veteran("veteran","元老2.png", "元老"),
+    god_of_war("god_of_war","战神2.png", "战神"),
+    elite("elite","精英2.png", "精英"),
+    ordinary("ordinary","普通成员2.png", "普通成员"),
+
     //暂无图片
     edit("edit","编辑2.png", "编辑"),
     save("save","保存2.png", "保存"),

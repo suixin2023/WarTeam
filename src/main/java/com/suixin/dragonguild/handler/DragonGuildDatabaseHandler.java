@@ -160,6 +160,38 @@ public class DragonGuildDatabaseHandler {
         }
         return  dragonGuildEntity;
     }
+
+    public static  List<DragonGuildEntity> selectDragonGuildAll(){
+        String sql = "select * from dragon_guild where status = 1 order by level desc ";
+        List<DragonGuildEntity> dragonGuildEntitys = new ArrayList<>();
+        try {
+            ResultSet rst = MysqlUtil.execQuery(sql);
+            if (rst != null) {
+                while (rst.next()) {
+                    DragonGuildEntity dragonGuildEntity = new DragonGuildEntity();
+                    dragonGuildEntity.setId(rst.getInt("id"));
+                    dragonGuildEntity.setUid(rst.getString("uid"));
+                    dragonGuildEntity.setCreator(rst.getString("creator"));
+                    dragonGuildEntity.setName(rst.getString("name"));
+                    dragonGuildEntity.setLevel(rst.getInt("level"));
+                    dragonGuildEntity.setExpAll(rst.getInt("exp_all"));
+                    dragonGuildEntity.setExpCurrent(rst.getInt("exp_current"));
+                    dragonGuildEntity.setMaxMember(rst.getInt("max_member"));
+                    dragonGuildEntity.setStatus(rst.getInt("status"));
+                    dragonGuildEntity.setCreated(rst.getDate("created"));
+                    dragonGuildEntity.setModified(rst.getDate("modified"));
+                    dragonGuildEntitys.add(dragonGuildEntity);
+                }
+                MysqlUtil.close(rst);
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return  dragonGuildEntitys;
+    }
+
     //查询总页数
     public static Integer selectTeamCount(){
         String sql = "select count(*) as datacount from dragon_guild where status = 1";

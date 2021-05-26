@@ -49,6 +49,7 @@ public class BaseCommand implements CommandExecutor {
 				player.sendMessage("§6●§a/gh refuse <玩家> §e拒绝玩家加入公会!");
 				if (op) {
 					player.sendMessage("§6●§a/gh reload §e重载插件!");
+					player.sendMessage("§6●§a/gh add <公会> 贡献值 §e增加公会荣誉!");
 				}
 				player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 				return true;
@@ -98,10 +99,59 @@ public class BaseCommand implements CommandExecutor {
 				//重载插件
 				DragonGuild.loadPlugin(player);
 			}
+			else if (arg1.equals("add")) {
+				if (!op) {
+					player.sendMessage("§c无权限");
+					return false;
+				}
+				add(argsList,player);
+			}
 		}
 		return true;
 	}
-
+	private void add(List<String> argsList,Player player) {
+		if (argsList.size() != 3){
+			player.sendMessage("§c指令不正确");
+			return;
+		}
+		String teamName = argsList.get(1);
+		String exp = argsList.get(2);
+		Integer expInt = 0;
+		try {
+			expInt = Integer.valueOf(exp);
+		}catch (Exception e){
+			player.sendMessage("§c错误!贡献值必须是整数!");
+			return;
+		}
+		DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByName(teamName);
+		if (dragonGuildEntity.getId() == null) {
+			player.sendMessage(Message.team_inexistence);
+			return;
+		}
+		DragonGuildEntity dragonGuildEntity1 = new DragonGuildEntity();
+		Integer expAll = dragonGuildEntity.getExpAll();
+		dragonGuildEntity1.setExpAll(expAll + expInt);
+		Integer expCurrent = dragonGuildEntity.getExpCurrent();
+		if (expInt < expCurrent) {
+			int i = expCurrent - expInt;
+			if (i < 0){
+				i = 0;
+			}
+			Integer integer = levelMap.get(dragonGuildEntity.getLevel() + 1);
+			if (i > integer) {
+				i = integer;
+			}
+			dragonGuildEntity1.setExpCurrent(i);
+		}else{
+			dragonGuildEntity1.setExpCurrent(expCurrent - expInt);
+			dragonGuildEntity1.setLevel(dragonGuildEntity.getLevel()+1);
+			//升级后最大成员数
+			dragonGuildEntity1.setMaxMember(maxNumMap.get(dragonGuildEntity.getLevel()+1));
+			//升级后下一级所需经验
+			dragonGuildEntity1.setExpCurrent(levelMap.get(dragonGuildEntity.getLevel()+2));
+		}
+		DragonGuildDatabaseHandler.updateUserConfigDataNum(dragonGuildEntity.getId(),dragonGuildEntity1);
+	}
 	private void dragonGuildList ( List<String> argsList,Player player) {
 		if (argsList.size() > 2){
 			player.sendMessage("§c指令不正确");

@@ -1,5 +1,6 @@
 package com.suixin.dragonguild.dragongui;
 
+import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.EasyButtonEx;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
@@ -100,7 +101,7 @@ public class DragonGuildNoTeam {
             }
         };
         YamlConfiguration name = DragonGuiYml.getName();
-        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList("[龙之公会]"));
+        EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(DragonGuild.getSystemConfig().getString("DragonGuild.noteam")));
         YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
         EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
         screen.addComponent(nameText);

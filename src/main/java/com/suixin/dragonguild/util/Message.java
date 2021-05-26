@@ -40,6 +40,10 @@ public class Message {
     public static String no_more_apply;
     public static String no_more_guild;
     public static String no_permission;
+    public static String name;
+    public static String contribution;
+    public static String level;
+    public static String member;
 
     public static boolean loadMessage( ){
         YamlConfiguration config = DragonGuild.getYml("message.yml");
@@ -77,6 +81,10 @@ public class Message {
             no_more_apply = prefix + config.getString("DragonGuild.no_more_apply","§c没有更多的申请了");
             no_more_guild = prefix + config.getString("DragonGuild.no_more_guild","§c没有更多的公会了");
             no_permission = prefix + config.getString("DragonGuild.no_permission","§c无权限,你不是队长");
+            name = prefix + config.getString("information.name","§a游戏名：");
+            contribution = prefix + config.getString("information.contribution","§a贡献：");
+            level = prefix + config.getString("information.level","§a等级：");
+            member = prefix + config.getString("information.member","§a成员：");
             return true;
         }else {
             return true;

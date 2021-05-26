@@ -51,9 +51,9 @@ public final class PlayerJoinEventClass implements Listener {
             DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
             if (dragonGuildEntity.getId() != null) {
                 DragonGuildEntity dragonGuildEntity1 = new DragonGuildEntity();
-                Integer expAll = dragonGuildEntity1.getExpAll();
+                Integer expAll = dragonGuildEntity.getExpAll();
                 dragonGuildEntity1.setExpAll(expAll + expInt);
-                Integer expCurrent = dragonGuildEntity1.getExpCurrent();
+                Integer expCurrent = dragonGuildEntity.getExpCurrent();
                 if (expInt < expCurrent) {
                     dragonGuildEntity1.setExpCurrent(expCurrent - expInt);
                 }else{
