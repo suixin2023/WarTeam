@@ -24,39 +24,40 @@ DragonGuild:
   position:
    chairman:
      name: '会长'
-     permission:
+     command:
        - 'tp'
+       -
        - 'fly'
    vice_chairman:
      name: '副会长'
-     permission:
+     command:
        - 'tp'
        - 'fly'
    veteran:
      name: '元老'
-     permission:
+     command:
        - 'tp'
        - 'fly'
    god_of_war:
      name: '战神'
-     permission:
+     command:
        - 'tp'
        - 'fly'
    elite:
      name: '精英'
-     permission:
+     command:
        - 'tp'
        - 'fly'
    ordinary:
      name: '普通成员'
-     permission:
+     command:
        - 'tp'
        - 'fly'
   event:
     memberjoin:
       - 'tp'
       - 'fly'
-    memberjoin:
+    memberOut:
       - 'tp'
       - 'fly'
   level:
