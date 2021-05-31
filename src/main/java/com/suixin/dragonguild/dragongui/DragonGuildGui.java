@@ -336,7 +336,6 @@ public class DragonGuildGui {
         EasyButton noticeButton = new EasyButton(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildNotice.openGameLobbyGui(player,id);
             }
         };
         //战神
@@ -344,7 +343,6 @@ public class DragonGuildGui {
         EasyButton god_of_warButton = new EasyButton(god_of_war.getInt("x"), god_of_war.getInt("y"), god_of_war.getInt("width"), god_of_war.getInt("high"), ImageUrlEnum.god_of_war.getUrl(), PImageUrlEnum.god_of_war.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildChat.openGameLobbyGui(player,id);
             }
         };
         //精英
@@ -352,7 +350,6 @@ public class DragonGuildGui {
         EasyButton eliteButton = new EasyButton(elite.getInt("x"), elite.getInt("y"), elite.getInt("width"), elite.getInt("high"), ImageUrlEnum.elite.getUrl(), PImageUrlEnum.elite.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildApply.openGameLobbyGui(player,id);
             }
         };
         //普通成员
@@ -360,7 +357,6 @@ public class DragonGuildGui {
         EasyButton topButton = new EasyButton(ordinary.getInt("x"), ordinary.getInt("y"), ordinary.getInt("width"), ordinary.getInt("high"), ImageUrlEnum.ordinary.getUrl(), PImageUrlEnum.ordinary.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildTop.openGameLobbyGui(player,id);
             }
         };
     }
