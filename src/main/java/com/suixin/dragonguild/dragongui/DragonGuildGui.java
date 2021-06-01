@@ -97,24 +97,7 @@ public class DragonGuildGui {
         EasyButton dissolveTeamButton = new EasyButton(dissolveTeam.getInt("x"), dissolveTeam.getInt("y"), dissolveTeam.getInt("width"), dissolveTeam.getInt("high"),ImageUrlEnum.dissolveTeam.getUrl(), PImageUrlEnum.dissolveTeam.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
-                if (dragonGuildEntity.getId() == null) {
-                    player.sendMessage(Message.no_team);
-                    return;
-                }
-                DragonGuildDatabaseHandler.deleteById(dragonGuildEntity.getId());
-                List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByDragonGuildId(dragonGuildEntity.getId());
-                for (DragonGuildMemberEntity dragonGuildMemberEntity : dragonGuildMemberEntities) {
-                    String uid = dragonGuildMemberEntity.getUid();
-                    Player addressee = Bukkit.getServer().getPlayer(uid);
-                    if (addressee != null) {
-                        addressee.sendMessage(Message.team_dissolve);
-                    }
-                }
-                DragonGuildMemBerDatabaseHandler.deleteAll(dragonGuildEntity.getId());
-                DragonGuildApplyDatabaseHandler.deleteAll(dragonGuildEntity.getId());
-                player.closeInventory();
-                player.chat("/gh open ");
+                dissolveConfirm(player);
             }
         };
         //退出公会
@@ -310,23 +293,59 @@ public class DragonGuildGui {
         userComponent.put(player.getName(),component);
     }
 
-    public static Map<String, Component> getUserComponent() {
-        return userComponent;
+    private static void dissolveConfirm(Player player) {
+        EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+        //确定
+        YamlConfiguration sidebarConfirmYml = DragonGuiYml.getSidebarConfirm();
+        EasyButton sidebarConfirmButton = new EasyButton(sidebarConfirmYml.getInt("x"), sidebarConfirmYml.getInt("y"), sidebarConfirmYml.getInt("width"), sidebarConfirmYml.getInt("high"), ImageUrlEnum.confirm.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
+                if (dragonGuildEntity.getId() == null) {
+                    player.sendMessage(Message.no_team);
+                    return;
+                }
+                DragonGuildDatabaseHandler.deleteById(dragonGuildEntity.getId());
+                List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByDragonGuildId(dragonGuildEntity.getId());
+                for (DragonGuildMemberEntity dragonGuildMemberEntity : dragonGuildMemberEntities) {
+                    String uid = dragonGuildMemberEntity.getUid();
+                    Player addressee = Bukkit.getServer().getPlayer(uid);
+                    if (addressee != null) {
+                        addressee.sendMessage(Message.team_dissolve);
+                    }
+                }
+                DragonGuildMemBerDatabaseHandler.deleteAll(dragonGuildEntity.getId());
+                DragonGuildApplyDatabaseHandler.deleteAll(dragonGuildEntity.getId());
+                player.closeInventory();
+                player.chat("/gh open ");
+            }
+        };
+        //取消
+        YamlConfiguration sidebarConcelYml = DragonGuiYml.getSidebarCancel();
+        EasyButton sidebarConcelButton = new EasyButton(sidebarConcelYml.getInt("x"), sidebarConcelYml.getInt("y"), sidebarConcelYml.getInt("width"), sidebarConcelYml.getInt("high"), ImageUrlEnum.cancel.getUrl(), PImageUrlEnum.veteran.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                clearSidebar(player,2,openedScreen.getComponents());
+                openedScreen.updateGui(player);
+            }
+        };
+        clearSidebar(player,1,openedScreen.getComponents());
+        openedScreen.addComponent(sidebarConfirmButton);
+        openedScreen.addComponent(sidebarConcelButton);
+        Component component = userComponent.get(player.getName());
+        EasyComponent easyComponent = sidebarConfirmButton;
+        EasyComponent easyComponent2 = sidebarConcelButton;
+        List<String> sidebar2 = component.getSidebar2();
+        sidebar2.add(easyComponent.getId());
+        sidebar2.add(easyComponent2.getId());
+        component.setSidebar2(sidebar2);
+        userComponent.put(player.getName(),component);
+        openedScreen.updateGui(player);
     }
-
-    public static void setUserComponent(Map<String, Component> userComponent) {
-        DragonGuildGui.userComponent = userComponent;
-    }
-
-    private void jklj() {
-//        vice_chairman("vice_chairman","副会长2.png", "副会长"),
-//                veteran("veteran","元老2.png", "元老"),
-//                god_of_war("god_of_war","战神2.png", "战神"),
-//                elite("elite","精英2.png", "精英"),
-//                ordinary("ordinary","普通成员2.png", "普通成员"),
+    private void positionButton() {
         //副会长
         YamlConfiguration vice_chairmanYml = DragonGuiYml.getVice_chairman();
-        EasyButton vice_chairmanButton = new EasyButton(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), PImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
+        EasyButton vice_chairmanButton = new EasyButton(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), ImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
@@ -359,5 +378,31 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
             }
         };
+    }
+    //清除侧边栏
+    private static void clearSidebar(Player player, Integer type, Map<String, EasyComponent> components){
+        Component component = userComponent.get(player.getName());
+        if (type == 1) {
+            List<String> sidebar = component.getSidebar();
+            for (String memBerId : sidebar) {
+                components.remove(memBerId);
+            }
+            sidebar.clear();
+        }else {
+            List<String> sidebar2 = component.getSidebar();
+            for (String memBerId : sidebar2) {
+                components.remove(memBerId);
+            }
+            sidebar2.clear();
+        }
+        userComponent.put(player.getName(),component);
+    }
+
+    public static Map<String, Component> getUserComponent() {
+        return userComponent;
+    }
+
+    public static void setUserComponent(Map<String, Component> userComponent) {
+        DragonGuildGui.userComponent = userComponent;
     }
 }

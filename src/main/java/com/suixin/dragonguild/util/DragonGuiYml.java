@@ -28,6 +28,8 @@ public class DragonGuiYml {
     private static YamlConfiguration memberList;
     private static YamlConfiguration outTeam;
     private static YamlConfiguration dissolveTeam;
+    private static YamlConfiguration sidebarConfirm;
+    private static YamlConfiguration sidebarCancel;
     private static YamlConfiguration window;
     private static YamlConfiguration shurukuang;
     private static YamlConfiguration confirm;
@@ -107,6 +109,8 @@ public class DragonGuiYml {
             memberList = DragonGuild.getYml("dragon/成员列表.yml");
             outTeam = DragonGuild.getYml("dragon/退出公会.yml");
             dissolveTeam = DragonGuild.getYml("dragon/解散公会.yml");
+            sidebarConfirm = DragonGuild.getYml("dragon/侧边确定.yml");
+            sidebarCancel = DragonGuild.getYml("dragon/侧边取消.yml");
             close = DragonGuild.getYml("dragon/关闭.yml");
             back = DragonGuild.getYml("dragon/返回.yml");
             cancel = DragonGuild.getYml("dragon/window/取消.yml");
@@ -734,5 +738,21 @@ public class DragonGuiYml {
 
     public static void setOrdinary(YamlConfiguration ordinary) {
         DragonGuiYml.ordinary = ordinary;
+    }
+
+    public static YamlConfiguration getSidebarConfirm() {
+        return sidebarConfirm;
+    }
+
+    public static void setSidebarConfirm(YamlConfiguration sidebarConfirm) {
+        DragonGuiYml.sidebarConfirm = sidebarConfirm;
+    }
+
+    public static YamlConfiguration getSidebarCancel() {
+        return sidebarCancel;
+    }
+
+    public static void setSidebarCancel(YamlConfiguration sidebarCancel) {
+        DragonGuiYml.sidebarCancel = sidebarCancel;
     }
 }

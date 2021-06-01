@@ -24,22 +24,54 @@ DragonGuild:
   position:
    chairman:
      name: '会长'
+     permission:
+       #踢人
+       kick: true
+       #修改公会名字
+       updateGuildName: true
+       #编辑公告
+       editNotice: true
+       #审批
+       apply: true
+       #任职
+       appoint: true
      command:
        - 'tp'
        -
        - 'fly'
    vice_chairman:
      name: '副会长'
+     permission:
+       #踢人
+       kick: true
+       #修改公会名字
+       updateGuildName: true
+       #编辑公告
+       editNotice: true
+       #审批
+       apply: true
+       #任职
+       appoint: true
      command:
        - 'tp'
        - 'fly'
    veteran:
      name: '元老'
+     permission:
+       #踢人
+       kick: true
+       #编辑公告
+       editNotice: true
+       #审批
+       apply: true
      command:
        - 'tp'
        - 'fly'
    god_of_war:
      name: '战神'
+     permission:
+       #审批
+       apply: true
      command:
        - 'tp'
        - 'fly'
