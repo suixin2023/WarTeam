@@ -62,6 +62,8 @@ public class DragonGuild extends JavaPlugin {
 	public static void loadPlugin(Player player) {
 		// 读取config配置文件
 		systemConfig = getYml("config.yml");
+		Boolean ss = systemConfig.getBoolean("DragonGuild.position.god_of_war.permission.kick",false);
+		Bukkit.getConsoleSender().sendMessage("§a测试配置读取"+ss);
 		String level = systemConfig.getString("DragonGuild.level");
 		level = level.substring(1,level.length() -1).replace(" ","");
 		String[] levelSplit = level.split(",");
