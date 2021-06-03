@@ -1,5 +1,6 @@
 package com.suixin.dragonguild.dragongui;
 
+import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
@@ -84,13 +85,14 @@ public class DragonGuildGui {
                 player.closeInventory();
             }
         };
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         Integer count = DragonGuildMemBerDatabaseHandler.selectCount(id);
         YamlConfiguration name = DragonGuiYml.getName();
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
-        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(Message.member+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(Message.level+dragonGuildEntity.getLevel()+""));
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.namekick","§a成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","§a等级:")+dragonGuildEntity.getLevel()+""));
 
         //解散公会
         YamlConfiguration dissolveTeam = DragonGuiYml.getDissolveTeam();
@@ -254,6 +256,7 @@ public class DragonGuildGui {
             components.remove(memBerId);
         }
         memBerlist.clear();
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         for (DragonGuildMemberEntity dragonGuildMember: dragonGuildMemberEntities) {
             String playerName = dragonGuildMember.getUid();
             Integer exp = dragonGuildMember.getExp();
@@ -265,8 +268,8 @@ public class DragonGuildGui {
             }else {
                 pictureFrameImage = new EasyImage(pictureFramedefx, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }
-            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(Message.name+playerName));
-            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(Message.contribution+exp));
+            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(systemConfig.getString("information.namekick","游戏名:")+playerName));
+            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("information.namekick","贡献:"+exp);
             EasyLabel positionText = new EasyLabel(positionYmlx, positionYmlY, 1 ,Arrays.asList(position));
             list.add(listImage);
             list.add(pictureFrameImage);

@@ -28,9 +28,4 @@ DragonGuild:
   no_permission: '§c无权限,你不是会长'
   no_more_apply: '§c没有更多的申请了'
   no_more_guild: '§c没有更多的公会了'
-information:
-  name: '游戏名：'
-  contribution: '贡献：'
-  level: '等级：'
-  member: '成员：'
 

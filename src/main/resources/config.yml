@@ -35,10 +35,15 @@ DragonGuild:
        apply: true
        #任职
        appoint: true
-     command:
-       - 'tp'
-       -
-       - 'fly'
+       command:
+         - 'server:say @ 创建了公会%dragonguild_name%'  #service:代表服务器发出指令,@代表事件涉及的玩家名字,%dragonguild_name%是公会名字变量
+         - 'player:say 我是会长啦' #player:代表由事件玩家发出指令
+         - 'judge:%player_level% > 0 && %player_health% > 5:5' #judge:是条件判断语句,&&是逻辑运算符,代表且.翻译:如果玩家等级大于0,并且生命值大于5,执行第5行语句
+         - 'judge:%player_level% > 10 || %player_health% = 20:6' #||是逻辑运算符,代表或,翻译:如果玩家等级大于10,或者生命值等于20,执行第6行语句
+         - 'player:say 我是第5行'
+         - 'player:say 我是第6行'
+         - 'judge:%dragonguild_is_creator% = "是":8' #翻译:如果玩家是会长,执行第8行语句
+         - 'player:say 我是第8行'
    vice_chairman:
      name: '副会长'
      permission:
@@ -85,10 +90,11 @@ DragonGuild:
      command:
        - 'tp'
        - 'fly'
+
+  #事件系统
   event:
     memberjoin:
-      - 'tp'
-      - 'fly'
+      - 'player:say 我加入公会啦'
     memberOut:
       - 'tp'
       - 'fly'
@@ -103,3 +109,9 @@ DragonGuild:
     - '8:500:80'
     - '9:800:90'
     - '10:1500:100'
+
+  information:
+    name: '游戏名：'
+    contribution: '贡献：'
+    level: '等级：'
+    member: '成员：'

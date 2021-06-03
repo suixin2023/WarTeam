@@ -130,7 +130,7 @@ public class DragonGuildChat {
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(Message.member+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(Message.level+dragonGuildEntity.getLevel()+""));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","§a等级:"+dragonGuildEntity.getLevel()+""));
 
         //图标
         YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
