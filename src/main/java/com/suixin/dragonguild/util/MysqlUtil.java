@@ -7,7 +7,6 @@ import org.bukkit.configuration.file.FileConfiguration;
 import java.sql.*;
 
 public class MysqlUtil {
-    private static Connection conn = null;
     private static HikariDataSource ds = null;
     private static String dbDriver;    //定义驱动
     private static String dbURL;        //定义URL
@@ -39,14 +38,10 @@ public class MysqlUtil {
             hikariConfig.addDataSourceProperty("prepStmtCacheSize", "250");
             hikariConfig.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
             ds = new HikariDataSource(hikariConfig);
-            conn = ds.getConnection();
             return true;
         } catch (ClassNotFoundException classnotfoundexception) {
             classnotfoundexception.printStackTrace();
             System.err.println("db: " + classnotfoundexception.getMessage());
-            return false;
-        } catch (SQLException sqlexception) {
-            System.err.println("db.getconn(): " + sqlexception.getMessage());
             return false;
         }
     }
@@ -67,11 +62,10 @@ public class MysqlUtil {
     public static ResultSet execQuery(String sql) throws Exception {
         ResultSet rstSet = null;
         try {
-            if (null == conn){
-                conn = ds.getConnection();
-            }
+            Connection conn = ds.getConnection();
             Statement stmt = conn.createStatement();
             rstSet = stmt.executeQuery(sql);
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -82,12 +76,11 @@ public class MysqlUtil {
     public static ResultSet executeQuery(String sql,String [] params) throws Exception {
         ResultSet rstSet = null;
         try {
-            if (null == conn){
-                throw new Exception("Database not connected!");
-            }
+            Connection conn = ds.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,params[0]);
             rstSet = stmt.executeQuery(sql);
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -98,15 +91,12 @@ public class MysqlUtil {
     public static ResultSet getInsertObjectIDs(String insertSql) throws Exception {
         ResultSet rst = null;
         try {
-            if (null == conn){
-                throw new Exception("Database not connected!");
-            }
-
+            Connection conn = ds.getConnection();
             Statement stmt = conn.createStatement();
 
             stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
             rst = stmt.getGeneratedKeys();
-
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -118,9 +108,7 @@ public class MysqlUtil {
         ResultSet rst = null;
         PreparedStatement pstmt = null;
         try {
-            if (null == conn){
-                conn = ds.getConnection();
-            }
+            Connection conn = ds.getConnection();
             pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 
             if (null != params) {
@@ -130,6 +118,7 @@ public class MysqlUtil {
             }
             pstmt.executeUpdate();
             rst = pstmt.getGeneratedKeys();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -141,13 +130,12 @@ public class MysqlUtil {
     public static int execCommand(String sql) throws Exception {
         int flag = 0;
         try {
-            if (null == conn){
-                conn = ds.getConnection();
-            }
+            Connection conn = ds.getConnection();
             Statement stmt = conn.createStatement();
             flag = stmt.executeUpdate(sql);
 
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -193,8 +181,7 @@ public void callStordProc(String sql, Object[] inParams, SqlParameter[] outParam
     public static PreparedStatement execPrepared(String psql) throws Exception {
         PreparedStatement pstmt = null;
         try {
-            if (null == conn){
-            }
+            Connection conn = ds.getConnection();
             pstmt = conn.prepareStatement(psql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -211,17 +198,4 @@ public void callStordProc(String sql, Object[] inParams, SqlParameter[] outParam
             e.printStackTrace();
         }
     }
-
-    // 释放资源
-    public static void close() throws SQLException, Exception {
-        if (null != conn) {
-            conn.close();
-            conn = null;
-        }
-    }
-
-    public static Connection getConn() {
-        return conn;
-    }
-
 }
