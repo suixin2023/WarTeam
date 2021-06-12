@@ -1,5 +1,6 @@
 package com.suixin.dragonguild.dragongui;
 
+import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
@@ -126,8 +127,9 @@ public class DragonGuildTop {
         Integer count = DragonGuildMemBerDatabaseHandler.selectCount(dragonGuildId);
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(Message.member+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","§a等级:"+dragonGuildEntity.getLevel()+""));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","等级:"+dragonGuildEntity.getLevel()+"")));
         //图标
         YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
         EasyImage guildImg = new EasyImage( guildImgYml.getInt("x"), guildImgYml.getInt("y"), guildImgYml.getInt("width"), guildImgYml.getInt("high"),ImageUrlEnum.guildImg.getUrl());
@@ -176,12 +178,13 @@ public class DragonGuildTop {
         for (String easyComponent : guildList) {
             components.remove(easyComponent);
         }
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         for (int i = 0; i < dragonGuildEntities.size(); i ++) {
             String name = dragonGuildEntities.get(i).getName();
             Integer level = dragonGuildEntities.get(i).getLevel();
             EasyImage topUmg = new EasyImage( topYml.getInt("x"), topYmlY, topYml.getInt("width"), topYml.getInt("high"),ImageUrlEnum.guildList.getUrl());
             EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(name));
-            EasyLabel topLevelText = new EasyLabel(topLevelYml.getInt("x"), topLevelYmlY, 1,Arrays.asList(systemConfig.getString("information.level","§a等级:"+level);
+            EasyLabel topLevelText = new EasyLabel(topLevelYml.getInt("x"), topLevelYmlY, 1,Arrays.asList(systemConfig.getString("information.level","§a等级:"+level)));
             EasyImage img;
             if (currentPage == 1 && i == 0) {
                 img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild.getUrl());

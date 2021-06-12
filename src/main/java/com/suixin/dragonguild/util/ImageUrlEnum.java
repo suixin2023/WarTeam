@@ -54,6 +54,7 @@ public enum ImageUrlEnum {
     god_of_war("god_of_war","战神.png", "战神"),
     elite("elite","精英.png", "精英"),
     ordinary("ordinary","普通成员.png", "普通成员"),
+    appoint("appoint","任职.png", "任职"),
     //暂无图片
     edit("edit","编辑.png", "编辑"),
     save("save","保存.png", "保存"),

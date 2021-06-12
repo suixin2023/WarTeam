@@ -35,6 +35,7 @@ public enum PImageUrlEnum {
     god_of_war("god_of_war","战神2.png", "战神"),
     elite("elite","精英2.png", "精英"),
     ordinary("ordinary","普通成员2.png", "普通成员"),
+    appoint("appoint","任职2.png", "任职"),
 
     //暂无图片
     edit("edit","编辑2.png", "编辑"),

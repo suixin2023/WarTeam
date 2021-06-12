@@ -129,8 +129,9 @@ public class DragonGuildChat {
         Integer count = DragonGuildMemBerDatabaseHandler.selectCount(dragonGuildId);
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(Message.member+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","§a等级:"+dragonGuildEntity.getLevel()+""));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","等级:"+dragonGuildEntity.getLevel()+"")));
 
         //图标
         YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
@@ -221,7 +222,7 @@ public class DragonGuildChat {
             EasyImage chatBoxImg = new EasyImage(chatBox.getInt("x"), chatBoxY2, chatBox.getInt("width"), high,ImageUrlEnum.chatBox.getUrl());
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
-            String format = simpleDateFormat.format(new Date());
+            String format = simpleDateFormat.format(dragonGuildChatEntity.getCreated());
             EasyLabel nameText = new EasyLabel(chatName.getInt("x"), chatNameY, 1,Arrays.asList(" §d"+creator+" "+format));
             EasyLabel chatContentText = new EasyLabel(chatContent.getInt("x"), chatContentY, 1,descList);
             list.add(img);

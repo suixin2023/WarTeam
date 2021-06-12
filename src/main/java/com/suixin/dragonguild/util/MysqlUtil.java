@@ -8,6 +8,7 @@ import java.sql.*;
 
 public class MysqlUtil {
     private static HikariDataSource ds = null;
+    private static Connection conn = null;
     private static String dbDriver;    //定义驱动
     private static String dbURL;        //定义URL
     private static String userName;    //定义用户名
@@ -62,10 +63,9 @@ public class MysqlUtil {
     public static ResultSet execQuery(String sql) throws Exception {
         ResultSet rstSet = null;
         try {
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             Statement stmt = conn.createStatement();
             rstSet = stmt.executeQuery(sql);
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -76,11 +76,10 @@ public class MysqlUtil {
     public static ResultSet executeQuery(String sql,String [] params) throws Exception {
         ResultSet rstSet = null;
         try {
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             PreparedStatement stmt = conn.prepareStatement(sql);
             stmt.setString(1,params[0]);
             rstSet = stmt.executeQuery(sql);
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -91,12 +90,11 @@ public class MysqlUtil {
     public static ResultSet getInsertObjectIDs(String insertSql) throws Exception {
         ResultSet rst = null;
         try {
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             Statement stmt = conn.createStatement();
 
             stmt.executeUpdate(insertSql, Statement.RETURN_GENERATED_KEYS);
             rst = stmt.getGeneratedKeys();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,7 +106,7 @@ public class MysqlUtil {
         ResultSet rst = null;
         PreparedStatement pstmt = null;
         try {
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             pstmt = conn.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
 
             if (null != params) {
@@ -118,7 +116,6 @@ public class MysqlUtil {
             }
             pstmt.executeUpdate();
             rst = pstmt.getGeneratedKeys();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -130,12 +127,10 @@ public class MysqlUtil {
     public static int execCommand(String sql) throws Exception {
         int flag = 0;
         try {
-            Connection conn = ds.getConnection();
+            conn = ds.getConnection();
             Statement stmt = conn.createStatement();
             flag = stmt.executeUpdate(sql);
-
             stmt.close();
-            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -173,6 +168,7 @@ public void callStordProc(String sql, Object[] inParams, SqlParameter[] outParam
             Statement stmt = rst.getStatement();
             rst.close();
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

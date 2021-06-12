@@ -3,6 +3,7 @@ package com.suixin.dragonguild.dragongui;
 import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
+import com.suixin.dragonguild.entity.EasyButtonEx;
 import com.suixin.dragonguild.handler.DragonGuildApplyDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
@@ -91,8 +92,8 @@ public class DragonGuildGui {
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
-        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.namekick","§a成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","§a等级:")+dragonGuildEntity.getLevel()+""));
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.member","§a成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","等级:")+dragonGuildEntity.getLevel()+""));
 
         //解散公会
         YamlConfiguration dissolveTeam = DragonGuiYml.getDissolveTeam();
@@ -234,17 +235,20 @@ public class DragonGuildGui {
         YamlConfiguration nameYml = DragonGuiYml.getNickName();
         YamlConfiguration expYml = DragonGuiYml.getExp();
         YamlConfiguration positionYml = DragonGuiYml.getPosition();
+        YamlConfiguration appointYml = DragonGuiYml.getAppoint();
         int memberListx = memberList.getInt("x");
         int pictureFramedefx = pictureFrameYml.getInt("x");
         int namex = nameYml.getInt("x");
         int expx = expYml.getInt("x");
         int positionYmlx = positionYml.getInt("x");
+        int appointYmlx = appointYml.getInt("x");
 
         int memberListY = memberList.getInt("y");
         int pictureFramey = pictureFrameYml.getInt("y");
         int namey = nameYml.getInt("y");
         int expy = expYml.getInt("y");
         int positionYmlY = positionYml.getInt("y");
+        int appointYmlY = appointYml.getInt("y");
 
         List<DragonGuildMemberEntity> dragonGuildMemberEntities = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerDataNum(limit, id);
         DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(id);
@@ -269,8 +273,22 @@ public class DragonGuildGui {
                 pictureFrameImage = new EasyImage(pictureFramedefx, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }
             EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(systemConfig.getString("information.namekick","游戏名:")+playerName));
-            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("information.namekick","贡献:"+exp);
+            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("information.contribution","贡献:"+exp)));
+            if (position == null) {
+                position = "无职位";
+            }
             EasyLabel positionText = new EasyLabel(positionYmlx, positionYmlY, 1 ,Arrays.asList(position));
+            //任职
+            YamlConfiguration sidebarConcelYml = DragonGuiYml.getSidebarCancel();
+            EasyButtonEx appointButton = new EasyButtonEx(appointYmlx, appointYmlY, appointYml.getInt("width"), appointYml.getInt("high"), ImageUrlEnum.appoint.getUrl(), PImageUrlEnum.appoint.getUrl()) {
+                @Override
+                public void onClick(Player player, Type type) {
+                    clearSidebar(player,openedScreen.getComponents());
+                    openedScreen.updateGui(player);
+                }
+            };
+            appointButton.setGuildName(playerName);
+            appointButton.setType("appointButton");
             list.add(listImage);
             list.add(pictureFrameImage);
             list.add(nameText);
@@ -300,7 +318,7 @@ public class DragonGuildGui {
         EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
         //确定
         YamlConfiguration sidebarConfirmYml = DragonGuiYml.getSidebarConfirm();
-        EasyButton sidebarConfirmButton = new EasyButton(sidebarConfirmYml.getInt("x"), sidebarConfirmYml.getInt("y"), sidebarConfirmYml.getInt("width"), sidebarConfirmYml.getInt("high"), ImageUrlEnum.confirm.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
+        EasyButton sidebarConfirmButton = new EasyButton(sidebarConfirmYml.getInt("x"), sidebarConfirmYml.getInt("y"), sidebarConfirmYml.getInt("width"), sidebarConfirmYml.getInt("high"), ImageUrlEnum.confirm.getUrl(), PImageUrlEnum.confirm.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
                 DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
@@ -325,79 +343,107 @@ public class DragonGuildGui {
         };
         //取消
         YamlConfiguration sidebarConcelYml = DragonGuiYml.getSidebarCancel();
-        EasyButton sidebarConcelButton = new EasyButton(sidebarConcelYml.getInt("x"), sidebarConcelYml.getInt("y"), sidebarConcelYml.getInt("width"), sidebarConcelYml.getInt("high"), ImageUrlEnum.cancel.getUrl(), PImageUrlEnum.veteran.getUrl()) {
+        EasyButton sidebarConcelButton = new EasyButton(sidebarConcelYml.getInt("x"), sidebarConcelYml.getInt("y"), sidebarConcelYml.getInt("width"), sidebarConcelYml.getInt("high"), ImageUrlEnum.cancel.getUrl(), PImageUrlEnum.cancel.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
-                clearSidebar(player,2,openedScreen.getComponents());
+                clearSidebar(player,openedScreen.getComponents());
                 openedScreen.updateGui(player);
             }
         };
-        clearSidebar(player,1,openedScreen.getComponents());
+        clearSidebar(player,openedScreen.getComponents());
         openedScreen.addComponent(sidebarConfirmButton);
         openedScreen.addComponent(sidebarConcelButton);
         Component component = userComponent.get(player.getName());
         EasyComponent easyComponent = sidebarConfirmButton;
         EasyComponent easyComponent2 = sidebarConcelButton;
-        List<String> sidebar2 = component.getSidebar2();
-        sidebar2.add(easyComponent.getId());
-        sidebar2.add(easyComponent2.getId());
-        component.setSidebar2(sidebar2);
+        List<String> sidebar = component.getSidebar();
+        sidebar.add(easyComponent.getId());
+        sidebar.add(easyComponent2.getId());
+        component.setSidebar(sidebar);
         userComponent.put(player.getName(),component);
         openedScreen.updateGui(player);
     }
-    private void positionButton() {
+    public static void positionButton(Player player, String appointName) {
+        EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
         //副会长
         YamlConfiguration vice_chairmanYml = DragonGuiYml.getVice_chairman();
-        EasyButton vice_chairmanButton = new EasyButton(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), ImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
+        EasyButtonEx vice_chairmanButton = new EasyButtonEx(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), ImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
         };
         //元老
         YamlConfiguration veteran = DragonGuiYml.getVeteran();
-        EasyButton noticeButton = new EasyButton(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
+        EasyButtonEx noticeButton = new EasyButtonEx(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
         };
         //战神
         YamlConfiguration god_of_war = DragonGuiYml.getGod_of_war();
-        EasyButton god_of_warButton = new EasyButton(god_of_war.getInt("x"), god_of_war.getInt("y"), god_of_war.getInt("width"), god_of_war.getInt("high"), ImageUrlEnum.god_of_war.getUrl(), PImageUrlEnum.god_of_war.getUrl()) {
+        EasyButtonEx god_of_warButton = new EasyButtonEx(god_of_war.getInt("x"), god_of_war.getInt("y"), god_of_war.getInt("width"), god_of_war.getInt("high"), ImageUrlEnum.god_of_war.getUrl(), PImageUrlEnum.god_of_war.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
         };
         //精英
         YamlConfiguration elite = DragonGuiYml.getElite();
-        EasyButton eliteButton = new EasyButton(elite.getInt("x"), elite.getInt("y"), elite.getInt("width"), elite.getInt("high"), ImageUrlEnum.elite.getUrl(), PImageUrlEnum.elite.getUrl()) {
+        EasyButtonEx eliteButton = new EasyButtonEx(elite.getInt("x"), elite.getInt("y"), elite.getInt("width"), elite.getInt("high"), ImageUrlEnum.elite.getUrl(), PImageUrlEnum.elite.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
         };
         //普通成员
         YamlConfiguration ordinary = DragonGuiYml.getOrdinary();
-        EasyButton topButton = new EasyButton(ordinary.getInt("x"), ordinary.getInt("y"), ordinary.getInt("width"), ordinary.getInt("high"), ImageUrlEnum.ordinary.getUrl(), PImageUrlEnum.ordinary.getUrl()) {
+        EasyButtonEx ordinaryButton = new EasyButtonEx(ordinary.getInt("x"), ordinary.getInt("y"), ordinary.getInt("width"), ordinary.getInt("high"), ImageUrlEnum.ordinary.getUrl(), PImageUrlEnum.ordinary.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
         };
+        vice_chairmanButton.setGuildName(appointName);
+        vice_chairmanButton.setType("vice_chairmanButton");
+
+        noticeButton.setGuildName(appointName);
+        noticeButton.setType("noticeButton");
+
+        god_of_warButton.setGuildName(appointName);
+        god_of_warButton.setType("god_of_warButton");
+
+        eliteButton.setGuildName(appointName);
+        eliteButton.setType("eliteButton");
+
+        ordinaryButton.setGuildName(appointName);
+        ordinaryButton.setType("ordinaryButton");
+        clearSidebar(player, openedScreen.getComponents());
+        openedScreen.addComponent(vice_chairmanButton);
+        openedScreen.addComponent(noticeButton);
+        openedScreen.addComponent(god_of_warButton);
+        openedScreen.addComponent(eliteButton);
+        openedScreen.addComponent(ordinaryButton);
+        Component component = userComponent.get(player.getName());
+        EasyComponent easyComponent = vice_chairmanButton;
+        EasyComponent easyComponent2 = noticeButton;
+        EasyComponent easyComponent3 = god_of_warButton;
+        EasyComponent easyComponent4 = eliteButton;
+        EasyComponent easyComponent5 = ordinaryButton;
+        List<String> sidebar = component.getSidebar();
+        sidebar.add(easyComponent.getId());
+        sidebar.add(easyComponent2.getId());
+        sidebar.add(easyComponent3.getId());
+        sidebar.add(easyComponent4.getId());
+        sidebar.add(easyComponent5.getId());
+        component.setSidebar(sidebar);
+        userComponent.put(player.getName(),component);
+        openedScreen.updateGui(player);
     }
     //清除侧边栏
-    private static void clearSidebar(Player player, Integer type, Map<String, EasyComponent> components){
+    private static void clearSidebar(Player player, Map<String, EasyComponent> components){
         Component component = userComponent.get(player.getName());
-        if (type == 1) {
-            List<String> sidebar = component.getSidebar();
-            for (String memBerId : sidebar) {
-                components.remove(memBerId);
-            }
-            sidebar.clear();
-        }else {
-            List<String> sidebar2 = component.getSidebar();
-            for (String memBerId : sidebar2) {
-                components.remove(memBerId);
-            }
-            sidebar2.clear();
+        List<String> sidebar = component.getSidebar();
+        for (String memBerId : sidebar) {
+            components.remove(memBerId);
         }
+        sidebar.clear();
         userComponent.put(player.getName(),component);
     }
 

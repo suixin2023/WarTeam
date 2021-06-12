@@ -15,7 +15,6 @@ public class Component {
     private List<String> chatList  = new ArrayList<>();
     private List<String> guildList  = new ArrayList<>();
     private List<String> sidebar  = new ArrayList<>();
-    private List<String> sidebar2  = new ArrayList<>();
     private EasyScrollingList scrollingList;
     public Integer getCurrent() {
         return current;
@@ -73,11 +72,4 @@ public class Component {
         this.sidebar = sidebar;
     }
 
-    public List<String> getSidebar2() {
-        return sidebar2;
-    }
-
-    public void setSidebar2(List<String> sidebar2) {
-        this.sidebar2 = sidebar2;
-    }
 }
