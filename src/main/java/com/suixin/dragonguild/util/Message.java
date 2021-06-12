@@ -40,10 +40,6 @@ public class Message {
     public static String no_more_apply;
     public static String no_more_guild;
     public static String no_permission;
-    public static String name;
-    public static String contribution;
-    public static String level;
-    public static String member;
 
     public static boolean loadMessage( ){
         YamlConfiguration config = DragonGuild.getYml("message.yml");

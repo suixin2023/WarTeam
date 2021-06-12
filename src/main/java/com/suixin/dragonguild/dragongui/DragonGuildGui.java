@@ -92,7 +92,7 @@ public class DragonGuildGui {
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
-        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.member","§a成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.member","成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
         EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","等级:")+dragonGuildEntity.getLevel()+""));
 
         //解散公会
