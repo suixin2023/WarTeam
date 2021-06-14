@@ -4,6 +4,7 @@ import com.google.common.base.Charsets;
 import com.suixin.dragonguild.command.BaseCommand;
 import com.suixin.dragonguild.dragongui.DragonGuildNotice;
 import com.suixin.dragonguild.handler.*;
+import com.suixin.dragonguild.listener.AppointButtonClickListener;
 import com.suixin.dragonguild.listener.EasyButtonClickListener;
 import com.suixin.dragonguild.task.ActivationCodeTask;
 import com.suixin.dragonguild.util.*;
@@ -48,6 +49,7 @@ public class DragonGuild extends JavaPlugin {
 		if ( Bukkit.getServer().getPluginManager().isPluginEnabled("DragonCore")) {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.GREEN +"DragonCore已连接");
 			Bukkit.getPluginManager().registerEvents(new EasyButtonClickListener(),this);
+			Bukkit.getPluginManager().registerEvents(new AppointButtonClickListener(),this);
 		}else {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW+"未找到DragonCore，插件将无法正常运行");
 		}

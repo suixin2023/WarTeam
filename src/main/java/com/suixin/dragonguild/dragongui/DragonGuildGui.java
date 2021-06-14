@@ -92,8 +92,8 @@ public class DragonGuildGui {
         YamlConfiguration renshu = DragonGuiYml.getRenshu();
         YamlConfiguration level = DragonGuiYml.getLevel();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
-        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("information.member","成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("information.level","等级:")+dragonGuildEntity.getLevel()+""));
+        EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("DragonGuild.information.member","成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("DragonGuild.information.level","等级:")+dragonGuildEntity.getLevel()+""));
 
         //解散公会
         YamlConfiguration dissolveTeam = DragonGuiYml.getDissolveTeam();
@@ -272,14 +272,13 @@ public class DragonGuildGui {
             }else {
                 pictureFrameImage = new EasyImage(pictureFramedefx, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }
-            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(systemConfig.getString("information.namekick","游戏名:")+playerName));
-            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("information.contribution","贡献:"+exp)));
+            EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(systemConfig.getString("DragonGuild.information.namekick","游戏名:")+playerName));
+            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("DragonGuild.information.contribution","贡献:"+exp)));
             if (position == null) {
                 position = "无职位";
             }
             EasyLabel positionText = new EasyLabel(positionYmlx, positionYmlY, 1 ,Arrays.asList(position));
             //任职
-            YamlConfiguration sidebarConcelYml = DragonGuiYml.getSidebarCancel();
             EasyButtonEx appointButton = new EasyButtonEx(appointYmlx, appointYmlY, appointYml.getInt("width"), appointYml.getInt("high"), ImageUrlEnum.appoint.getUrl(), PImageUrlEnum.appoint.getUrl()) {
                 @Override
                 public void onClick(Player player, Type type) {
@@ -294,16 +293,19 @@ public class DragonGuildGui {
             list.add(nameText);
             list.add(expText);
             list.add(positionText);
+            list.add(appointButton);
             scrollingList.addComponent(listImage);
             scrollingList.addComponent(pictureFrameImage);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(expText);
             scrollingList.addComponent(positionText);
+            scrollingList.addComponent(appointButton);
             memberListY = memberListY + memberList.getInt("interval");
             pictureFramey = pictureFramey + memberList.getInt("interval");
             namey = namey + memberList.getInt("interval");
             expy = expy + memberList.getInt("interval");
             positionYmlY = positionYmlY + memberList.getInt("interval");
+            appointYmlY = appointYmlY + memberList.getInt("interval");
         }
 
         component.setCurrent(currentPage);
@@ -374,7 +376,7 @@ public class DragonGuildGui {
         };
         //元老
         YamlConfiguration veteran = DragonGuiYml.getVeteran();
-        EasyButtonEx noticeButton = new EasyButtonEx(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
+        EasyButtonEx veteranButton = new EasyButtonEx(veteran.getInt("x"), veteran.getInt("y"), veteran.getInt("width"), veteran.getInt("high"), ImageUrlEnum.veteran.getUrl(), PImageUrlEnum.veteran.getUrl()) {
             @Override
             public void onClick(Player player, Type type) {
             }
@@ -403,8 +405,8 @@ public class DragonGuildGui {
         vice_chairmanButton.setGuildName(appointName);
         vice_chairmanButton.setType("vice_chairmanButton");
 
-        noticeButton.setGuildName(appointName);
-        noticeButton.setType("noticeButton");
+        veteranButton.setGuildName(appointName);
+        veteranButton.setType("veteranButton");
 
         god_of_warButton.setGuildName(appointName);
         god_of_warButton.setType("god_of_warButton");
@@ -416,13 +418,13 @@ public class DragonGuildGui {
         ordinaryButton.setType("ordinaryButton");
         clearSidebar(player, openedScreen.getComponents());
         openedScreen.addComponent(vice_chairmanButton);
-        openedScreen.addComponent(noticeButton);
+        openedScreen.addComponent(veteranButton);
         openedScreen.addComponent(god_of_warButton);
         openedScreen.addComponent(eliteButton);
         openedScreen.addComponent(ordinaryButton);
         Component component = userComponent.get(player.getName());
         EasyComponent easyComponent = vice_chairmanButton;
-        EasyComponent easyComponent2 = noticeButton;
+        EasyComponent easyComponent2 = veteranButton;
         EasyComponent easyComponent3 = god_of_warButton;
         EasyComponent easyComponent4 = eliteButton;
         EasyComponent easyComponent5 = ordinaryButton;
