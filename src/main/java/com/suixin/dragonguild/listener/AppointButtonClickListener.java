@@ -41,10 +41,13 @@ public class AppointButtonClickListener implements Listener {
             return;
         }
         EasyButtonEx buttonEx = (EasyButtonEx) component;
-        String appointName = buttonEx.getApplyName();
+        String appointName = buttonEx.getAppointName();
         String type = buttonEx.getType();
         DragonGuildMemberEntity dragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(appointName);
         DragonGuildMemberEntity dragonGuildMemberEntity1 = new DragonGuildMemberEntity();
+        if (dragonGuildMemberEntity.getPosition().equals("会长") && !type.equals("appointButton")) {
+            player.sendMessage("§a不能任命会长");
+        }
         if (type.equals("appointButton")) {
             DragonGuildGui.positionButton(player,appointName);
         }else if (type.equals("vice_chairmanButton")){

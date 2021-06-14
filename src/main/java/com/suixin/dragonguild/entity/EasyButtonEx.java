@@ -7,6 +7,7 @@ public class EasyButtonEx extends EasyButton {
     private String type;
     private String applyName;
     private String guildName;
+    private String appointName;
     public EasyButtonEx(int x, int y, int w, int h, String url) {
         super(x, y, w, h, url);
     }
@@ -41,5 +42,13 @@ public class EasyButtonEx extends EasyButton {
 
     public void setGuildName(String guildName) {
         this.guildName = guildName;
+    }
+
+    public String getAppointName() {
+        return appointName;
+    }
+
+    public void setAppointName(String appointName) {
+        this.appointName = appointName;
     }
 }

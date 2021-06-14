@@ -286,7 +286,7 @@ public class DragonGuildGui {
                     openedScreen.updateGui(player);
                 }
             };
-            appointButton.setGuildName(playerName);
+            appointButton.setAppointName(playerName);
             appointButton.setType("appointButton");
             list.add(listImage);
             list.add(pictureFrameImage);

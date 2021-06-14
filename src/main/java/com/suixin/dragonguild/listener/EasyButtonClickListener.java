@@ -89,7 +89,7 @@ public class EasyButtonClickListener implements Listener {
             }
             player.sendMessage(Message.apply_nopass);
             DragonGuildApply.openGameLobbyGui(player,dragonGuildApplyEntity.getDragonGuildId());
-        }else {
+        }else if (type.equals("joinApplyButton")) {
             //申请加入
             String guildName = buttonEx.getGuildName();
             player.chat("/gh join " + guildName);
