@@ -261,6 +261,39 @@ public class DragonGuildGui {
         }
         memBerlist.clear();
         YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
+        DragonGuildMemberEntity dragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
+        DragonGuildMemberEntity dragonGuildMemberEntity1 = new DragonGuildMemberEntity();
+        String position1 = dragonGuildMemberEntity.getPosition();
+        int hasPermission = 0;
+        if (position1 == null) {
+            dragonGuildMemberEntity1.setPosition(systemConfig.getString("DragonGuild.ordinary.name", "普通成员"));
+            DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.chairman.name", "会长"))) {
+            boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.chairman.permission.appoint", false);
+            if (aBoolean) {
+                hasPermission = 1;
+            }
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长"))) {
+            boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.vice_chairman.permission.appoint", false);
+            if (aBoolean) {
+                hasPermission = 1;
+            }
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.veteran.name", "元老"))) {
+            boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.veteran.permission.appoint", false);
+            if (aBoolean) {
+                hasPermission = 1;
+            }
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.god_of_war.name", "战神"))) {
+            boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.god_of_war.permission.appoint", false);
+            if (aBoolean) {
+                hasPermission = 1;
+            }
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.elite.name", "精英"))) {
+            boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.elite.permission.appoint", false);
+            if (aBoolean) {
+                hasPermission = 1;
+            }
+        }
         for (DragonGuildMemberEntity dragonGuildMember: dragonGuildMemberEntities) {
             String playerName = dragonGuildMember.getUid();
             Integer exp = dragonGuildMember.getExp();
@@ -282,6 +315,7 @@ public class DragonGuildGui {
             EasyButtonEx appointButton = new EasyButtonEx(appointYmlx, appointYmlY, appointYml.getInt("width"), appointYml.getInt("high"), ImageUrlEnum.appoint.getUrl(), PImageUrlEnum.appoint.getUrl()) {
                 @Override
                 public void onClick(Player player, Type type) {
+                    EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
                     clearSidebar(player,openedScreen.getComponents());
                     openedScreen.updateGui(player);
                 }
@@ -293,13 +327,17 @@ public class DragonGuildGui {
             list.add(nameText);
             list.add(expText);
             list.add(positionText);
-            list.add(appointButton);
+            if (hasPermission == 1) {
+                list.add(appointButton);
+            }
             scrollingList.addComponent(listImage);
             scrollingList.addComponent(pictureFrameImage);
             scrollingList.addComponent(nameText);
             scrollingList.addComponent(expText);
             scrollingList.addComponent(positionText);
-            scrollingList.addComponent(appointButton);
+            if (hasPermission == 1) {
+                scrollingList.addComponent(appointButton);
+            }
             memberListY = memberListY + memberList.getInt("interval");
             pictureFramey = pictureFramey + memberList.getInt("interval");
             namey = namey + memberList.getInt("interval");
@@ -367,6 +405,16 @@ public class DragonGuildGui {
     }
     public static void positionButton(Player player, String appointName) {
         EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+        Component component = userComponent.get(player.getName());
+        List<String> sidebar = component.getSidebar();
+        if (sidebar.size() > 0) {
+            String s = sidebar.get(0);
+            EasyButtonEx easyButtonEx = (EasyButtonEx) openedScreen.getComponent(s);
+            if (easyButtonEx.getAppointName().equals(appointName)) {
+                clearSidebar(player, openedScreen.getComponents());
+                return;
+            }
+        }
         //副会长
         YamlConfiguration vice_chairmanYml = DragonGuiYml.getVice_chairman();
         EasyButtonEx vice_chairmanButton = new EasyButtonEx(vice_chairmanYml.getInt("x"), vice_chairmanYml.getInt("y"), vice_chairmanYml.getInt("width"), vice_chairmanYml.getInt("high"), ImageUrlEnum.vice_chairman.getUrl(), PImageUrlEnum.vice_chairman.getUrl()) {
@@ -402,38 +450,36 @@ public class DragonGuildGui {
             public void onClick(Player player, Type type) {
             }
         };
-        vice_chairmanButton.setGuildName(appointName);
+        vice_chairmanButton.setAppointName(appointName);
         vice_chairmanButton.setType("vice_chairmanButton");
 
-        veteranButton.setGuildName(appointName);
+        veteranButton.setAppointName(appointName);
         veteranButton.setType("veteranButton");
 
-        god_of_warButton.setGuildName(appointName);
+        god_of_warButton.setAppointName(appointName);
         god_of_warButton.setType("god_of_warButton");
 
-        eliteButton.setGuildName(appointName);
+        eliteButton.setAppointName(appointName);
         eliteButton.setType("eliteButton");
 
-        ordinaryButton.setGuildName(appointName);
+        ordinaryButton.setAppointName(appointName);
         ordinaryButton.setType("ordinaryButton");
         clearSidebar(player, openedScreen.getComponents());
-        openedScreen.addComponent(vice_chairmanButton);
-        openedScreen.addComponent(veteranButton);
-        openedScreen.addComponent(god_of_warButton);
-        openedScreen.addComponent(eliteButton);
         openedScreen.addComponent(ordinaryButton);
-        Component component = userComponent.get(player.getName());
-        EasyComponent easyComponent = vice_chairmanButton;
-        EasyComponent easyComponent2 = veteranButton;
-        EasyComponent easyComponent3 = god_of_warButton;
-        EasyComponent easyComponent4 = eliteButton;
         EasyComponent easyComponent5 = ordinaryButton;
-        List<String> sidebar = component.getSidebar();
-        sidebar.add(easyComponent.getId());
-        sidebar.add(easyComponent2.getId());
-        sidebar.add(easyComponent3.getId());
-        sidebar.add(easyComponent4.getId());
         sidebar.add(easyComponent5.getId());
+        openedScreen.addComponent(eliteButton);
+        EasyComponent easyComponent4 = eliteButton;
+        sidebar.add(easyComponent4.getId());
+        openedScreen.addComponent(god_of_warButton);
+        EasyComponent easyComponent3 = god_of_warButton;
+        sidebar.add(easyComponent3.getId());
+        openedScreen.addComponent(veteranButton);
+        EasyComponent easyComponent2 = veteranButton;
+        sidebar.add(easyComponent2.getId());
+        openedScreen.addComponent(vice_chairmanButton);
+        EasyComponent easyComponent = vice_chairmanButton;
+        sidebar.add(easyComponent.getId());
         component.setSidebar(sidebar);
         userComponent.put(player.getName(),component);
         openedScreen.updateGui(player);

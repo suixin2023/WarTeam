@@ -13,10 +13,12 @@ import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.handler.DragonGuildNoticeDatabaseHandler;
 import com.suixin.dragonguild.util.Message;
 import com.suixin.dragonguild.util.VaultAPI;
+import com.sun.org.apache.bcel.internal.generic.DREM;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.util.*;
@@ -214,6 +216,7 @@ public class BaseCommand implements CommandExecutor {
 		}
 	}
 	private void createDragonGuild ( List<String> argsList,Player player) {
+		YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
 		if (argsList.size() != 2){
 			player.sendMessage("§c指令不正确");
 			return;
@@ -230,9 +233,9 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		double money = VaultAPI.getMoney(player.getName());
-		Double amount = new Double(DragonGuild.getSystemConfig().getString("DragonGuild.cost"));
+		Double amount = new Double(systemConfig.getString("DragonGuild.cost"));
 		if (money < amount) {
-			player.sendMessage(DragonGuild.getSystemConfig().getString("DragonGuild.prefix") +"§c您没有足够的金币！");
+			player.sendMessage(systemConfig.getString("DragonGuild.prefix") +"§c您没有足够的金币！");
 			return;
 		}
 
@@ -253,6 +256,7 @@ public class BaseCommand implements CommandExecutor {
 		DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
 		dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity3.getId());
 		dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity3.getName());
+		dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.chairman.name", "会长"));
 		dragonGuildMemberEntity.setExp(0);
 		dragonGuildMemberEntity.setUid(player.getName());
 		dragonGuildMemberEntity.setStatus(1);
@@ -430,6 +434,7 @@ public class BaseCommand implements CommandExecutor {
 	}
 
 	private void applyPassDragonGuild ( List<String> argsList,Player player) {
+		YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
 		if (argsList.size() != 2){
 			player.sendMessage("§c指令不正确");
 			return;
@@ -458,6 +463,7 @@ public class BaseCommand implements CommandExecutor {
 		DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
 		dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity.getId());
 		dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity.getName());
+		dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.ordinary.name", "普通成员"));
 		dragonGuildMemberEntity.setExp(0);
 		dragonGuildMemberEntity.setUid(dragonGuildApplyEntity.getUid());
 		dragonGuildMemberEntity.setStatus(1);

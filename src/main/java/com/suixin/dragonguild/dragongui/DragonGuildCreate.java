@@ -136,6 +136,7 @@ public class DragonGuildCreate {
     }
 
     private static boolean createDragonGuild (String guildName, Player player) {
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByName(guildName);
         if (dragonGuildEntity.getId() != null) {
             player.sendMessage(Message.create_failure);
@@ -170,6 +171,7 @@ public class DragonGuildCreate {
         DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
         dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity3.getId());
         dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity3.getName());
+        dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.chairman.name", "会长"));
         dragonGuildMemberEntity.setExp(0);
         dragonGuildMemberEntity.setUid(player.getName());
         dragonGuildMemberEntity.setStatus(1);

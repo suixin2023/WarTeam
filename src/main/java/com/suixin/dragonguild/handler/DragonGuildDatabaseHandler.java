@@ -1,7 +1,9 @@
 package com.suixin.dragonguild.handler;
 
+import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
 import com.suixin.dragonguild.util.MysqlUtil;
+import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -151,8 +153,8 @@ public class DragonGuildDatabaseHandler {
                     dragonGuildEntity.setCreated(rst.getDate("created"));
                     dragonGuildEntity.setModified(rst.getDate("modified"));
                 }
-                MysqlUtil.close(rst);
             }
+            MysqlUtil.close(rst);
 
 
         } catch (Exception e) {
@@ -306,6 +308,18 @@ public class DragonGuildDatabaseHandler {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        updateChairman();
         return datacount;
+    }
+
+    public static void updateChairman(){
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
+        String sql = "update dragon_guild_member set position = '"+systemConfig.getString("DragonGuild.chairman.name", "会长")+"' where status = 1 and uid =(SELECT creator from dragon_guild where status = 1)";
+        try {
+            MysqlUtil.execCommand(sql);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

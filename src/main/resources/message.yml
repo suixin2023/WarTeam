@@ -28,4 +28,6 @@ DragonGuild:
   no_permission: '§c无权限,你不是会长'
   no_more_apply: '§c没有更多的申请了'
   no_more_guild: '§c没有更多的公会了'
+  no_permission_appoint_chairman: '§c不能任命会长'
+  no_permission_appoint: '§c您无权任命'
 

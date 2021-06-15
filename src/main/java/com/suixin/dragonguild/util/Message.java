@@ -39,6 +39,8 @@ public class Message {
     public static String no_more_member;
     public static String no_more_apply;
     public static String no_more_guild;
+    public static String no_permission_appoint_chairman;
+    public static String no_permission_appoint;
     public static String no_permission;
 
     public static boolean loadMessage( ){
@@ -76,6 +78,8 @@ public class Message {
             no_more_member = prefix + config.getString("DragonGuild.no_more_member","§c没有更多的成员了");
             no_more_apply = prefix + config.getString("DragonGuild.no_more_apply","§c没有更多的申请了");
             no_more_guild = prefix + config.getString("DragonGuild.no_more_guild","§c没有更多的公会了");
+            no_permission_appoint_chairman = prefix + config.getString("DragonGuild.no_permission_appoint_chairman","§c不能任命会长");
+            no_permission_appoint = prefix + config.getString("DragonGuild.no_permission_appoint","§c您无权任命'");
             no_permission = prefix + config.getString("DragonGuild.no_permission","§c无权限,你不是队长");
             return true;
         }else {

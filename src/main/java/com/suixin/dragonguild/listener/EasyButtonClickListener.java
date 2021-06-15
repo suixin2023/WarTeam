@@ -1,5 +1,6 @@
 package com.suixin.dragonguild.listener;
 
+import com.suixin.dragonguild.DragonGuild;
 import com.suixin.dragonguild.dragongui.DragonGuildApply;
 import com.suixin.dragonguild.entity.DragonGuildApplyEntity;
 import com.suixin.dragonguild.entity.DragonGuildEntity;
@@ -13,6 +14,7 @@ import eos.moe.dragoncore.api.easygui.EasyScreen;
 import eos.moe.dragoncore.api.easygui.component.EasyComponent;
 import eos.moe.dragoncore.api.gui.event.CustomPacketEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -51,10 +53,12 @@ public class EasyButtonClickListener implements Listener {
                 player.sendMessage(Message.apply_inexistence);
                 return;
             }
+            YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
             DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildApplyEntity.getDragonGuildId());
             DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
             dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity.getId());
             dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity.getName());
+            dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.ordinary.name", "普通成员"));
             dragonGuildMemberEntity.setExp(0);
             dragonGuildMemberEntity.setUid(dragonGuildApplyEntity.getUid());
             dragonGuildMemberEntity.setStatus(1);

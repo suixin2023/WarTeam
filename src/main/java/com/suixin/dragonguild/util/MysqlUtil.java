@@ -131,6 +131,7 @@ public class MysqlUtil {
             Statement stmt = conn.createStatement();
             flag = stmt.executeUpdate(sql);
             stmt.close();
+            conn.close();
         } catch (SQLException e) {
             e.printStackTrace();
         }

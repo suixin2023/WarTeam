@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 
+import java.security.Permission;
 import java.util.Date;
 import java.util.List;
 
@@ -42,16 +43,53 @@ public class AppointButtonClickListener implements Listener {
         }
         EasyButtonEx buttonEx = (EasyButtonEx) component;
         String appointName = buttonEx.getAppointName();
+        if (appointName == null) {
+            return;
+        }
         String type = buttonEx.getType();
         DragonGuildMemberEntity dragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(appointName);
+        DragonGuildMemberEntity playerDragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
         DragonGuildMemberEntity dragonGuildMemberEntity1 = new DragonGuildMemberEntity();
-        if (dragonGuildMemberEntity.getPosition().equals("会长") && !type.equals("appointButton")) {
-            player.sendMessage("§a不能任命会长");
+        String position = dragonGuildMemberEntity.getPosition();
+        String position1 = playerDragonGuildMemberEntity.getPosition();
+        if (position.equals(systemConfig.getString("DragonGuild.chairman.name", "会长")) && !type.equals("appointButton")) {
+            player.sendMessage(Message.no_permission_appoint_chairman);
+            return;
+        }
+        int permissionLevel = 0;
+        if (position.equals(systemConfig.getString("DragonGuild.position.chairman.name", "会长"))) {
+            permissionLevel = 5;
+        }else if (position.equals(systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长"))) {
+            permissionLevel = 4;
+        }else if (position.equals(systemConfig.getString("DragonGuild.position.veteran.name", "元老"))) {
+            permissionLevel = 3;
+        }else if (position.equals(systemConfig.getString("DragonGuild.position.god_of_war.name", "战神"))) {
+            permissionLevel = 2;
+        }else if (position.equals(systemConfig.getString("DragonGuild.position.elite.name", "精英"))) {
+            permissionLevel = 1;
+        }
+
+        int permissionLevelOfPlayer = 0;
+        if (position1.equals(systemConfig.getString("DragonGuild.position.chairman.name", "会长"))) {
+            permissionLevelOfPlayer = 5;
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长"))) {
+            permissionLevelOfPlayer = 4;
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.veteran.name", "元老"))) {
+            permissionLevelOfPlayer = 3;
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.god_of_war.name", "战神"))) {
+            permissionLevelOfPlayer = 2;
+        }else if (position1.equals(systemConfig.getString("DragonGuild.position.elite.name", "精英"))) {
+            permissionLevelOfPlayer = 1;
+        }
+        if (permissionLevelOfPlayer <= permissionLevel) {
+            player.sendMessage(Message.no_permission_appoint);
+            return;
         }
         if (type.equals("appointButton")) {
             DragonGuildGui.positionButton(player,appointName);
         }else if (type.equals("vice_chairmanButton")){
-            String vice_chairman = systemConfig.getString("DragonGuild.vice_chairman.name", "副会长");
+
+            String vice_chairman = systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长");
             dragonGuildMemberEntity1.setPosition(vice_chairman);
             DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
             player.sendMessage("§a成功任命§e["+appointName+"]§a为§6"+vice_chairman);
@@ -60,7 +98,7 @@ public class AppointButtonClickListener implements Listener {
                 addressee.sendMessage("§a您被任命为§6"+vice_chairman);
             }
         }else if (type.equals("veteranButton")){
-            String veteran = systemConfig.getString("DragonGuild.veteran.name", "元老");
+            String veteran = systemConfig.getString("DragonGuild.position.veteran.name", "元老");
             dragonGuildMemberEntity1.setPosition(veteran);
             DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
             player.sendMessage("§a成功任命§e["+appointName+"]§a为§6"+veteran);
@@ -69,7 +107,7 @@ public class AppointButtonClickListener implements Listener {
                 addressee.sendMessage("§a您被任命为§6"+veteran);
             }
         }else if (type.equals("god_of_warButton")){
-            String god_of_war = systemConfig.getString("DragonGuild.god_of_war.name", "战神");
+            String god_of_war = systemConfig.getString("DragonGuild.position.god_of_war.name", "战神");
             dragonGuildMemberEntity1.setPosition(god_of_war);
             DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
             player.sendMessage("§a成功任命§e["+appointName+"]§a为§6"+god_of_war);
@@ -78,7 +116,7 @@ public class AppointButtonClickListener implements Listener {
                 addressee.sendMessage("§a您被任命为§6"+god_of_war);
             }
         }else if (type.equals("eliteButton")){
-            String elite = systemConfig.getString("DragonGuild.elite.name", "精英");
+            String elite = systemConfig.getString("DragonGuild.position.elite.name", "精英");
             dragonGuildMemberEntity1.setPosition(elite);
             DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
             player.sendMessage("§a成功任命§e["+appointName+"]§a为§6"+elite);
@@ -87,7 +125,7 @@ public class AppointButtonClickListener implements Listener {
                 addressee.sendMessage("§a您被任命为§6"+elite);
             }
         }else if (type.equals("ordinaryButton")){
-            String ordinary = systemConfig.getString("DragonGuild.ordinary.name", "普通成员");
+            String ordinary = systemConfig.getString("DragonGuild.position.ordinary.name", "普通成员");
             dragonGuildMemberEntity1.setPosition(ordinary);
             DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity.getId(),dragonGuildMemberEntity1);
             player.sendMessage("§a成功任命§e["+appointName+"]§a为§6"+ordinary);
