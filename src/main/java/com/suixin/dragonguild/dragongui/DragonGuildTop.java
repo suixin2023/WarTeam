@@ -129,17 +129,16 @@ public class DragonGuildTop {
         YamlConfiguration level = DragonGuiYml.getLevel();
         YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
         EasyLabel renshuText = new EasyLabel(renshu.getInt("x"), renshu.getInt("y"), 1, Arrays.asList(systemConfig.getString("DragonGuild.information.member","成员:")+count + "/"+dragonGuildEntity.getMaxMember()));
-        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("DragonGuild.information.level","等级:"+dragonGuildEntity.getLevel()+"")));
+        EasyLabel levelText = new EasyLabel( level.getInt("x"), level.getInt("y"),1, Arrays.asList(systemConfig.getString("DragonGuild.information.level","等级:")+dragonGuildEntity.getLevel()+""));
         //图标
         YamlConfiguration guildImgYml = DragonGuiYml.getGuildImg();
         EasyImage guildImg = new EasyImage( guildImgYml.getInt("x"), guildImgYml.getInt("y"), guildImgYml.getInt("width"), guildImgYml.getInt("high"),ImageUrlEnum.guildImg.getUrl());
-        screen.addComponent(listBgkImg);
-        screen.addComponent(scrollingList);
-        screen.addComponent(guildImg);
         screen.addComponent(nameText);
         screen.addComponent(renshuText);
         screen.addComponent(levelText);
-        screen.addComponent(nameText);
+        screen.addComponent(listBgkImg);
+        screen.addComponent(scrollingList);
+        screen.addComponent(guildImg);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);

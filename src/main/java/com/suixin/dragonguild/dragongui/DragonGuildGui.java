@@ -206,9 +206,9 @@ public class DragonGuildGui {
         screen.addComponent(closeButton);
         screen.addComponent(shangyiyeButton);
         screen.addComponent(xiayiyeButton);
-        screen.addComponent("名字",nameText);
-        screen.addComponent("人数",renshuText);
-        screen.addComponent("等级",levelText);
+        screen.addComponent(nameText);
+        screen.addComponent(renshuText);
+        screen.addComponent(levelText);
         screen.addComponent(lobbyButton);
         screen.addComponent(noticeButton);
         screen.addComponent(chatButton);

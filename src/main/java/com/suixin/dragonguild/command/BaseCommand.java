@@ -14,6 +14,7 @@ import com.suixin.dragonguild.handler.DragonGuildNoticeDatabaseHandler;
 import com.suixin.dragonguild.util.Message;
 import com.suixin.dragonguild.util.VaultAPI;
 import com.sun.org.apache.bcel.internal.generic.DREM;
+import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -38,6 +39,10 @@ public class BaseCommand implements CommandExecutor {
 		boolean op = player.isOp();
 		if (cmd.getName().equalsIgnoreCase("gh")) {
 			if (args.length == 0) {
+				String s2 = "%player_health%";
+				s2 = PlaceholderAPI.setBracketPlaceholders(player, s2);
+				String s1 = PlaceholderAPI.setPlaceholders(player, "%player_level%");
+				player.sendMessage(s2);
 				player.sendMessage("§c§l§m §c§l§m §c§l§m §c§l§m §6§l§m §6§l§m §6§l§m §6§l§m §e§l§m §e§l§m §e§l§m §e§l§m §a§l§m §a§l§m §a§l§m §a§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §b§l§m §a§l§m §a§l§m §a§l§m §a§l§m §e§l§m §e§l§m §e§l§m §e§l§m §6§l§m §6§l§m §6§l§m §6§l§m §c§l§m §c§l§m §c§l§m §c§l§m");
 				player.sendMessage("§6●§a/gh open §e打开公会管理");
 				player.sendMessage("§6●§a/gh list <页码> §e打开公会列表");

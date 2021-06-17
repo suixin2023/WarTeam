@@ -9,6 +9,8 @@ Mysql:
   userName: 'root'
   #MySQL数据库密码
   password: '1234'
+#快捷键
+hotkeys: "G"
 DragonGuild:
   #插件消息前缀
   prefix: '[公会]'
