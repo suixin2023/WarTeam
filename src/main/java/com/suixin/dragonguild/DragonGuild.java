@@ -9,6 +9,7 @@ import com.suixin.dragonguild.listener.EasyButtonClickListener;
 import com.suixin.dragonguild.listener.KeyBoardEventListener;
 import com.suixin.dragonguild.task.ActivationCodeTask;
 import com.suixin.dragonguild.util.*;
+import eos.moe.dragoncore.api.CoreAPI;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -53,6 +54,10 @@ public class DragonGuild extends JavaPlugin {
 			Bukkit.getPluginManager().registerEvents(new EasyButtonClickListener(),this);
 			Bukkit.getPluginManager().registerEvents(new AppointButtonClickListener(),this);
 			Bukkit.getPluginManager().registerEvents(new KeyBoardEventListener(),this);
+			for(int i = 1;i<=26;i++){
+				char c = Character.toUpperCase((char) (96 + i));
+				CoreAPI.registerKey(String.valueOf(c));
+			}
 		}else {
 			Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW+"未找到DragonCore，插件将无法正常运行");
 		}
@@ -67,8 +72,6 @@ public class DragonGuild extends JavaPlugin {
 	public static void loadPlugin(Player player) {
 		// 读取config配置文件
 		systemConfig = getYml("config.yml");
-		Boolean ss = systemConfig.getBoolean("DragonGuild.position.god_of_war.permission.kick",false);
-		Bukkit.getConsoleSender().sendMessage("§a测试配置读取"+ss);
 		String level = systemConfig.getString("DragonGuild.level");
 		level = level.substring(1,level.length() -1).replace(" ","");
 		String[] levelSplit = level.split(",");

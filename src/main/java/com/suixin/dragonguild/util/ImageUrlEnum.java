@@ -60,6 +60,7 @@ public enum ImageUrlEnum {
     save("save","保存.png", "保存"),
     clear("clear","清空.png", "清空"),
     chatBox("chatBox","消息框.png", "消息框"),
+    chatBox2("chatBox","消息框2.png", "消息框"),
     ;
 
     private String id;

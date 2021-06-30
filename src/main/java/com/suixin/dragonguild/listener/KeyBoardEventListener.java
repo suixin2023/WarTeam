@@ -6,6 +6,7 @@ import com.suixin.dragonguild.dragongui.DragonGuildNoTeam;
 import com.suixin.dragonguild.entity.DragonGuildMemberEntity;
 import com.suixin.dragonguild.handler.DragonGuildMemBerDatabaseHandler;
 import com.suixin.dragonguild.util.KeyConversion;
+import eos.moe.dragoncore.api.CoreAPI;
 import eos.moe.dragoncore.api.KeyPressEvent;
 import eos.moe.dragoncore.api.easygui.EasyScreen;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -17,10 +18,9 @@ public class KeyBoardEventListener implements Listener {
     @EventHandler
     public void onKey(KeyPressEvent e){
         YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
-        String hotkeys = systemConfig.getString("hotkeys");
-        int conversion = KeyConversion.conversion(hotkeys);
-        String key = e.getKey();
-        if (conversion != 0 && Integer.valueOf(key) == conversion) {
+        String hotkeys = systemConfig.getString("hotkeys").toLowerCase();
+        String key = e.getKey().toLowerCase();
+        if (hotkeys.equals(key)) {
             EasyScreen openedScreen = EasyScreen.getOpenedScreen(e.getPlayer());
             if (openedScreen == null) {
                 DragonGuildMemberEntity dragonGuildMemberEntity = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(e.getPlayer().getName());

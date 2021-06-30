@@ -80,8 +80,8 @@ public class DragonGuildChatDatabaseHandler {
                         dragonGuildChatEntity.setGuildId(rst.getInt("guild_id"));
                         dragonGuildChatEntity.setDescs(rst.getString("descs"));
                         dragonGuildChatEntity.setStatus(rst.getInt("status"));
-                        dragonGuildChatEntity.setCreated(rst.getDate("created"));
-                        dragonGuildChatEntity.setModified(rst.getDate("modified"));
+                        dragonGuildChatEntity.setCreated(rst.getTimestamp("created"));
+                        dragonGuildChatEntity.setModified(rst.getTimestamp("modified"));
                         dragonGuildChatEntitys.add(dragonGuildChatEntity);
                     }
                 }

@@ -183,7 +183,7 @@ public class DragonGuildTop {
             Integer level = dragonGuildEntities.get(i).getLevel();
             EasyImage topUmg = new EasyImage( topYml.getInt("x"), topYmlY, topYml.getInt("width"), topYml.getInt("high"),ImageUrlEnum.guildList.getUrl());
             EasyLabel nameText = new EasyLabel(nameYml.getInt("x"), nameYmlY, 1,Arrays.asList(name));
-            EasyLabel topLevelText = new EasyLabel(topLevelYml.getInt("x"), topLevelYmlY, 1,Arrays.asList(systemConfig.getString("DragonGuild.information.level","§a等级:"+level)));
+            EasyLabel topLevelText = new EasyLabel(topLevelYml.getInt("x"), topLevelYmlY, 1,Arrays.asList(systemConfig.getString("DragonGuild.information.level","§a等级:")+level));
             EasyImage img;
             if (currentPage == 1 && i == 0) {
                 img = new EasyImage( topImgYml.getInt("x"), topImgYmlY, topImgYml.getInt("width"), topImgYml.getInt("high"),ImageUrlEnum.guild.getUrl());

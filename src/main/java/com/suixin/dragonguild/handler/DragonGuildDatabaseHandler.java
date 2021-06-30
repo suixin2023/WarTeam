@@ -314,7 +314,7 @@ public class DragonGuildDatabaseHandler {
 
     public static void updateChairman(){
         YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
-        String sql = "update dragon_guild_member set position = '"+systemConfig.getString("DragonGuild.chairman.name", "会长")+"' where status = 1 and uid =(SELECT creator from dragon_guild where status = 1)";
+        String sql = "update dragon_guild_member set position = '"+systemConfig.getString("DragonGuild.chairman.name", "会长")+"' where status = 1 and uid in(SELECT creator from dragon_guild where status = 1)";
         try {
             MysqlUtil.execCommand(sql);
 

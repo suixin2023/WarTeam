@@ -1,5 +1,6 @@
 package com.suixin.dragonguild.entity;
 
+
 import java.util.Date;
 
 /**

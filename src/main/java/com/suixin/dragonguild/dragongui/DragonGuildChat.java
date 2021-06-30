@@ -172,6 +172,10 @@ public class DragonGuildChat {
         int chatBoxY = chatBox.getInt("y");
         int chatNameY = chatName.getInt("y");
         int chatContentY = chatContent.getInt("y");
+        int chatImgX;
+        int chatBoxX;
+        int chatNameX;
+        int chatContentX;
         List<DragonGuildChatEntity> dragonGuildChatEntities = DragonGuildChatDatabaseHandler.selectDragonGuildDataNum(limit, dragonGuildId);
         if (dragonGuildChatEntities.size() == 0) {
             return;
@@ -183,13 +187,27 @@ public class DragonGuildChat {
         chatlist.clear();
         for (DragonGuildChatEntity dragonGuildChatEntity: dragonGuildChatEntities) {
             String creator = dragonGuildChatEntity.getCreator();
+            String url;
+            if (creator.equals(player.getName())) {
+                chatImgX = chatImg.getInt("x2");
+                chatBoxX = chatBox.getInt("x2");
+                chatNameX = chatName.getInt("x2");
+                chatContentX = chatContent.getInt("x2");
+                url = ImageUrlEnum.chatBox2.getUrl();
+            }else {
+                chatImgX = chatImg.getInt("x");
+                chatBoxX = chatBox.getInt("x");
+                chatNameX = chatName.getInt("x");
+                chatContentX = chatContent.getInt("x");
+                url = ImageUrlEnum.chatBox.getUrl();
+            }
             String descs = dragonGuildChatEntity.getDescs();
             DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildByCreator(creator);
             EasyImage img = null;
             if (dragonGuildEntity.getId() == null) {
-                img = new EasyImage(chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
+                img = new EasyImage(chatImgX, chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }else {
-                img = new EasyImage(chatImg.getInt("x"), chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.creator.getUrl());
+                img = new EasyImage(chatImgX, chatImgY, chatImg.getInt("width"), chatImg.getInt("high"),ImageUrlEnum.creator.getUrl());
             }
             int length = 0;
             try {
@@ -198,6 +216,7 @@ public class DragonGuildChat {
                 e.printStackTrace();
             }
             List<String> descList = new ArrayList<>();
+            String substring = "";
             int y = length;
             while (y > 0){
                 String s = "";
@@ -206,11 +225,24 @@ public class DragonGuildChat {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
+                int lastIndexOf = s.lastIndexOf("§");
+                if (lastIndexOf == -1) {
+                    lastIndexOf = s.lastIndexOf("&");
+                }
                 descs = descs.replace(s,"");
+                if (lastIndexOf >= 0) {
+                    int lengthOfs = s.length();
+                    if (lastIndexOf == lengthOfs - 1) {
+                        substring = s.substring(lastIndexOf, lastIndexOf + 1);
+                        substring = substring + descs.substring(0, 1);
+                    }else {
+                        substring = s.substring(lastIndexOf, lastIndexOf + 2);
+                    }
+                }
                 y = y - 20;
-                descList.add(s);
+                descList.add(substring+s);
             }
-            
+
             int high = chatBox.getInt("high");
             int chatBoxY2 = chatBoxY;
             if (descList.size() == 3) {
@@ -220,12 +252,12 @@ public class DragonGuildChat {
                 high = high*2;
                 chatBoxY2 = chatBoxY2 - 4;
             }
-            EasyImage chatBoxImg = new EasyImage(chatBox.getInt("x"), chatBoxY2, chatBox.getInt("width"), high,ImageUrlEnum.chatBox.getUrl());
+            EasyImage chatBoxImg = new EasyImage(chatBoxX, chatBoxY2, chatBox.getInt("width"), high, url);
 
             SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH:mm:ss");
             String format = simpleDateFormat.format(dragonGuildChatEntity.getCreated());
-            EasyLabel nameText = new EasyLabel(chatName.getInt("x"), chatNameY, 1,Arrays.asList(" §d"+creator+" "+format));
-            EasyLabel chatContentText = new EasyLabel(chatContent.getInt("x"), chatContentY, 1,descList);
+            EasyLabel nameText = new EasyLabel(chatNameX, chatNameY, 1,Arrays.asList(" §6"+creator+" §d"+format));
+            EasyLabel chatContentText = new EasyLabel(chatContentX, chatContentY, 1,descList);
             list.add(img);
             list.add(chatBoxImg);
             list.add(nameText);

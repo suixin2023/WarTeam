@@ -47,17 +47,17 @@ public class MysqlUtil {
         }
     }
 
-//    @Override
-//    protected void finalize() throws Exception {
-//        try {
-//            if (null != conn){
-//                conn.close();
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//    }
+    @Override
+    protected void finalize() throws Exception {
+        try {
+            if (null != conn){
+                conn.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     // 查询并得到结果集
     public static ResultSet execQuery(String sql) throws Exception {
