@@ -44,7 +44,7 @@ public final class PlayerJoinEventClass implements Listener {
             Date outTime = new Date();
             long datePoor = getDatePoor(outTime.getTime(), joinTime.getTime());
             YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
-            Long exp = systemConfig.getLong("DragonGuild.exp");
+            Long exp = Long.valueOf(systemConfig.getString("DragonGuild.exp"));
             exp = exp * datePoor;
             int expInt = exp.intValue();
             Integer dragonGuildId = dragonGuildMemberEntity.getDragonGuildId();

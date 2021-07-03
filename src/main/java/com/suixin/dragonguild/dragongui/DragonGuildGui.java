@@ -306,7 +306,7 @@ public class DragonGuildGui {
                 pictureFrameImage = new EasyImage(pictureFramedefx, pictureFramey, pictureFrameYml.getInt("width"), pictureFrameYml.getInt("high"),ImageUrlEnum.pictureFrame.getUrl());
             }
             EasyLabel nameText = new EasyLabel(namex, namey, 1, Arrays.asList(systemConfig.getString("DragonGuild.information.namekick","游戏名:")+playerName));
-            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("DragonGuild.information.contribution","贡献:"+exp)));
+            EasyLabel expText = new EasyLabel(expx, expy, 1 ,Arrays.asList(systemConfig.getString("DragonGuild.information.contribution","贡献:")+exp));
             if (position == null) {
                 position = "无职位";
             }

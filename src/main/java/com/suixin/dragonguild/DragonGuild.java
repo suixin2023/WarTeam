@@ -7,6 +7,7 @@ import com.suixin.dragonguild.handler.*;
 import com.suixin.dragonguild.listener.AppointButtonClickListener;
 import com.suixin.dragonguild.listener.EasyButtonClickListener;
 import com.suixin.dragonguild.listener.KeyBoardEventListener;
+import com.suixin.dragonguild.listener.PlayerJoinEventClass;
 import com.suixin.dragonguild.task.ActivationCodeTask;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.CoreAPI;
@@ -54,6 +55,7 @@ public class DragonGuild extends JavaPlugin {
 			Bukkit.getPluginManager().registerEvents(new EasyButtonClickListener(),this);
 			Bukkit.getPluginManager().registerEvents(new AppointButtonClickListener(),this);
 			Bukkit.getPluginManager().registerEvents(new KeyBoardEventListener(),this);
+			Bukkit.getPluginManager().registerEvents(new PlayerJoinEventClass(),this);
 			for(int i = 1;i<=26;i++){
 				char c = Character.toUpperCase((char) (96 + i));
 				CoreAPI.registerKey(String.valueOf(c));

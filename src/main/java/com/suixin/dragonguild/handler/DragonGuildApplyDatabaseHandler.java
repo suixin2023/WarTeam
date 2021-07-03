@@ -166,8 +166,8 @@ public class DragonGuildApplyDatabaseHandler {
         return  dragonGuildApplyEntitys;
     }
 
-    public static DragonGuildApplyEntity selectDragonGuildApplyByUidAndApply(String uid, String apply){
-        String sql = "select * from dragon_guild_apply where status = 0 and uid = '" +uid +"' and apply = '" +apply+"'";
+    public static DragonGuildApplyEntity selectDragonGuildApplyByUidAndApply(String uid, Integer dragonGuildId){
+        String sql = "select * from dragon_guild_apply where status = 0 and uid = '" +uid+"'" +"and dragon_guild_id = " +dragonGuildId;
         DragonGuildApplyEntity dragonGuildApplyEntity = new DragonGuildApplyEntity();
         try {
             ResultSet rst = MysqlUtil.execQuery(sql);

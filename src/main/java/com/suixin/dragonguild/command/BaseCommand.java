@@ -445,12 +445,47 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		String userName = argsList.get(1);
-		DragonGuildEntity dragonGuildEntity1 = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
-		if (dragonGuildEntity1.getId() == null) {
+		DragonGuildMemberEntity dragonGuildMemberEntity2 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
+		if (dragonGuildMemberEntity2.getId() == null) {
 			player.sendMessage(Message.create_first);
 			return;
 		}
-		DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(userName,player.getName());
+		String position1 = dragonGuildMemberEntity2.getPosition();
+		int hasPermission = 0;
+		if (position1 == null) {
+			dragonGuildMemberEntity2.setPosition(systemConfig.getString("DragonGuild.position.ordinary.name", "普通成员"));
+			DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity2.getId(),dragonGuildMemberEntity2);
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.chairman.name", "会长"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.chairman.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.vice_chairman.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.veteran.name", "元老"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.veteran.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.god_of_war.name", "战神"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.god_of_war.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.elite.name", "精英"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.elite.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}
+		if (hasPermission == 0) {
+			player.sendMessage(Message.no_permission_apply);
+			return;
+		}
+		DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(userName,dragonGuildMemberEntity2.getDragonGuildId());
 		if (dragonGuildApplyEntity.getId() == null) {
 			player.sendMessage(Message.apply_inexistence);
 			return;
@@ -468,7 +503,7 @@ public class BaseCommand implements CommandExecutor {
 		DragonGuildMemberEntity dragonGuildMemberEntity = new DragonGuildMemberEntity();
 		dragonGuildMemberEntity.setDragonGuildId(dragonGuildEntity.getId());
 		dragonGuildMemberEntity.setDragonGuildName(dragonGuildEntity.getName());
-		dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.ordinary.name", "普通成员"));
+		dragonGuildMemberEntity.setPosition(systemConfig.getString("DragonGuild.position.ordinary.name", "普通成员"));
 		dragonGuildMemberEntity.setExp(0);
 		dragonGuildMemberEntity.setUid(dragonGuildApplyEntity.getUid());
 		dragonGuildMemberEntity.setStatus(1);
@@ -491,12 +526,48 @@ public class BaseCommand implements CommandExecutor {
 			return;
 		}
 		String userName = argsList.get(1);
-		DragonGuildEntity dragonGuildEntity1 = DragonGuildDatabaseHandler.selectDragonGuildByCreator(player.getName());
-		if (dragonGuildEntity1.getId() == null) {
+		DragonGuildMemberEntity dragonGuildMemberEntity2 = DragonGuildMemBerDatabaseHandler.selectDragonGuildMemBerByUid(player.getName());
+		if (dragonGuildMemberEntity2.getId() == null) {
 			player.sendMessage(Message.create_first);
 			return;
 		}
-		DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(userName,player.getName());
+		YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
+		String position1 = dragonGuildMemberEntity2.getPosition();
+		int hasPermission = 0;
+		if (position1 == null) {
+			dragonGuildMemberEntity2.setPosition(systemConfig.getString("DragonGuild.position.ordinary.name", "普通成员"));
+			DragonGuildMemBerDatabaseHandler.updateUserConfigDataNum(dragonGuildMemberEntity2.getId(),dragonGuildMemberEntity2);
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.chairman.name", "会长"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.chairman.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.vice_chairman.name", "副会长"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.vice_chairman.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.veteran.name", "元老"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.veteran.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.god_of_war.name", "战神"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.god_of_war.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}else if (position1.equals(systemConfig.getString("DragonGuild.position.elite.name", "精英"))) {
+			boolean aBoolean = systemConfig.getBoolean("DragonGuild.position.elite.permission.apply", false);
+			if (aBoolean) {
+				hasPermission = 1;
+			}
+		}
+		if (hasPermission == 0) {
+			player.sendMessage(Message.no_permission_apply);
+			return;
+		}
+		DragonGuildApplyEntity dragonGuildApplyEntity = DragonGuildApplyDatabaseHandler.selectDragonGuildApplyByUidAndApply(userName,dragonGuildMemberEntity2.getDragonGuildId());
 		if (dragonGuildApplyEntity.getId() == null) {
 			player.sendMessage(Message.apply_inexistence);
 			return;
