@@ -82,6 +82,19 @@ public class DragonGuiYml {
     private static YamlConfiguration god_of_war;
     private static YamlConfiguration elite;
     private static YamlConfiguration ordinary;
+    //颜色
+    private static YamlConfiguration lianglv;
+    private static YamlConfiguration lianglan;
+    private static YamlConfiguration cheng;
+    private static YamlConfiguration qianhong;
+    private static YamlConfiguration qianlan;
+    private static YamlConfiguration shenlv;
+    private static YamlConfiguration shenlan;
+    private static YamlConfiguration hui;
+    private static YamlConfiguration huilan;
+    private static YamlConfiguration zi;
+    private static YamlConfiguration hong;
+    private static YamlConfiguration huang;
     public static boolean loadGui( ) {
         try {
             shangyiye = DragonGuild.getYml("dragon/上一页.yml");
@@ -164,6 +177,20 @@ public class DragonGuiYml {
             chatBar = DragonGuild.getYml("dragon/chat/bar.yml");
             chatConfirm = DragonGuild.getYml("dragon/chat/确定.yml");
             chatCancel = DragonGuild.getYml("dragon/chat/取消.yml");
+
+
+            lianglv = DragonGuild.getYml("dragon/color/亮绿.yml");
+            lianglan = DragonGuild.getYml("dragon/color/亮蓝.yml");
+            cheng = DragonGuild.getYml("dragon/color/橙.yml");
+            qianhong = DragonGuild.getYml("dragon/color/浅红.yml");
+            qianlan = DragonGuild.getYml("dragon/color/浅蓝.yml");
+            shenlv = DragonGuild.getYml("dragon/color/深绿.yml");
+            shenlan = DragonGuild.getYml("dragon/color/深蓝.yml");
+            hui = DragonGuild.getYml("dragon/color/灰.yml");
+            huilan = DragonGuild.getYml("dragon/color/灰蓝.yml");
+            zi = DragonGuild.getYml("dragon/color/紫.yml");
+            hong = DragonGuild.getYml("dragon/color/红.yml");
+            huang = DragonGuild.getYml("dragon/color/黄.yml");
             return true;
         }catch (Exception e){
             return false;
@@ -754,5 +781,101 @@ public class DragonGuiYml {
 
     public static void setSidebarCancel(YamlConfiguration sidebarCancel) {
         DragonGuiYml.sidebarCancel = sidebarCancel;
+    }
+
+    public static YamlConfiguration getLianglv() {
+        return lianglv;
+    }
+
+    public static void setLianglv(YamlConfiguration lianglv) {
+        DragonGuiYml.lianglv = lianglv;
+    }
+
+    public static YamlConfiguration getLianglan() {
+        return lianglan;
+    }
+
+    public static void setLianglan(YamlConfiguration lianglan) {
+        DragonGuiYml.lianglan = lianglan;
+    }
+
+    public static YamlConfiguration getCheng() {
+        return cheng;
+    }
+
+    public static void setCheng(YamlConfiguration cheng) {
+        DragonGuiYml.cheng = cheng;
+    }
+
+    public static YamlConfiguration getQianhong() {
+        return qianhong;
+    }
+
+    public static void setQianhong(YamlConfiguration qianhong) {
+        DragonGuiYml.qianhong = qianhong;
+    }
+
+    public static YamlConfiguration getQianlan() {
+        return qianlan;
+    }
+
+    public static void setQianlan(YamlConfiguration qianlan) {
+        DragonGuiYml.qianlan = qianlan;
+    }
+
+    public static YamlConfiguration getShenlv() {
+        return shenlv;
+    }
+
+    public static void setShenlv(YamlConfiguration shenlv) {
+        DragonGuiYml.shenlv = shenlv;
+    }
+
+    public static YamlConfiguration getShenlan() {
+        return shenlan;
+    }
+
+    public static void setShenlan(YamlConfiguration shenlan) {
+        DragonGuiYml.shenlan = shenlan;
+    }
+
+    public static YamlConfiguration getHui() {
+        return hui;
+    }
+
+    public static void setHui(YamlConfiguration hui) {
+        DragonGuiYml.hui = hui;
+    }
+
+    public static YamlConfiguration getHuilan() {
+        return huilan;
+    }
+
+    public static void setHuilan(YamlConfiguration huilan) {
+        DragonGuiYml.huilan = huilan;
+    }
+
+    public static YamlConfiguration getZi() {
+        return zi;
+    }
+
+    public static void setZi(YamlConfiguration zi) {
+        DragonGuiYml.zi = zi;
+    }
+
+    public static YamlConfiguration getHong() {
+        return hong;
+    }
+
+    public static void setHong(YamlConfiguration hong) {
+        DragonGuiYml.hong = hong;
+    }
+
+    public static YamlConfiguration getHuang() {
+        return huang;
+    }
+
+    public static void setHuang(YamlConfiguration huang) {
+        DragonGuiYml.huang = huang;
     }
 }

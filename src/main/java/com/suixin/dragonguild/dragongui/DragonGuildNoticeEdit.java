@@ -173,6 +173,8 @@ public class DragonGuildNoticeEdit {
         DragonGuildEntity dragonGuildEntity = DragonGuildDatabaseHandler.selectDragonGuildById(dragonGuildId);
         YamlConfiguration name = DragonGuiYml.getName();
         EasyLabel nameText = new EasyLabel(name.getInt("x"), name.getInt("y"), 1, Arrays.asList(dragonGuildEntity.getName()));
+        YamlConfiguration systemConfig = DragonGuild.getSystemConfig();
+        int noticeEditline = systemConfig.getInt("noticeEditline");
         gui.addComponent(img);
         gui.addComponent(nameText);
         gui.addComponent(applyCloseButton);
@@ -183,15 +185,33 @@ public class DragonGuildNoticeEdit {
         gui.addComponent(applyButton);
         gui.addComponent(topButton);
         gui.addComponent("title",titleTextField);
-        gui.addComponent("content1",contentTextField1);
-        gui.addComponent("content2",contentTextField2);
-        gui.addComponent("content3",contentTextField3);
-        gui.addComponent("content4",contentTextField4);
-        gui.addComponent("content5",contentTextField5);
-        gui.addComponent("content6",contentTextField6);
-        gui.addComponent("content7",contentTextField7);
-        gui.addComponent("content8",contentTextField8);
-        gui.addComponent("content9",contentTextField9);
+        if (noticeEditline >= 1) {
+            gui.addComponent("content1",contentTextField1);
+        }
+        if (noticeEditline >= 2) {
+            gui.addComponent("content2",contentTextField2);
+        }
+        if (noticeEditline >= 3) {
+            gui.addComponent("content3",contentTextField3);
+        }
+        if (noticeEditline >= 4) {
+            gui.addComponent("content4",contentTextField4);
+        }
+        if (noticeEditline >= 5) {
+            gui.addComponent("content5",contentTextField5);
+        }
+        if (noticeEditline >= 6) {
+            gui.addComponent("content6",contentTextField6);
+        }
+        if (noticeEditline >= 7) {
+            gui.addComponent("content7",contentTextField7);
+        }
+        if (noticeEditline >= 8) {
+            gui.addComponent("content8",contentTextField8);
+        }
+        if (noticeEditline >= 9) {
+            gui.addComponent("content9",contentTextField9);
+        }
         gui.addComponent(clearButton);
         gui.addComponent(backButton);
         return gui;

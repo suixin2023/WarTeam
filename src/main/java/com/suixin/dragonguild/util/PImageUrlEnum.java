@@ -37,6 +37,19 @@ public enum PImageUrlEnum {
     ordinary("ordinary","普通成员2.png", "普通成员"),
     appoint("appoint","任职2.png", "任职"),
 
+    cheng("chatBox","color2/橙.png", "橙"),
+    hong("chatBox","color2/红.png", "红"),
+    huang("chatBox","color2/黄.png", "黄"),
+    hui("chatBox","color2/灰.png", "灰"),
+    huilan("chatBox","color2/灰蓝.png", "灰蓝"),
+    lianglan("chatBox","color2/亮蓝.png", "亮蓝"),
+    lianglv("chatBox","color2/亮绿.png", "亮绿"),
+    qianhong("chatBox","color2/浅红.png", "浅红"),
+    qianlan("chatBox","color2/浅蓝.png", "浅蓝"),
+    shenlan("chatBox","color2/深蓝.png", "深蓝"),
+    shenlv("chatBox","color2/深绿.png", "深蓝"),
+    zi("chatBox","color2/紫.png", "紫"),
+
     //暂无图片
     edit("edit","编辑2.png", "编辑"),
     save("save","保存2.png", "保存"),

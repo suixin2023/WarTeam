@@ -16,6 +16,7 @@ public class Component {
     private List<String> guildList  = new ArrayList<>();
     private List<String> sidebar  = new ArrayList<>();
     private EasyScrollingList scrollingList;
+    private String color;
     public Integer getCurrent() {
         return current;
     }
@@ -72,4 +73,11 @@ public class Component {
         this.sidebar = sidebar;
     }
 
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
 }

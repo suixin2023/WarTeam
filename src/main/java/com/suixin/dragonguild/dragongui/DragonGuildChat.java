@@ -121,6 +121,324 @@ public class DragonGuildChat {
                 DragonGuildChat.openGameLobbyGui(player,dragonGuildId);
             }
         };
+        //亮绿
+        YamlConfiguration lianglv = DragonGuiYml.getLianglv();
+        EasyButton lianglvButton = new EasyButton( lianglv.getInt("x"), lianglv.getInt("y"), lianglv.getInt("width"), lianglv.getInt("high"), ImageUrlEnum.lianglv.getUrl(), ImageUrlEnum.lianglv.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§a");
+                EasyButton lianglv = (EasyButton)openedScreen.getComponent("亮绿");
+                lianglv.setUrl(PImageUrlEnum.lianglv.getUrl());
+                lianglv.setUrlHov(PImageUrlEnum.lianglv.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("亮绿");
+            }
+        };
+        //亮蓝
+        YamlConfiguration lianglan = DragonGuiYml.getLianglan();
+        EasyButton lianglanButton = new EasyButton( lianglan.getInt("x"), lianglan.getInt("y"), lianglan.getInt("width"), lianglan.getInt("high"), ImageUrlEnum.lianglan.getUrl(), ImageUrlEnum.lianglan.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§b");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("亮蓝");
+                lianglan.setUrl(PImageUrlEnum.lianglan.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.lianglan.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("亮蓝");
+            }
+        };
+        //橙
+        YamlConfiguration cheng = DragonGuiYml.getCheng();
+        EasyButton chengButton = new EasyButton( cheng.getInt("x"), cheng.getInt("y"), cheng.getInt("width"), cheng.getInt("high"), ImageUrlEnum.cheng.getUrl(), ImageUrlEnum.cheng.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§6");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("橙");
+                lianglan.setUrl(PImageUrlEnum.cheng.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.cheng.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("橙");
+            }
+        };
+
+        //浅红
+        YamlConfiguration qianhong = DragonGuiYml.getQianhong();
+        EasyButton qianhongButton = new EasyButton( qianhong.getInt("x"), qianhong.getInt("y"), qianhong.getInt("width"), qianhong.getInt("high"), ImageUrlEnum.qianhong.getUrl(), ImageUrlEnum.qianhong.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§c");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("浅红");
+                lianglan.setUrl(PImageUrlEnum.qianhong.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.qianhong.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("浅红");
+            }
+        };
+        //浅蓝
+        YamlConfiguration qianlan = DragonGuiYml.getQianlan();
+        EasyButton qianlanButton = new EasyButton( qianlan.getInt("x"), qianlan.getInt("y"), qianlan.getInt("width"), qianlan.getInt("high"), ImageUrlEnum.qianlan.getUrl(), ImageUrlEnum.qianlan.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§9");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("浅蓝");
+                lianglan.setUrl(PImageUrlEnum.qianlan.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.qianlan.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("浅蓝");
+            }
+        };
+        //深绿
+        YamlConfiguration shenlv = DragonGuiYml.getShenlv();
+        EasyButton shenlvButton = new EasyButton( shenlv.getInt("x"), shenlv.getInt("y"), shenlv.getInt("width"), shenlv.getInt("high"), ImageUrlEnum.shenlv.getUrl(), ImageUrlEnum.shenlv.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§2");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("深绿");
+                lianglan.setUrl(PImageUrlEnum.shenlv.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.shenlv.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("深绿");
+            }
+        };
+        //深蓝
+        YamlConfiguration shenlan = DragonGuiYml.getShenlan();
+        EasyButton shenlanButton = new EasyButton( shenlan.getInt("x"), shenlan.getInt("y"), shenlan.getInt("width"), shenlan.getInt("high"), ImageUrlEnum.shenlan.getUrl(), ImageUrlEnum.shenlan.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§1");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("深蓝");
+                lianglan.setUrl(PImageUrlEnum.shenlan.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.shenlan.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("深蓝");
+            }
+        };
+
+        //灰
+        YamlConfiguration hui = DragonGuiYml.getHui();
+        EasyButton huiButton = new EasyButton( hui.getInt("x"), hui.getInt("y"), hui.getInt("width"), hui.getInt("high"), ImageUrlEnum.hui.getUrl(), ImageUrlEnum.hui.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§f");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("灰");
+                lianglan.setUrl(PImageUrlEnum.hui.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.hui.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("灰");
+            }
+        };
+
+        //灰蓝
+        YamlConfiguration huilan = DragonGuiYml.getHuilan();
+        EasyButton huilanButton = new EasyButton( huilan.getInt("x"), huilan.getInt("y"), huilan.getInt("width"), huilan.getInt("high"), ImageUrlEnum.huilan.getUrl(), ImageUrlEnum.huilan.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§3");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("灰蓝");
+                lianglan.setUrl(PImageUrlEnum.huilan.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.huilan.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("灰蓝");
+            }
+        };
+
+        //紫
+        YamlConfiguration zi = DragonGuiYml.getZi();
+        EasyButton ziButton = new EasyButton( zi.getInt("x"), zi.getInt("y"), zi.getInt("width"), zi.getInt("high"), ImageUrlEnum.zi.getUrl(), ImageUrlEnum.zi.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§d");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("紫");
+                lianglan.setUrl(PImageUrlEnum.zi.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.zi.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("紫");
+            }
+        };
+
+        //红
+        YamlConfiguration hong = DragonGuiYml.getHong();
+        EasyButton hongButton = new EasyButton( hong.getInt("x"), hong.getInt("y"), hong.getInt("width"), hong.getInt("high"), ImageUrlEnum.hong.getUrl(), ImageUrlEnum.hong.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§4");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("红");
+                lianglan.setUrl(PImageUrlEnum.hong.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.hong.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("红");
+            }
+        };
+        //黄
+        YamlConfiguration huang = DragonGuiYml.getHuang();
+        EasyButton huangButton = new EasyButton( huang.getInt("x"), huang.getInt("y"), huang.getInt("width"), huang.getInt("high"), ImageUrlEnum.huang.getUrl(), ImageUrlEnum.huang.getUrl()) {
+            @Override
+            public void onClick(Player player, Type type) {
+                EasyScreen openedScreen = EasyScreen.getOpenedScreen(player);
+                EasyTextField chat = (EasyTextField)openedScreen.getComponent("聊天输入");
+                String text = chat.getText();
+                if (text == null) {
+                    text = "";
+                }
+                chat.setText(text+"§e");
+                EasyButton lianglan = (EasyButton)openedScreen.getComponent("黄");
+                lianglan.setUrl(PImageUrlEnum.huang.getUrl());
+                lianglan.setUrlHov(PImageUrlEnum.huang.getUrl());
+                String color = component.getColor();
+                if (color != null && !color.equals("")) {
+                    EasyButton color1 = (EasyButton) openedScreen.getComponent(color);
+                    String replace = color1.getUrl().replace("2", "");
+                    color1.setUrl(replace);
+                    color1.setUrlHov(replace);
+                }
+                openedScreen.updateGui(player);
+                component.setColor("黄");
+            }
+        };
+
         YamlConfiguration listBgkYml = DragonGuiYml.getListBgk();
         EasyImage listBgkImg = new EasyImage( listBgkYml.getInt("x"), listBgkYml.getInt("y"), listBgkYml.getInt("width"), listBgkYml.getInt("high"),ImageUrlEnum.listbgk.getUrl());
         YamlConfiguration name = DragonGuiYml.getName();
@@ -140,6 +458,18 @@ public class DragonGuildChat {
         screen.addComponent(nameText);
         screen.addComponent(renshuText);
         screen.addComponent(levelText);
+        screen.addComponent("亮绿",lianglvButton);
+        screen.addComponent("亮蓝",lianglanButton);
+        screen.addComponent("橙",chengButton);
+        screen.addComponent("浅红",qianhongButton);
+        screen.addComponent("浅蓝",qianlanButton);
+        screen.addComponent("深绿",shenlvButton);
+        screen.addComponent("深蓝",shenlanButton);
+        screen.addComponent("灰",huiButton);
+        screen.addComponent("灰蓝",huilanButton);
+        screen.addComponent("紫",ziButton);
+        screen.addComponent("红",hongButton);
+        screen.addComponent("黄",huangButton);
         screen.addComponent(listBgkImg);
         screen.addComponent(guildImg);
         screen.addComponent(lobbyButton);
@@ -149,7 +479,7 @@ public class DragonGuildChat {
         screen.addComponent(topButton);
         screen.addComponent(scrollingList);
         screen.addComponent(closeButton);
-        screen.addComponent(contentTextField);
+        screen.addComponent("聊天输入",contentTextField);
         screen.addComponent(shangyiyeButton);
         return screen;
     }
@@ -218,7 +548,7 @@ public class DragonGuildChat {
             List<String> descList = new ArrayList<>();
             String substring = "";
             int y = length;
-            while (y > 0){
+            while (y > 0 && !descs.equals("")){
                 String s = "";
                 try {
                     s = bSubstring(descs, 20);
@@ -318,5 +648,14 @@ public class DragonGuildChat {
         }
 
         return new String(bytes, 0, i, "Unicode");
+    }
+
+    public static void main(String[] args) {
+        try {
+            String s = bSubstring("§a§a§a§a§a§aasdasd", 20);
+            System.out.println(s);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

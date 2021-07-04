@@ -11,6 +11,8 @@ Mysql:
   password: '1234'
 #快捷键
 hotkeys: "G"
+#公告内容可编辑行数
+noticeEditline: 9
 DragonGuild:
   #插件消息前缀
   prefix: '[公会]'

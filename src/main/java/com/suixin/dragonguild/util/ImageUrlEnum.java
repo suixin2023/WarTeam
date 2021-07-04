@@ -61,6 +61,18 @@ public enum ImageUrlEnum {
     clear("clear","清空.png", "清空"),
     chatBox("chatBox","消息框.png", "消息框"),
     chatBox2("chatBox","消息框2.png", "消息框"),
+    cheng("chatBox","color/橙.png", "橙"),
+    hong("chatBox","color/红.png", "红"),
+    huang("chatBox","color/黄.png", "黄"),
+    hui("chatBox","color/灰.png", "灰"),
+    huilan("chatBox","color/灰蓝.png", "灰蓝"),
+    lianglan("chatBox","color/亮蓝.png", "亮蓝"),
+    lianglv("chatBox","color/亮绿.png", "亮绿"),
+    qianhong("chatBox","color/浅红.png", "浅红"),
+    qianlan("chatBox","color/浅蓝.png", "浅蓝"),
+    shenlan("chatBox","color/深蓝.png", "深蓝"),
+    shenlv("chatBox","color/深绿.png", "深蓝"),
+    zi("chatBox","color/紫.png", "紫"),
     ;
 
     private String id;
