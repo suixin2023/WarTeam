@@ -104,8 +104,6 @@ public class EasyButtonClickListener implements Listener {
             dragonGuildMemberEntity.setStatus(1);
             dragonGuildMemberEntity.setCreated(new Date());
             DragonGuildMemBerDatabaseHandler.insert(dragonGuildMemberEntity);
-            dragonGuildEntity.setMaxMember(dragonGuildEntity.getMaxMember() + 1);
-            DragonGuildDatabaseHandler.updateUserConfigDataNum(dragonGuildEntity.getId(),dragonGuildEntity);
             dragonGuildApplyEntity.setStatus(1);
             DragonGuildApplyDatabaseHandler.updateUserConfigDataNum(dragonGuildApplyEntity.getId(),dragonGuildApplyEntity);
             Player addressee = Bukkit.getServer().getPlayer(applyUserName);

@@ -2,7 +2,6 @@ package com.suixin.dragonguild;
 
 import com.google.common.base.Charsets;
 import com.suixin.dragonguild.command.BaseCommand;
-import com.suixin.dragonguild.dragongui.DragonGuildNotice;
 import com.suixin.dragonguild.handler.*;
 import com.suixin.dragonguild.listener.AppointButtonClickListener;
 import com.suixin.dragonguild.listener.EasyButtonClickListener;
@@ -11,7 +10,6 @@ import com.suixin.dragonguild.listener.PlayerJoinEventClass;
 import com.suixin.dragonguild.task.ActivationCodeTask;
 import com.suixin.dragonguild.util.*;
 import eos.moe.dragoncore.api.CoreAPI;
-import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -28,6 +26,7 @@ import java.util.List;
 
 public class DragonGuild extends JavaPlugin {
 	private static DragonGuild instance;
+	private static Integer pass = 0;
 	private static YamlConfiguration systemConfig;
 	private static HashMap<Integer,Integer> levelMap = new HashMap<>();
 	private static HashMap<Integer,Integer> maxNumMap = new HashMap<>();
@@ -194,7 +193,11 @@ public class DragonGuild extends JavaPlugin {
 		DragonGuild.version = version;
 	}
 
-	public static void main(String[] args) {
+	public static Integer getPass() {
+		return pass;
+	}
 
+	public static void setPass(Integer pass) {
+		DragonGuild.pass = pass;
 	}
 }
