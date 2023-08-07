@@ -97,6 +97,10 @@
 	</properties>
 	<repositories>
 		<repository>
+			<id>phoenix</id>
+			<url>https://nexus.phoenixdvpt.fr/repository/maven-public/</url>
+		</repository>
+		<repository>
 			<id>spigot-repo</id>
 			<url>https://hub.spigotmc.org/nexus/content/groups/public/</url>
 		</repository>
